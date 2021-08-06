@@ -11,9 +11,13 @@
 		386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6B26BABE0400F1E4AB /* ContentView.swift */; };
 		386EBE6E26BABE0400F1E4AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386EBE6D26BABE0400F1E4AB /* Assets.xcassets */; };
 		386EBE7126BABE0400F1E4AB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386EBE7026BABE0400F1E4AB /* Preview Assets.xcassets */; };
-		38BB9B9326BABED900CE2946 /* ScanPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9226BABED900CE2946 /* ScanPicker.swift */; };
-		38BB9B9626BAD5AE00CE2946 /* AddReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9526BAD5AE00CE2946 /* AddReceipt.swift */; };
-		38BB9B9826BAEEE100CE2946 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9726BAEEE100CE2946 /* Receipt.swift */; };
+		38BB9B9326BABED900CE2946 /* ScanPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9226BABED900CE2946 /* ScanPickerView.swift */; };
+		38BB9B9626BAD5AE00CE2946 /* NewReceiptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9526BAD5AE00CE2946 /* NewReceiptsView.swift */; };
+		38E89E3326BD0C02006A0D49 /* Recognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E3226BD0C02006A0D49 /* Recognizer.swift */; };
+		38E89E3926BD693C006A0D49 /* AddReceiptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E3826BD693C006A0D49 /* AddReceiptsView.swift */; };
+		38E89E3F26BD7051006A0D49 /* VNRecognizedTextObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E3E26BD7051006A0D49 /* VNRecognizedTextObservation.swift */; };
+		38E89E4126BD7D39006A0D49 /* ReceiptScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E4026BD7D39006A0D49 /* ReceiptScan.swift */; };
+		38F20D5B26BBFE0E007D0A0E /* ReceiptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,10 +26,14 @@
 		386EBE6B26BABE0400F1E4AB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		386EBE6D26BABE0400F1E4AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		386EBE7026BABE0400F1E4AB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		38BB9B9226BABED900CE2946 /* ScanPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanPicker.swift; sourceTree = "<group>"; };
+		38BB9B9226BABED900CE2946 /* ScanPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanPickerView.swift; sourceTree = "<group>"; };
 		38BB9B9426BAC05E00CE2946 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		38BB9B9526BAD5AE00CE2946 /* AddReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReceipt.swift; sourceTree = "<group>"; };
-		38BB9B9726BAEEE100CE2946 /* Receipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
+		38BB9B9526BAD5AE00CE2946 /* NewReceiptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReceiptsView.swift; sourceTree = "<group>"; };
+		38E89E3226BD0C02006A0D49 /* Recognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recognizer.swift; sourceTree = "<group>"; };
+		38E89E3826BD693C006A0D49 /* AddReceiptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReceiptsView.swift; sourceTree = "<group>"; };
+		38E89E3E26BD7051006A0D49 /* VNRecognizedTextObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VNRecognizedTextObservation.swift; sourceTree = "<group>"; };
+		38E89E4026BD7D39006A0D49 /* ReceiptScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScan.swift; sourceTree = "<group>"; };
+		38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,12 +66,12 @@
 		386EBE6826BABE0400F1E4AB /* ReceiptKeeper */ = {
 			isa = PBXGroup;
 			children = (
+				38E89E3D26BD703E006A0D49 /* Extensions */,
+				38E89E3A26BD6A28006A0D49 /* Activities */,
 				38BB9B9426BAC05E00CE2946 /* Info.plist */,
 				386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */,
 				386EBE6B26BABE0400F1E4AB /* ContentView.swift */,
-				38BB9B9726BAEEE100CE2946 /* Receipt.swift */,
-				38BB9B9526BAD5AE00CE2946 /* AddReceipt.swift */,
-				38BB9B9226BABED900CE2946 /* ScanPicker.swift */,
+				38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */,
 				386EBE6D26BABE0400F1E4AB /* Assets.xcassets */,
 				386EBE6F26BABE0400F1E4AB /* Preview Content */,
 			);
@@ -76,6 +84,34 @@
 				386EBE7026BABE0400F1E4AB /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		38E89E3A26BD6A28006A0D49 /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				38E89E3B26BD6A2E006A0D49 /* AddReceipts */,
+			);
+			path = Activities;
+			sourceTree = "<group>";
+		};
+		38E89E3B26BD6A2E006A0D49 /* AddReceipts */ = {
+			isa = PBXGroup;
+			children = (
+				38E89E3826BD693C006A0D49 /* AddReceiptsView.swift */,
+				38E89E3226BD0C02006A0D49 /* Recognizer.swift */,
+				38BB9B9526BAD5AE00CE2946 /* NewReceiptsView.swift */,
+				38BB9B9226BABED900CE2946 /* ScanPickerView.swift */,
+				38E89E4026BD7D39006A0D49 /* ReceiptScan.swift */,
+			);
+			path = AddReceipts;
+			sourceTree = "<group>";
+		};
+		38E89E3D26BD703E006A0D49 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				38E89E3E26BD7051006A0D49 /* VNRecognizedTextObservation.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,11 +184,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38BB9B9626BAD5AE00CE2946 /* AddReceipt.swift in Sources */,
-				38BB9B9826BAEEE100CE2946 /* Receipt.swift in Sources */,
+				38BB9B9626BAD5AE00CE2946 /* NewReceiptsView.swift in Sources */,
+				38E89E3926BD693C006A0D49 /* AddReceiptsView.swift in Sources */,
+				38E89E3326BD0C02006A0D49 /* Recognizer.swift in Sources */,
+				38F20D5B26BBFE0E007D0A0E /* ReceiptsView.swift in Sources */,
 				386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */,
-				38BB9B9326BABED900CE2946 /* ScanPicker.swift in Sources */,
+				38E89E4126BD7D39006A0D49 /* ReceiptScan.swift in Sources */,
+				38BB9B9326BABED900CE2946 /* ScanPickerView.swift in Sources */,
 				386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */,
+				38E89E3F26BD7051006A0D49 /* VNRecognizedTextObservation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

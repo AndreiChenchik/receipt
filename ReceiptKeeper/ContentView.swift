@@ -9,23 +9,16 @@ import SwiftUI
 import VisionKit
 
 struct ContentView: View {
-    @State private var isShowingPicker = false
-    @State private var isShowingAdder = false
-    @State private var newReceipt: Receipt?
+    @SceneStorage("selectedView") var selectedView: String?
 
     var body: some View {
-        Text("Hello, world!")
-            .padding()
-            .onTapGesture {
-                isShowingPicker = true
-            }
-            .sheet(isPresented: $isShowingPicker) {
-                ScanPicker(newReceipt: $newReceipt)
-                    .ignoresSafeArea()
-            }
-            .sheet(item: $newReceipt, onDismiss: {
-                newReceipt = nil
-            }, content: AddReceipt.init)
+        TabView(selection: $selectedView) {
+            ReceiptsView()
+                .tag(ReceiptsView.tag)
+                .tabItem {
+                    Label("Receipts", systemImage: "doc.on.doc")
+                }
+        }
     }
 }
 

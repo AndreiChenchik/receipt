@@ -1,6 +1,6 @@
 //
-//  ScanPicker.swift
-//  ScanPicker
+//  ScanPickerView.swift
+//  ScanPickerView
 //
 //  Created by Andrei Chenchik on 4/8/21.
 //
@@ -8,25 +8,24 @@
 import SwiftUI
 import VisionKit
 
-enum ScanError: Error {
-    case scanCancelled
-}
+struct ScanPickerView: UIViewControllerRepresentable {
+    @Binding var isFinishedPicking: Bool
 
-struct ScanPicker: UIViewControllerRepresentable {
-    @Binding var newReceipt: Receipt?
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var recognizer: Recognizer
 
     func makeUIViewController(context: Context) -> VNDocumentCameraViewController {
-        let documentPicker = VNDocumentCameraViewController()
-        documentPicker.delegate = context.coordinator
-        return documentPicker
+        let receiptsPicker = VNDocumentCameraViewController()
+        receiptsPicker.delegate = context.coordinator
+
+        return receiptsPicker
     }
 
     func updateUIViewController(_ uiViewController: VNDocumentCameraViewController, context: Context) {
         // nothing to update here
     }
 
-    func closePicker() {
+    func dismiss() {
         presentationMode.wrappedValue.dismiss()
     }
 
@@ -35,31 +34,37 @@ struct ScanPicker: UIViewControllerRepresentable {
     }
 
     final class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
-        var parent: ScanPicker
+        var parent: ScanPickerView
 
-        init(_ parent: ScanPicker) {
+        init(_ parent: ScanPickerView) {
             self.parent = parent
         }
 
         func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-            parent.newReceipt = Receipt(from: .success(scan))
-            parent.closePicker()
+            var receiptScans = [UIImage]()
+            
+            for index in 0..<scan.pageCount {
+                let image = scan.imageOfPage(at: index)
+                receiptScans.append(image)
+            }
+
+            parent.recognizer.setScans(receiptScans)
+            parent.isFinishedPicking = true
         }
 
         func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
-            parent.newReceipt = Receipt(from: .failure(ScanError.scanCancelled))
-            parent.closePicker()
+            parent.dismiss()
         }
 
         func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
-            parent.newReceipt = Receipt(from: .failure(error))
-            parent.closePicker()
+            #warning("add error handling")
+            parent.dismiss()
         }
     }
 }
 
 //struct VisionPicker_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ScanPicker()
+//        ScanPickerView()
 //    }
 //}
