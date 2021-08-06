@@ -12,4 +12,9 @@ struct ReceiptScan: Identifiable {
     let id = UUID()
     let scanImage: UIImage
     var recognizedImage: UIImage? = nil
+    var content = [ReceiptLine]()
+
+    var title: String? {
+        content.first?.label
+    }
 }

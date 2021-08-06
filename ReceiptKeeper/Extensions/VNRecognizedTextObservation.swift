@@ -9,7 +9,7 @@ import Foundation
 import Vision
 
 extension VNRecognizedTextObservation {
-    var topCandidate: String? {
+    var topCandidateText: String? {
         topCandidates(1).first?.string
     }
 }
