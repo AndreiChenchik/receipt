@@ -1,0 +1,26 @@
+//
+//  ReceiptsViewModel.swift
+//  ReceiptsViewModel
+//
+//  Created by Andrei Chenchik on 7/8/21.
+//
+
+import Foundation
+
+extension ReceiptsView {
+    class ViewModel: ObservableObject {
+        let dataController: DataController
+
+        init(dataController: DataController) {
+            self.dataController = dataController
+        }
+
+        var isCapableToScan: Bool {
+            ReceiptScannerView.isCapableToScan
+        }
+
+        var haveReceiptsToShow: Bool {
+            !dataController.drafts.isEmpty || !dataController.receipts.isEmpty
+        }
+    }
+}

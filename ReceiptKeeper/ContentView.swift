@@ -11,9 +11,11 @@ import VisionKit
 struct ContentView: View {
     @SceneStorage("selectedView") var selectedView: String?
 
+    @EnvironmentObject var dataController: DataController
+
     var body: some View {
         TabView(selection: $selectedView) {
-            ReceiptsView()
+            ReceiptsView(dataController: dataController)
                 .tag(ReceiptsView.tag)
                 .tabItem {
                     Label("Receipts", systemImage: "doc.on.doc")
@@ -22,8 +24,8 @@ struct ContentView: View {
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}

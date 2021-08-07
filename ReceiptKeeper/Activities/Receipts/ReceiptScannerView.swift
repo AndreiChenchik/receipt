@@ -1,6 +1,6 @@
 //
-//  ScanPickerView.swift
-//  ScanPickerView
+//  ReceiptScannerView.swift
+//  ReceiptScannerView
 //
 //  Created by Andrei Chenchik on 4/8/21.
 //
@@ -8,11 +8,14 @@
 import SwiftUI
 import VisionKit
 
-struct ScanPickerView: UIViewControllerRepresentable {
-    @Binding var isFinishedPicking: Bool
+struct ReceiptScannerView: UIViewControllerRepresentable {
+    static var isCapableToScan: Bool {
+        VNDocumentCameraViewController.isSupported
+    }
+
+    @EnvironmentObject var dataController: DataController
 
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var recognizer: Recognizer
 
     func makeUIViewController(context: Context) -> VNDocumentCameraViewController {
         let receiptsPicker = VNDocumentCameraViewController()
@@ -34,22 +37,19 @@ struct ScanPickerView: UIViewControllerRepresentable {
     }
 
     final class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
-        var parent: ScanPickerView
+        var parent: ReceiptScannerView
 
-        init(_ parent: ScanPickerView) {
+        init(_ parent: ReceiptScannerView) {
             self.parent = parent
         }
 
         func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-            var receiptScans = [UIImage]()
-            
             for index in 0..<scan.pageCount {
-                let image = scan.imageOfPage(at: index)
-                receiptScans.append(image)
+                let scanImage = scan.imageOfPage(at: index)
+                parent.dataController.addReceiptDraft(with: scanImage)
             }
 
-            parent.recognizer.setScans(receiptScans)
-            parent.isFinishedPicking = true
+            parent.dismiss()
         }
 
         func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
@@ -63,8 +63,8 @@ struct ScanPickerView: UIViewControllerRepresentable {
     }
 }
 
-//struct VisionPicker_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ScanPickerView()
-//    }
-//}
+//  struct VisionPicker_Previews: PreviewProvider {
+//      static var previews: some View {
+//          ReceiptScannerView()
+//      }
+//  }

@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct ReceiptKeeperApp: App {
+    @StateObject private var dataController = DataController()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(dataController)
         }
     }
 }

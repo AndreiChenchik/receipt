@@ -21,8 +21,8 @@ struct AddReceiptsView: View {
                     EmptyView()
                 }
 
-                ScanPickerView(isFinishedPicking: $isFinishedPicking)
-                    .ignoresSafeArea()
+//                ReceiptScannerView(isFinishedPicking: $isFinishedPicking)
+//                    .ignoresSafeArea()
             }
             .navigationTitle("Scan & Edit")
             .navigationBarHidden(true)
