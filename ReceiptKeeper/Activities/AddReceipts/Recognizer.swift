@@ -70,7 +70,7 @@ class Recognizer: ObservableObject {
 
         for line in lines {
             updatedLines.append(line)
-            if line.label.trimmingCharacters(in: .whitespacesAndNewlines) == "TOTAL" { break }
+            if line.label.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() == "total" { break }
         }
 
         return updatedLines
