@@ -24,7 +24,7 @@ extension RecognizerView {
         @Published var recognizedTitle: String = "Receipt"
 
         func recognizeDraft() {
-            let image = receiptDraft.image
+            let image = receiptDraft.scanImage
             let recognizeTextRequest = VNRecognizeTextRequest { [weak self] request, error in
                 guard let self = self else { return }
                 guard var results = request.results as? [VNRecognizedTextObservation] else { return }

@@ -8,8 +8,12 @@
 import Foundation
 import UIKit
 
-struct ReceiptDraft: Identifiable {
+class ReceiptDraft: Identifiable, ObservableObject {
     let id = UUID()
-    let image: UIImage
-    let dateCreated = Date()
+    @Published var scanImage: UIImage
+    @Published var dateCreated = Date()
+
+    init(with scanImage: UIImage) {
+        self.scanImage = scanImage
+    }
 }

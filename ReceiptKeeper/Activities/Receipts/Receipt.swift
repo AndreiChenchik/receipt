@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Receipt: Identifiable {
+class Receipt: Identifiable {
     let id = UUID()
 }

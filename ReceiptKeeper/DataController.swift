@@ -17,7 +17,7 @@ class DataController: ObservableObject {
     }
 
     func addReceiptDraft(with scanImage: UIImage) {
-        let draft = ReceiptDraft(image: scanImage)
+        let draft = ReceiptDraft(with: scanImage)
         drafts.append(draft)
     }
 }
