@@ -35,9 +35,9 @@ struct ReceiptsView: View {
         NavigationView {
             Group {
                 if viewModel.haveReceiptsToShow {
-                    ReceiptListView()
+                    ReceiptsListView()
                 } else {
-                    EmptyReceiptListView()
+                    EmptyReceiptsListView()
                 }
             }
             .toolbar {
@@ -45,7 +45,7 @@ struct ReceiptsView: View {
             }
             .navigationTitle("Receipts")
             .sheet(isPresented: $isShowingAddReceiptsView) {
-                ReceiptScannerView()
+                ScannerView()
                     .ignoresSafeArea()
             }
         }

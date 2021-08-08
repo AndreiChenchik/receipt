@@ -16,7 +16,7 @@ extension ReceiptsView {
         }
 
         var isCapableToScan: Bool {
-            ReceiptScannerView.isCapableToScan
+            ScannerView.isCapableToScan
         }
 
         var haveReceiptsToShow: Bool {

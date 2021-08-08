@@ -1,6 +1,6 @@
 //
-//  ReceiptScannerView.swift
-//  ReceiptScannerView
+//  ScannerView.swift
+//  ScannerView
 //
 //  Created by Andrei Chenchik on 4/8/21.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 import VisionKit
 
-struct ReceiptScannerView: UIViewControllerRepresentable {
+struct ScannerView: UIViewControllerRepresentable {
     static var isCapableToScan: Bool {
         VNDocumentCameraViewController.isSupported
     }
@@ -37,9 +37,9 @@ struct ReceiptScannerView: UIViewControllerRepresentable {
     }
 
     final class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
-        var parent: ReceiptScannerView
+        var parent: ScannerView
 
-        init(_ parent: ReceiptScannerView) {
+        init(_ parent: ScannerView) {
             self.parent = parent
         }
 
@@ -65,6 +65,6 @@ struct ReceiptScannerView: UIViewControllerRepresentable {
 
 //  struct VisionPicker_Previews: PreviewProvider {
 //      static var previews: some View {
-//          ReceiptScannerView()
+//          ScannerView()
 //      }
 //  }

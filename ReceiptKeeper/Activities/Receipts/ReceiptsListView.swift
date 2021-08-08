@@ -1,13 +1,13 @@
 //
-//  ReceiptListView.swift
-//  ReceiptListView
+//  ReceiptsListView.swift
+//  ReceiptsListView
 //
 //  Created by Andrei Chenchik on 7/8/21.
 //
 
 import SwiftUI
 
-struct ReceiptListView: View {
+struct ReceiptsListView: View {
     @EnvironmentObject var dataController: DataController
 
     var body: some View {
@@ -15,7 +15,18 @@ struct ReceiptListView: View {
             if !dataController.drafts.isEmpty {
                 Section(header: Text("Drafts")) {
                     ForEach(dataController.drafts) { draft in
-                        Text(draft.id.uuidString)
+                        NavigationLink {
+                            RecognizerView(receiptDraft: draft, dataController: dataController)
+                        } label: {
+                            VStack(alignment: .leading) {
+                                Text(draft.dateCreated, style: .date)
+                                Text(draft.dateCreated, style: .time)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+
+                        }
+
                     }
                 }
             }
@@ -33,6 +44,6 @@ struct ReceiptListView: View {
 
 struct ReceiptListView_Previews: PreviewProvider {
     static var previews: some View {
-        ReceiptListView()
+        ReceiptsListView()
     }
 }

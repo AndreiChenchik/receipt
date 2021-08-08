@@ -11,4 +11,5 @@ import UIKit
 struct ReceiptDraft: Identifiable {
     let id = UUID()
     let image: UIImage
+    let dateCreated = Date()
 }

@@ -1,13 +1,13 @@
 //
-//  EmptyReceiptListView.swift
-//  EmptyReceiptListView
+//  EmptyReceiptsListView.swift
+//  EmptyReceiptsListView
 //
 //  Created by Andrei Chenchik on 7/8/21.
 //
 
 import SwiftUI
 
-struct EmptyReceiptListView: View {
+struct EmptyReceiptsListView: View {
     var body: some View {
         VStack {
             Text("No receipts to display")
@@ -18,6 +18,6 @@ struct EmptyReceiptListView: View {
 
 struct EmptyReceiptListView_Previews: PreviewProvider {
     static var previews: some View {
-        EmptyReceiptListView()
+        EmptyReceiptsListView()
     }
 }

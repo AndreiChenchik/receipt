@@ -1,21 +1,24 @@
 //
-//  RecognitionResultsView.swift
-//  RecognitionResultsView
+//  RecognizerView.swift
+//  RecognizerView
 //
-//  Created by Andrei Chenchik on 6/8/21.
+//  Created by Andrei Chenchik on 8/8/21.
 //
 
 import SwiftUI
 
-struct RecognitionResultsView: View {
-    @EnvironmentObject var recognizer: Recognizer
+struct RecognizerView: View {
+    @StateObject var viewModel: ViewModel
 
-    let index: Int
+    init(receiptDraft: ReceiptDraft, dataController: DataController) {
+        let viewModel = ViewModel(receiptDraft: receiptDraft, dataController: dataController)
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
-        if let image = recognizer.receiptScans[index].recognizedImage {
+        if let image = viewModel.recognizedImage {
                 List {
-                    ForEach(recognizer.receiptScans[index].content) { line in
+                    ForEach(viewModel.recognizedContents) { line in
                         if let value = line.value {
                             HStack {
                                 Text(line.label)
@@ -30,18 +33,16 @@ struct RecognitionResultsView: View {
                         .resizable()
                         .scaledToFit()
                         .padding(10)
-                }.navigationTitle(recognizer.receiptScans[index].title ?? "Receipt")
+                }.navigationTitle(viewModel.recognizedTitle)
         } else {
             ProgressView()
-                .onAppear {
-                    recognizer.recognize(imageAt: index)
-                }
+                .onAppear(perform: viewModel.recognizeDraft)
         }
     }
 }
 
-//struct RecognitionResultsView_Previews: PreviewProvider {
+//struct RecognizerView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        RecognitionResultsView()
+//        RecognizerView()
 //    }
 //}
