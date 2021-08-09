@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		386C193426C1111300F09FFE /* ReceiptItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386C193326C1111300F09FFE /* ReceiptItem.swift */; };
 		386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */; };
 		386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6B26BABE0400F1E4AB /* ContentView.swift */; };
 		386EBE6E26BABE0400F1E4AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386EBE6D26BABE0400F1E4AB /* Assets.xcassets */; };
@@ -21,11 +22,13 @@
 		3872876226C01700008B312B /* RecognizerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872876126C01700008B312B /* RecognizerViewModel.swift */; };
 		38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9226BABED900CE2946 /* ScannerView.swift */; };
 		38E89E3F26BD7051006A0D49 /* VNRecognizedTextObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E3E26BD7051006A0D49 /* VNRecognizedTextObservation.swift */; };
-		38E89E4726BD9731006A0D49 /* ReceiptLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E4626BD9731006A0D49 /* ReceiptLine.swift */; };
+		38E89E4726BD9731006A0D49 /* RecognizedLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E4626BD9731006A0D49 /* RecognizedLine.swift */; };
+		38E9908426C19B52007FF507 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E9908326C19B52007FF507 /* CGRect.swift */; };
 		38F20D5B26BBFE0E007D0A0E /* ReceiptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		386C193326C1111300F09FFE /* ReceiptItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptItem.swift; sourceTree = "<group>"; };
 		386EBE6626BABE0400F1E4AB /* ReceiptKeeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReceiptKeeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptKeeperApp.swift; sourceTree = "<group>"; };
 		386EBE6B26BABE0400F1E4AB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -42,7 +45,8 @@
 		38BB9B9226BABED900CE2946 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		38BB9B9426BAC05E00CE2946 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		38E89E3E26BD7051006A0D49 /* VNRecognizedTextObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VNRecognizedTextObservation.swift; sourceTree = "<group>"; };
-		38E89E4626BD9731006A0D49 /* ReceiptLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptLine.swift; sourceTree = "<group>"; };
+		38E89E4626BD9731006A0D49 /* RecognizedLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedLine.swift; sourceTree = "<group>"; };
+		38E9908326C19B52007FF507 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,11 +108,12 @@
 				3872875526BF181E008B312B /* EmptyReceiptsListView.swift */,
 				3872875326BF180B008B312B /* ReceiptsListView.swift */,
 				3872875A26BF2931008B312B /* Receipt.swift */,
-				3872875C26BF293A008B312B /* ReceiptDraft.swift */,
-				38E89E4626BD9731006A0D49 /* ReceiptLine.swift */,
+				386C193326C1111300F09FFE /* ReceiptItem.swift */,
 				38BB9B9226BABED900CE2946 /* ScannerView.swift */,
+				3872875C26BF293A008B312B /* ReceiptDraft.swift */,
 				3872875F26C016F4008B312B /* RecognizerView.swift */,
 				3872876126C01700008B312B /* RecognizerViewModel.swift */,
+				38E89E4626BD9731006A0D49 /* RecognizedLine.swift */,
 			);
 			path = Receipts;
 			sourceTree = "<group>";
@@ -125,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				38E89E3E26BD7051006A0D49 /* VNRecognizedTextObservation.swift */,
+				38E9908326C19B52007FF507 /* CGRect.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -200,7 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3872875D26BF293A008B312B /* ReceiptDraft.swift in Sources */,
-				38E89E4726BD9731006A0D49 /* ReceiptLine.swift in Sources */,
+				38E89E4726BD9731006A0D49 /* RecognizedLine.swift in Sources */,
 				3872875626BF181E008B312B /* EmptyReceiptsListView.swift in Sources */,
 				3872876026C016F4008B312B /* RecognizerView.swift in Sources */,
 				38F20D5B26BBFE0E007D0A0E /* ReceiptsView.swift in Sources */,
@@ -212,7 +218,9 @@
 				3872876226C01700008B312B /* RecognizerViewModel.swift in Sources */,
 				3872875926BF1EE8008B312B /* ReceiptsViewModel.swift in Sources */,
 				38E89E3F26BD7051006A0D49 /* VNRecognizedTextObservation.swift in Sources */,
+				386C193426C1111300F09FFE /* ReceiptItem.swift in Sources */,
 				3872875426BF180B008B312B /* ReceiptsListView.swift in Sources */,
+				38E9908426C19B52007FF507 /* CGRect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

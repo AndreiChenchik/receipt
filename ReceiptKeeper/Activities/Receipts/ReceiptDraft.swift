@@ -10,8 +10,9 @@ import UIKit
 
 class ReceiptDraft: Identifiable, ObservableObject {
     let id = UUID()
+    let dateCreated = Date()
+    
     @Published var scanImage: UIImage
-    @Published var dateCreated = Date()
 
     init(with scanImage: UIImage) {
         self.scanImage = scanImage

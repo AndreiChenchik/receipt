@@ -14,19 +14,17 @@ struct ReceiptsListView: View {
         List {
             if !dataController.drafts.isEmpty {
                 Section(header: Text("Drafts")) {
-                    ForEach(dataController.drafts) { draft in
+                    ForEach(dataController.drafts) { receiptDraft in
                         NavigationLink {
-                            RecognizerView(receiptDraft: draft, dataController: dataController)
+                            RecognizerView(receiptDraft: receiptDraft, dataController: dataController)
                         } label: {
                             VStack(alignment: .leading) {
-                                Text(draft.dateCreated, style: .date)
-                                Text(draft.dateCreated, style: .time)
+                                Text(receiptDraft.dateCreated, style: .date)
+                                Text(receiptDraft.dateCreated, style: .time)
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
-
                         }
-
                     }
                 }
             }

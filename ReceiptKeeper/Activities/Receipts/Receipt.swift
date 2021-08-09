@@ -7,6 +7,6 @@
 
 import Foundation
 
-class Receipt: Identifiable {
+class Receipt: Identifiable, ObservableObject {
     let id = UUID()
 }

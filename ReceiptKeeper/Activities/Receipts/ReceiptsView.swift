@@ -22,6 +22,7 @@ struct ReceiptsView: View {
     var scanNewReceiptsButton: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             if viewModel.isCapableToScan {
+                //TODO: Add photo picker for devices without scan
                 Button(action: {
                     isShowingAddReceiptsView = true
                 }) {

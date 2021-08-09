@@ -10,6 +10,6 @@ import Vision
 
 extension VNRecognizedTextObservation {
     var topCandidateText: String? {
-        topCandidates(1).first?.string
+        topCandidates(1).first?.string.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

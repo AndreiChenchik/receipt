@@ -16,9 +16,9 @@ struct RecognizerView: View {
     }
 
     var body: some View {
-        if let image = viewModel.recognizedImage {
+        if viewModel.isRecognitionDone {
                 List {
-                    ForEach(viewModel.recognizedContents) { line in
+                    ForEach(viewModel.enabledLines) { line in
                         if let value = line.value {
                             HStack {
                                 Text(line.label)
@@ -29,11 +29,20 @@ struct RecognizerView: View {
                             }
                         }
                     }
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .padding(10)
-                }.navigationTitle(viewModel.recognizedTitle)
+                    ZStack {
+                        Image(uiImage: viewModel.receiptDraft.scanImage)
+                            .resizable()
+                            .scaledToFit()
+                        Image(uiImage: viewModel.imageCharsBoundingBoxes!)
+                            .resizable()
+                            .scaledToFit()
+                        Image(uiImage: viewModel.imageTextBoundingBoxes!)
+                            .resizable()
+                            .scaledToFit()
+                    }
+                    .padding(10)
+
+                }.navigationTitle(viewModel.receiptTitle)
         } else {
             ProgressView()
                 .onAppear(perform: viewModel.recognizeDraft)
