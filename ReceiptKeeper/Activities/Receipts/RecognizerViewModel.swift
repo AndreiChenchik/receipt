@@ -77,8 +77,7 @@ extension RecognizerView {
                 let image = self.receiptDraft.scanImage
                 let boundingBoxes = self.allTextObservations.map { self.cgRectFromNormalizedRect($0.boundingBox, for: image.size) }
 
-                imageTextBoundingBoxes = image.getLayerWithRects(boundingBoxes, using: .blue)
-
+                imageTextBoundingBoxes = image.getLayerWithRects(boundingBoxes, with: .blue, opacity: 0.4)
                 buildGroup.leave()
             }
 
@@ -87,7 +86,7 @@ extension RecognizerView {
                 let image = self.receiptDraft.scanImage
                 let boundingBoxes = self.allCharsOnDraft.map { self.cgRectFromNormalizedRect($0, for: image.size) }
 
-                imageCharsBoundingBoxes = image.getLayerWithRects(boundingBoxes, using: .green)
+                imageCharsBoundingBoxes = image.getLayerWithRects(boundingBoxes, with: .green, using: .fill, opacity: 0.15)
                 buildGroup.leave()
             }
 
@@ -95,7 +94,7 @@ extension RecognizerView {
                 self.imageLayerWithTextBoundingBoxes = imageTextBoundingBoxes
                 self.imageLayerWithCharsBoundingBoxes = imageCharsBoundingBoxes
                 self.receiptContents = receiptLines
-                self.receiptTitle = receiptLines[0].label
+                self.receiptTitle = receiptLines.first?.label ?? "Receipt"
                 self.isRecognitionDone = true
             }
         }
@@ -219,6 +218,8 @@ extension RecognizerView {
         }
 
         private func hasSameBaseline(_ observation: VNRecognizedTextObservation, in line: RecognizedLine) -> Bool {
+            guard !line.observations.isEmpty else { return true }
+            
             let observationChars = observation.boundingBox.filterInnerRects(from: allCharsOnDraft, with: boundingBoxIntersectionThreshold)
             let observationBaseline = Baseline(of: observationChars)
 
