@@ -14,7 +14,6 @@ struct ScannerView: UIViewControllerRepresentable {
     }
 
     @EnvironmentObject var dataController: DataController
-
     @Environment(\.presentationMode) var presentationMode
 
     func makeUIViewController(context: Context) -> VNDocumentCameraViewController {
@@ -57,7 +56,7 @@ struct ScannerView: UIViewControllerRepresentable {
         }
 
         func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
-            #warning("add error handling")
+            print(error.localizedDescription)
             parent.dismiss()
         }
     }

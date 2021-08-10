@@ -8,9 +8,7 @@
 import Foundation
 import Vision
 
-struct RecognizedLine: Identifiable {
-    let id = UUID()
-
+struct RecognizedLine {
     var observations = [VNRecognizedTextObservation]()
     var additionalLines = [RecognizedLine]()
     var enabled = false
@@ -18,19 +16,18 @@ struct RecognizedLine: Identifiable {
 
 extension RecognizedLine {
     var label: String {
-        guard observations.count > 1 else {
-            return observations.first?.topCandidateText ?? ""
-        }
+        guard !observations.isEmpty else { return "" }
 
-        let sortedObservations = observations.sorted {
-            $0.boundingBox.maxX < $1.boundingBox.maxX
-        }
+        let sortedObservations = observations.sorted { $0.boundingBox.minX < $1.boundingBox.minX }
 
-        let count = observations.count > 1 ? observations.count - 1 : observations.count
+        let count = self.value != nil ? observations.count - 1 : observations.count
 
         var label = sortedObservations[0].topCandidateText ?? ""
-        for index in 1..<count {
-            label += " " + (sortedObservations[index].topCandidateText ?? "")
+
+        if count >= 1 {
+            for index in 1..<count {
+                label += " " + (sortedObservations[index].topCandidateText ?? "")
+            }
         }
 
         let additionalLines = additionalLines.sorted { $0.boundingBox.maxY < $1.boundingBox.maxY }
@@ -47,12 +44,14 @@ extension RecognizedLine {
     }
 
     var value: Double? {
-        let sortedObservations = observations.sorted {
-            $0.boundingBox.maxX < $1.boundingBox.maxX
-        }
+        let unnecessaryWords = ["usd", "eur", "$", "€"]
+        let sortedObservations = observations.sorted { $0.boundingBox.minX < $1.boundingBox.minX }
 
         if var lastText = sortedObservations.last?.topCandidateText {
             lastText = lastText.replacingOccurrences(of: ",", with: ".")
+            let words = lastText.split(separator: " ").filter { !unnecessaryWords.contains($0.lowercased()) }
+            lastText = words.joined(separator: " ")
+
             if lastText.contains(".") {
                 return Double(lastText)
             }

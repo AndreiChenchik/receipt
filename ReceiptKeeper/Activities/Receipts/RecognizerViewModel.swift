@@ -11,7 +11,8 @@ import UIKit
 
 extension RecognizerView {
     class ViewModel: ObservableObject {
-        let receiptDraft: ReceiptDraft
+        @Published var receiptDraft: ReceiptDraft
+        
         let dataController: DataController
 
         init(receiptDraft: ReceiptDraft, dataController: DataController) {
@@ -19,16 +20,7 @@ extension RecognizerView {
             self.dataController = dataController
         }
 
-        @Published var receiptContents = [RecognizedLine]()
-        @Published var receiptTitle: String = "Receipt"
         @Published var isRecognitionDone = false
-
-        @Published var imageLayerWithTextBoundingBoxes = UIImage()
-        @Published var imageLayerWithCharsBoundingBoxes = UIImage()
-
-        var enabledLines: [RecognizedLine] {
-            receiptContents.filter { $0.enabled }
-        }
 
         func recognizeDraft() {
             guard let cgImage = receiptDraft.scanImage.cgImage else { return }
@@ -60,7 +52,7 @@ extension RecognizerView {
         private var allCharsOnDraft = [CGRect]()
 
         private func buildContent() {
-            var receiptLines = [RecognizedLine]()
+            var receiptLines = [ReceiptLine]()
             var imageTextBoundingBoxes = UIImage()
             var imageCharsBoundingBoxes = UIImage()
 
@@ -91,15 +83,19 @@ extension RecognizerView {
             }
 
             buildGroup.notify(queue: .main) {
-                self.imageLayerWithTextBoundingBoxes = imageTextBoundingBoxes
-                self.imageLayerWithCharsBoundingBoxes = imageCharsBoundingBoxes
-                self.receiptContents = receiptLines
-                self.receiptTitle = receiptLines.first?.label ?? "Receipt"
+                self.receiptDraft.scanTextBoxesLayer = imageTextBoundingBoxes
+                self.receiptDraft.scanCharBoxesLayer = imageCharsBoundingBoxes
+
+                let totalLine = receiptLines.first { $0.value != "" && $0.label.lowercased() == "total" }
+                self.receiptDraft.totalValue = totalLine?.value ?? ""
+                self.receiptDraft.receiptLines = receiptLines
+                self.receiptDraft.storeTitle = receiptLines.first?.label ?? "Receipt"
+
                 self.isRecognitionDone = true
             }
         }
 
-        private func getReceiptLines() -> [RecognizedLine] {
+        private func getReceiptLines() -> [ReceiptLine] {
             guard !allTextObservations.isEmpty else { return [] }
 
             let sortedObservations = allTextObservations.sorted { $0.boundingBox.minY > $1.boundingBox.minY }
@@ -141,7 +137,25 @@ extension RecognizerView {
                 lines[i].enabled = true
             }
 
-            return lines
+            var receiptLines = [ReceiptLine]()
+            var totalFound = false
+
+            for line in lines {
+                if let value = line.value {
+                    if line.label.lowercased() == "total" && !totalFound {
+                        totalFound = true
+                    }
+
+                    let receiptLine = ReceiptLine(label: line.label, value: String(value), selected: !totalFound, boundingBox: line.boundingBox)
+                    receiptLines.append(receiptLine)
+                } else {
+
+                    let receiptLine = ReceiptLine(label: line.label, value: "", selected: false, boundingBox: line.boundingBox)
+                    receiptLines.append(receiptLine)
+                }
+            }
+
+            return receiptLines
         }
 
         private func recognizeText(from cgImage: CGImage) {
@@ -219,7 +233,7 @@ extension RecognizerView {
 
         private func hasSameBaseline(_ observation: VNRecognizedTextObservation, in line: RecognizedLine) -> Bool {
             guard !line.observations.isEmpty else { return true }
-            
+
             let observationChars = observation.boundingBox.filterInnerRects(from: allCharsOnDraft, with: boundingBoxIntersectionThreshold)
             let observationBaseline = Baseline(of: observationChars)
 
