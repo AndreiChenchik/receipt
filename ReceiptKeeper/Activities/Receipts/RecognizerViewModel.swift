@@ -19,11 +19,12 @@ extension RecognizerView {
             self.dataController = dataController
         }
 
-        @Published var imageTextBoundingBoxes: UIImage? = nil
-        @Published var imageCharsBoundingBoxes: UIImage? = nil
         @Published var receiptContents = [RecognizedLine]()
         @Published var receiptTitle: String = "Receipt"
         @Published var isRecognitionDone = false
+
+        @Published var imageLayerWithTextBoundingBoxes = UIImage()
+        @Published var imageLayerWithCharsBoundingBoxes = UIImage()
 
         var enabledLines: [RecognizedLine] {
             receiptContents.filter { $0.enabled }
@@ -55,8 +56,8 @@ extension RecognizerView {
         private let xOverlapThreshold = 0.02
         private let midYOffsetThreshold = 0.6
 
-        private var textObservations = [VNRecognizedTextObservation]()
-        private var charsObservations = [VNRectangleObservation]()
+        private var allTextObservations = [VNRecognizedTextObservation]()
+        private var allCharsOnDraft = [CGRect]()
 
         private func buildContent() {
             var receiptLines = [RecognizedLine]()
@@ -73,19 +74,26 @@ extension RecognizerView {
 
             buildGroup.enter()
             DispatchQueue.global(qos: .userInitiated).async {
-                imageTextBoundingBoxes = self.boundingBoxesImage(with: self.receiptDraft.scanImage.size, using: self.textObservations, color: .blue)
+                let image = self.receiptDraft.scanImage
+                let boundingBoxes = self.allTextObservations.map { self.cgRectFromNormalizedRect($0.boundingBox, for: image.size) }
+
+                imageTextBoundingBoxes = image.getLayerWithRects(boundingBoxes, using: .blue)
+
                 buildGroup.leave()
             }
 
             buildGroup.enter()
             DispatchQueue.global(qos: .userInitiated).async {
-                imageCharsBoundingBoxes = self.boundingBoxesImage(with: self.receiptDraft.scanImage.size, using: self.charsObservations, color: .green)
+                let image = self.receiptDraft.scanImage
+                let boundingBoxes = self.allCharsOnDraft.map { self.cgRectFromNormalizedRect($0, for: image.size) }
+
+                imageCharsBoundingBoxes = image.getLayerWithRects(boundingBoxes, using: .green)
                 buildGroup.leave()
             }
 
             buildGroup.notify(queue: .main) {
-                self.imageTextBoundingBoxes = imageTextBoundingBoxes
-                self.imageCharsBoundingBoxes = imageCharsBoundingBoxes
+                self.imageLayerWithTextBoundingBoxes = imageTextBoundingBoxes
+                self.imageLayerWithCharsBoundingBoxes = imageCharsBoundingBoxes
                 self.receiptContents = receiptLines
                 self.receiptTitle = receiptLines[0].label
                 self.isRecognitionDone = true
@@ -93,18 +101,17 @@ extension RecognizerView {
         }
 
         private func getReceiptLines() -> [RecognizedLine] {
-            guard !textObservations.isEmpty else { return [] }
+            guard !allTextObservations.isEmpty else { return [] }
 
-            let sortedObservations = textObservations.sorted { $0.boundingBox.minY > $1.boundingBox.minY }
+            let sortedObservations = allTextObservations.sorted { $0.boundingBox.minY > $1.boundingBox.minY }
 
             var lines = [RecognizedLine()]
             var totalReached = false
             var i = 0
 
             for observation in sortedObservations {
-                if self.isTheSameLine(observation, in: lines[i]) {
+                if self.hasSameBaseline(observation, in: lines[i]) {
                     lines[i].observations.append(observation)
-                    lines[i].characters = filteredChars(for: lines[i].boundingBox)
                 } else {
                     if i > 1, let updatedLine = mergeTwoLines(lines[i-1...i]) {
                         lines[i-1] = updatedLine
@@ -123,7 +130,6 @@ extension RecognizerView {
                     }
 
                     lines[i].observations.append(observation)
-                    lines[i].characters = filteredChars(for: lines[i].boundingBox)
                 }
             }
 
@@ -139,45 +145,6 @@ extension RecognizerView {
             return lines
         }
 
-        private func linearRegression(_ points: [CGPoint]) -> (CGFloat) -> CGFloat {
-            let xs = points.map { $0.x }
-            let ys = points.map { $0.y }
-
-            let sum1 = average(multiply(ys, xs)) - average(xs) * average(ys)
-            let sum2 = average(multiply(xs, xs)) - pow(average(xs), 2)
-            let slope = sum1 / sum2
-            let intercept = average(ys) - slope * average(xs)
-
-            return { x in
-                return slope * x + intercept
-            }
-        }
-
-        private func multiply(_ a: [CGFloat], _ b: [CGFloat]) -> [CGFloat] {
-            return zip(a, b).map(*)
-        }
-
-        private func average(_ input: [CGFloat]) -> CGFloat {
-            return input.reduce(0, +) / CGFloat(input.count)
-        }
-
-        private func filteredChars(for boundingBox: CGRect) -> [VNRectangleObservation] {
-            var filteredChars = [VNRectangleObservation]()
-
-            for char in charsObservations {
-                let intersectionArea = char.boundingBox.intersection(boundingBox).area
-                let intersectionRatio = intersectionArea / char.boundingBox.area
-
-                if intersectionRatio > boundingBoxIntersectionThreshold {
-                    filteredChars.append(char)
-                }
-            }
-
-//            let averageHeight = average(filteredChars.map { $0.boundingBox.height })
-//            return filteredChars.filter { $0.boundingBox.height > 0.8 * averageHeight }
-            return filteredChars
-        }
-
         private func recognizeText(from cgImage: CGImage) {
             let imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 
@@ -185,7 +152,7 @@ extension RecognizerView {
                 guard let self = self else { return }
 
                 guard let results = request.results as? [VNRecognizedTextObservation] else { return }
-                self.textObservations = results
+                self.allTextObservations = results
             }
 
             recognizeTextRequest.recognitionLevel = .accurate
@@ -205,15 +172,15 @@ extension RecognizerView {
                 guard let self = self else { return }
                 guard let results = request.results as? [VNTextObservation] else { return }
 
-                let charsObservations = results.reduce([VNRectangleObservation]()) { partialResult, textObservation in
+                let charsObservations = results.reduce([CGRect]()) { partialResult, textObservation in
                     guard let characterBoxes = textObservation.characterBoxes else {
                         return partialResult
                     }
 
-                    return partialResult + characterBoxes
+                    return partialResult + characterBoxes.map { $0.boundingBox }
                 }
 
-                self.charsObservations = charsObservations
+                self.allCharsOnDraft = charsObservations
             }
 
             recognizeCharsRequest.reportCharacterBoxes = true
@@ -225,56 +192,12 @@ extension RecognizerView {
             }
         }
 
-        private func boundingBoxesImage(with canvasSize: CGSize, using observations: [VNRectangleObservation], color: UIColor = .red) -> UIImage {
-            let renderer = UIGraphicsImageRenderer(size: canvasSize)
-            let imageWithBoundingBoxes = renderer.image { context in
-                context.cgContext.setStrokeColor(color.cgColor)
-                context.cgContext.setLineWidth(3)
+        private func cgRectFromNormalizedRect(_ rect: CGRect, for size: CGSize) -> CGRect {
+            let scaledBox = VNImageRectForNormalizedRect(rect, Int(size.width), Int(size.height))
+            let cgTransform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -size.height)
 
-                var boundingBoxes = [CGRect]()
-                for observation in observations {
-                    let scaledBox = VNImageRectForNormalizedRect(observation.boundingBox, Int(canvasSize.width), Int(canvasSize.height))
-                    let cgTransform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -canvasSize.height)
-                    boundingBoxes.append(scaledBox.applying(cgTransform))
-                }
-
-                context.cgContext.addRects(boundingBoxes)
-                context.cgContext.drawPath(using: .stroke)
-            }
-
-            return imageWithBoundingBoxes
+            return scaledBox.applying(cgTransform)
         }
-
-        private func boundingBoxesImage(with canvasSize: CGSize, using observations: [VNRecognizedTextObservation], color: UIColor = .red) -> UIImage {
-            let renderer = UIGraphicsImageRenderer(size: canvasSize)
-            let imageWithBoundingBoxes = renderer.image { context in
-                context.cgContext.setStrokeColor(color.cgColor)
-                context.cgContext.setLineWidth(3)
-
-                var boundingBoxes = [CGRect]()
-                for observation in observations {
-                    let scaledBox = VNImageRectForNormalizedRect(observation.boundingBox, Int(canvasSize.width), Int(canvasSize.height))
-                    let cgTransform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -canvasSize.height)
-                    boundingBoxes.append(scaledBox.applying(cgTransform))
-
-                    let midLine = linearRegression(filteredChars(for: observation.boundingBox).map { $0.boundingBox.lowerMid })
-                    var lineStart = CGPoint(x: 0, y: midLine(0))
-                    lineStart = VNImagePointForNormalizedPoint(lineStart, Int(canvasSize.width), Int(canvasSize.height)).applying(cgTransform)
-                    var lineEnd = CGPoint(x: 1, y: midLine(1))
-                    lineEnd = VNImagePointForNormalizedPoint(lineEnd, Int(canvasSize.width), Int(canvasSize.height)).applying(cgTransform)
-
-                    context.cgContext.move(to: lineStart)
-                    context.cgContext.addLine(to: lineEnd)
-                    context.cgContext.drawPath(using: .stroke)
-                }
-
-                context.cgContext.addRects(boundingBoxes)
-                context.cgContext.drawPath(using: .stroke)
-            }
-
-            return imageWithBoundingBoxes
-        }
-
 
         private func mergeTwoLines(_ lines: ArraySlice<RecognizedLine>) -> RecognizedLine? {
             guard lines.count == 2 else { return nil }
@@ -295,36 +218,14 @@ extension RecognizerView {
             }
         }
 
-        private func isTheSameLine(_ observation: VNRecognizedTextObservation, in line: RecognizedLine) -> Bool {
-            if isInLine(observation, with: line) && isNoXOverlap(of: observation, with: line) {
-                return true
-            } else {
-                return false
-            }
-        }
+        private func hasSameBaseline(_ observation: VNRecognizedTextObservation, in line: RecognizedLine) -> Bool {
+            let observationChars = observation.boundingBox.filterInnerRects(from: allCharsOnDraft, with: boundingBoxIntersectionThreshold)
+            let observationBaseline = Baseline(of: observationChars)
 
-        private func isNoXOverlap(of observation: VNRecognizedTextObservation, with line: RecognizedLine) -> Bool {
-            let targetWidth = observation.boundingBox.width
-            let targetWidthRange = observation.boundingBox.minX...observation.boundingBox.maxX
+            let lineChars = line.boundingBox.filterInnerRects(from: allCharsOnDraft, with: boundingBoxIntersectionThreshold)
+            let lineBaseline = Baseline(of: lineChars)
 
-            var xOverlap: CGFloat = 0
-            for observation in line.observations {
-                let observationWidthRange = observation.boundingBox.minX...observation.boundingBox.maxX
-                let intersection = targetWidthRange.clamped(to: observationWidthRange)
-                let intersectionLength = intersection.upperBound - intersection.lowerBound
-                xOverlap += intersectionLength
-            }
-
-            let overlappedPortion = xOverlap / targetWidth
-            return overlappedPortion < xOverlapThreshold
-        }
-
-        private func isInLine(_ observation: VNRecognizedTextObservation, with line: RecognizedLine) -> Bool {
-            let midLine = linearRegression(line.characters.map { $0.boundingBox.lowerMid })
-            let expectedMinY = midLine(observation.boundingBox.midX)
-            let midYOffsetHeightRatio = abs(expectedMinY - observation.boundingBox.minY) / observation.boundingBox.height
-
-            return midYOffsetHeightRatio < midYOffsetThreshold
+            return lineBaseline ~~ observationBaseline
         }
 
         private func isYCloseForMerge(_ firstLine: RecognizedLine, _ secondLine: RecognizedLine) -> Bool {

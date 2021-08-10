@@ -12,7 +12,6 @@ struct RecognizedLine: Identifiable {
     let id = UUID()
 
     var observations = [VNRecognizedTextObservation]()
-    var characters = [VNRectangleObservation]()
     var additionalLines = [RecognizedLine]()
     var enabled = false
 }

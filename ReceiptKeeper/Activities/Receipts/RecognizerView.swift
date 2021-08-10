@@ -33,10 +33,10 @@ struct RecognizerView: View {
                         Image(uiImage: viewModel.receiptDraft.scanImage)
                             .resizable()
                             .scaledToFit()
-                        Image(uiImage: viewModel.imageCharsBoundingBoxes!)
+                        Image(uiImage: viewModel.imageLayerWithCharsBoundingBoxes)
                             .resizable()
                             .scaledToFit()
-                        Image(uiImage: viewModel.imageTextBoundingBoxes!)
+                        Image(uiImage: viewModel.imageLayerWithTextBoundingBoxes)
                             .resizable()
                             .scaledToFit()
                     }
