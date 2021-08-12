@@ -9,7 +9,7 @@ import Foundation
 import Vision
 import UIKit
 
-extension RecognizerViewChild {
+extension RecognizerView {
     class ViewModel: ObservableObject {
         @Published var receiptDraft: ReceiptDraft
         
@@ -19,8 +19,6 @@ extension RecognizerViewChild {
             self.receiptDraft = receiptDraft
             self.dataController = dataController
         }
-
-        @Published var isRecognitionDone = false
 
         func recognizeDraft() {
             guard let cgImage = receiptDraft.scanImage.cgImage else { return }
@@ -90,8 +88,6 @@ extension RecognizerViewChild {
                 self.receiptDraft.totalValue = totalLine?.value ?? ""
                 self.receiptDraft.receiptLines = receiptLines
                 self.receiptDraft.storeTitle = receiptLines.first?.label ?? "Receipt"
-
-                self.isRecognitionDone = true
             }
         }
 
@@ -146,11 +142,12 @@ extension RecognizerViewChild {
                         totalFound = true
                     }
 
-                    let receiptLine = ReceiptLine(label: line.label, value: String(value), selected: !totalFound, boundingBox: line.boundingBox)
+                    let boundingBox = cgRectFromNormalizedRect(line.boundingBox, for: receiptDraft.scanImage.size)
+                    let receiptLine = ReceiptLine(label: line.label, value: String(value), selected: !totalFound, boundingBox: boundingBox)
                     receiptLines.append(receiptLine)
                 } else {
-
-                    let receiptLine = ReceiptLine(label: line.label, value: "", selected: false, boundingBox: line.boundingBox)
+                    let boundingBox = cgRectFromNormalizedRect(line.boundingBox, for: receiptDraft.scanImage.size)
+                    let receiptLine = ReceiptLine(label: line.label, value: "", selected: false, boundingBox: boundingBox)
                     receiptLines.append(receiptLine)
                 }
             }
@@ -230,6 +227,7 @@ extension RecognizerViewChild {
                 return nil
             }
         }
+
 
         private func hasSameBaseline(_ observation: VNRecognizedTextObservation, in line: RecognizedLine) -> Bool {
             guard !line.observations.isEmpty else { return true }

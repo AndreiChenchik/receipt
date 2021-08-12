@@ -13,93 +13,91 @@ struct RecognizerView: View {
     @ObservedObject var receiptDraft: ReceiptDraft
 
     var body: some View {
-        RecognizerViewChild(receiptDraft: receiptDraft, dataController: dataController)
-    }
-}
-
-struct RecognizerViewChild: View {
-    @StateObject var viewModel: ViewModel
-
-    @ObservedObject var receiptDraft: ReceiptDraft
-
-    init(receiptDraft: ReceiptDraft, dataController: DataController) {
-        let viewModel = ViewModel(receiptDraft: receiptDraft, dataController: dataController)
-        _viewModel = StateObject(wrappedValue: viewModel)
-        _receiptDraft = ObservedObject(wrappedValue: receiptDraft)
+        InnerView(receiptDraft: receiptDraft, dataController: dataController)
     }
 
-    var body: some View {
-        if !receiptDraft.receiptLines.isEmpty {
-            Form {
-                Section(header: Text("Title")) {
-                    TextField("Store title", text: $receiptDraft.storeTitle)
-                    TextField("Store location", text: $receiptDraft.storeAddress)
-                }
 
-                Section(header: Text("Date")) {
-                    TextField("Date", text: $receiptDraft.transactionDate)
-                }
+    struct InnerView: View {
+        @StateObject var viewModel: ViewModel
 
-                Section(header: Text("Items")) {
-                    ForEach($receiptDraft.selectedReceiptLines) { $line in
-                        ReceiptLineView(receiptLine: line, receiptDraft: receiptDraft)
+        @ObservedObject var receiptDraft: ReceiptDraft
+
+        @State var lineSelectedForPopup: ReceiptLine? = nil
+
+        init(receiptDraft: ReceiptDraft, dataController: DataController) {
+            let viewModel = ViewModel(receiptDraft: receiptDraft, dataController: dataController)
+            _viewModel = StateObject(wrappedValue: viewModel)
+            _receiptDraft = ObservedObject(wrappedValue: receiptDraft)
+        }
+
+        var body: some View {
+            if !receiptDraft.receiptLines.isEmpty {
+                Form {
+                    Section(header: Text("Title")) {
+                        TextField("Store title", text: $receiptDraft.storeTitle)
+                        TextField("Store location", text: $receiptDraft.storeAddress)
                     }
-                    .onDelete { indexSet in
-                        withAnimation {
-                            for index in indexSet {
-                                receiptDraft.objectWillChange.send()
-                                receiptDraft.selectedReceiptLines[index].selected = false
+
+                    Section(header: Text("Date")) {
+                        TextField("Date", text: $receiptDraft.transactionDate)
+                    }
+
+                    Section(header: Text("Items")) {
+                        ForEach(receiptDraft.selectedReceiptLines) { line in
+                            ReceiptSelectedLineView(receiptLine: line, receiptDraft: receiptDraft, lineSelectedForPopup: $lineSelectedForPopup)
+                        }
+                    }
+
+                    Section(header: Text("Total")) {
+                        TextField("Total value", text: $receiptDraft.totalValue)
+                    }
+
+                    Section {
+                        NavigationLink {
+                            ZStack {
+                                Image(uiImage: receiptDraft.scanImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                Image(uiImage: receiptDraft.scanCharBoxesLayer)
+                                    .resizable()
+                                    .scaledToFit()
+                                Image(uiImage: receiptDraft.scanTextBoxesLayer)
+                                    .resizable()
+                                    .scaledToFit()
                             }
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.vertical, 15)
+                        } label: {
+                            Text("Recognized Image")
+                        }
+                    }
+
+                    Section(header: Text("Other lines")) {
+                        ForEach(receiptDraft.unselectedReceiptLines) { line in
+                            ReceiptUnselectedLineView(receiptLine: line, receiptDraft: receiptDraft, lineSelectedForPopup: $lineSelectedForPopup)
                         }
                     }
                 }
-
-                Section(header: Text("Total")) {
-                    TextField("Total value", text: $receiptDraft.totalValue)
+                .popover(item: $lineSelectedForPopup) { line in
+                    Image(uiImage: receiptDraft.scanImage.croppedToRect(line.boundingBox))
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(40)
+                        .ignoresSafeArea()
+                        .background(Color.secondary)
                 }
-
-                Section {
-                    NavigationLink {
-                        ZStack {
-                            Image(uiImage: receiptDraft.scanImage)
-                                .resizable()
-                                .scaledToFit()
-                            Image(uiImage: receiptDraft.scanCharBoxesLayer)
-                                .resizable()
-                                .scaledToFit()
-                            Image(uiImage: receiptDraft.scanTextBoxesLayer)
-                                .resizable()
-                                .scaledToFit()
-                        }
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .padding(.vertical, 15)
-                    } label: {
-                        Text("Recognized Image")
+                .navigationTitle("New receipt")
+                .navigationBarTitleDisplayMode(.inline)
+            } else {
+                ProgressView()
+                    .onAppear {
+                        viewModel.recognizeDraft()
                     }
-                }
-
-                Section(header: Text("Other lines")) {
-                    ForEach(receiptDraft.unselectedReceiptLines) { line in
-                        ReceiptLineView(receiptLine: line, receiptDraft: receiptDraft)
-                    }
-                }
             }
-            .onAppear(perform: {
-                print(viewModel.isRecognitionDone)
-            })
-            .navigationTitle("New receipt")
-            .navigationBarTitleDisplayMode(.inline)
-        } else {
-            ProgressView()
-                .onAppear {
-                    print(viewModel.isRecognitionDone)
-                    viewModel.recognizeDraft()
-                    print(viewModel.isRecognitionDone)
-                }
         }
     }
 }
-
 //struct RecognizerView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        RecognizerView()

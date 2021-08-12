@@ -8,18 +8,18 @@
 import Foundation
 import CoreGraphics
 
-struct ReceiptLine: Identifiable, Equatable {
+class ReceiptLine: ObservableObject, Identifiable, Equatable {
     static func == (lhs: ReceiptLine, rhs: ReceiptLine) -> Bool {
         lhs.id == rhs.id
     }
 
     let id = UUID()
 
-    var label: String
-    var value: String
-    var selected: Bool
+    @Published var label: String
+    @Published var value: String
+    @Published var selected: Bool
 
-    var boundingBox: CGRect
+    @Published var boundingBox: CGRect
 
     var text: String { label + " " + value }
 
