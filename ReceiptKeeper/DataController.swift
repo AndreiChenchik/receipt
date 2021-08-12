@@ -10,14 +10,14 @@ import UIKit
 
 class DataController: ObservableObject {
     @Published var receipts = [Receipt]()
-    @Published var drafts = [ReceiptDraft]()
+    @Published var drafts = [Draft]()
 
     init() {
         print("initialized")
     }
 
     func addReceiptDraft(with scanImage: UIImage) {
-        let draft = ReceiptDraft(with: scanImage)
+        let draft = Draft(with: scanImage)
         drafts.append(draft)
     }
 }

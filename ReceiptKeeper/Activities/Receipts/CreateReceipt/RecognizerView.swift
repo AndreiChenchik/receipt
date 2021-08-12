@@ -10,7 +10,7 @@ import SwiftUI
 struct RecognizerView: View {
     @EnvironmentObject var dataController: DataController
 
-    @ObservedObject var receiptDraft: ReceiptDraft
+    @ObservedObject var receiptDraft: Draft
 
     var body: some View {
         InnerView(receiptDraft: receiptDraft, dataController: dataController)
@@ -20,11 +20,11 @@ struct RecognizerView: View {
     struct InnerView: View {
         @StateObject var viewModel: ViewModel
 
-        @ObservedObject var receiptDraft: ReceiptDraft
+        @ObservedObject var receiptDraft: Draft
 
-        @State var lineSelectedForPopup: ReceiptLine? = nil
+        @State var lineSelectedForPopup: DraftLine? = nil
 
-        init(receiptDraft: ReceiptDraft, dataController: DataController) {
+        init(receiptDraft: Draft, dataController: DataController) {
             let viewModel = ViewModel(receiptDraft: receiptDraft, dataController: dataController)
             _viewModel = StateObject(wrappedValue: viewModel)
             _receiptDraft = ObservedObject(wrappedValue: receiptDraft)
@@ -44,7 +44,7 @@ struct RecognizerView: View {
 
                     Section(header: Text("Items")) {
                         ForEach(receiptDraft.selectedReceiptLines) { line in
-                            ReceiptSelectedLineView(receiptLine: line, receiptDraft: receiptDraft, lineSelectedForPopup: $lineSelectedForPopup)
+                            SelectedDraftLineView(receiptLine: line, receiptDraft: receiptDraft, lineSelectedForPopup: $lineSelectedForPopup)
                         }
                     }
 
@@ -74,7 +74,7 @@ struct RecognizerView: View {
 
                     Section(header: Text("Other lines")) {
                         ForEach(receiptDraft.unselectedReceiptLines) { line in
-                            ReceiptUnselectedLineView(receiptLine: line, receiptDraft: receiptDraft, lineSelectedForPopup: $lineSelectedForPopup)
+                            UnselectedDraftLineView(receiptLine: line, receiptDraft: receiptDraft, lineSelectedForPopup: $lineSelectedForPopup)
                         }
                     }
                 }

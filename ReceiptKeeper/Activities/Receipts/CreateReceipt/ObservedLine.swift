@@ -1,6 +1,6 @@
 //
-//  RecognizedLine.swift
-//  RecognizedLine
+//  ObservedLine.swift
+//  ObservedLine
 //
 //  Created by Andrei Chenchik on 6/8/21.
 //
@@ -8,13 +8,13 @@
 import Foundation
 import Vision
 
-struct RecognizedLine {
+struct ObservedLine {
     var observations = [VNRecognizedTextObservation]()
-    var additionalLines = [RecognizedLine]()
+    var linkedLines = [ObservedLine]()
     var enabled = false
 }
 
-extension RecognizedLine {
+extension ObservedLine {
     var label: String {
         guard !observations.isEmpty else { return "" }
 
@@ -30,7 +30,7 @@ extension RecognizedLine {
             }
         }
 
-        let additionalLines = additionalLines.sorted { $0.boundingBox.maxY < $1.boundingBox.maxY }
+        let additionalLines = linkedLines.sorted { $0.boundingBox.maxY < $1.boundingBox.maxY }
 
         for line in additionalLines {
             if line.boundingBox.maxY > boundingBox.maxY {
@@ -61,7 +61,7 @@ extension RecognizedLine {
     }
 }
 
-extension RecognizedLine {
+extension ObservedLine {
     var boundingBox: CGRect {
         let maxYObservation = observations.max { $0.boundingBox.maxY < $1.boundingBox.maxY }
         let minYObservation = observations.min { $0.boundingBox.minY < $1.boundingBox.minY }

@@ -1,6 +1,6 @@
 //
-//  ReceiptDraft.swift
-//  ReceiptDraft
+//  Draft.swift
+//  Draft
 //
 //  Created by Andrei Chenchik on 7/8/21.
 //
@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Combine
 
-class ReceiptDraft: Identifiable, ObservableObject {
+class Draft: Identifiable, ObservableObject {
     let id = UUID()
 
     let dateCreated = Date()
@@ -23,9 +23,9 @@ class ReceiptDraft: Identifiable, ObservableObject {
     @Published var storeAddress = ""
     @Published var totalValue = ""
 
-    @Published var receiptLines = [ReceiptLine]()
-    var selectedReceiptLines: [ReceiptLine] { receiptLines.filter { $0.selected } }
-    var unselectedReceiptLines: [ReceiptLine] { receiptLines.filter { !$0.selected } }
+    @Published var receiptLines = [DraftLine]()
+    var selectedReceiptLines: [DraftLine] { receiptLines.filter { $0.selected } }
+    var unselectedReceiptLines: [DraftLine] { receiptLines.filter { !$0.selected } }
 
     init(with scanImage: UIImage) {
         self.scanImage = scanImage

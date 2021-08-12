@@ -1,17 +1,17 @@
 //
-//  ReceiptSelectedLineView.swift
-//  ReceiptSelectedLineView
+//  SelectedDraftLineView.swift
+//  SelectedDraftLineView
 //
 //  Created by Andrei Chenchik on 10/8/21.
 //
 
 import SwiftUI
 
-struct ReceiptSelectedLineView: View {
-    @ObservedObject var receiptLine: ReceiptLine
-    @ObservedObject var receiptDraft: ReceiptDraft
+struct SelectedDraftLineView: View {
+    @ObservedObject var receiptLine: DraftLine
+    @ObservedObject var receiptDraft: Draft
 
-    @Binding var lineSelectedForPopup: ReceiptLine?
+    @Binding var lineSelectedForPopup: DraftLine?
 
     var body: some View {
         HStack {
@@ -48,6 +48,6 @@ struct ReceiptSelectedLineView: View {
 
 //struct ReceiptLineView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ReceiptSelectedLineView()
+//        SelectedDraftLineView()
 //    }
 //}

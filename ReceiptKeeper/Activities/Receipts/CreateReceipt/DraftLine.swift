@@ -1,6 +1,6 @@
 //
-//  ReceiptLine.swift
-//  ReceiptLine
+//  DraftLine.swift
+//  DraftLine
 //
 //  Created by Andrei Chenchik on 10/8/21.
 //
@@ -8,8 +8,8 @@
 import Foundation
 import CoreGraphics
 
-class ReceiptLine: ObservableObject, Identifiable, Equatable {
-    static func == (lhs: ReceiptLine, rhs: ReceiptLine) -> Bool {
+class DraftLine: ObservableObject, Identifiable, Equatable {
+    static func == (lhs: DraftLine, rhs: DraftLine) -> Bool {
         lhs.id == rhs.id
     }
 

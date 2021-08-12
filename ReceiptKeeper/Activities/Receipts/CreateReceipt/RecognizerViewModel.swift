@@ -11,11 +11,11 @@ import UIKit
 
 extension RecognizerView {
     class ViewModel: ObservableObject {
-        @Published var receiptDraft: ReceiptDraft
+        @Published var receiptDraft: Draft
         
         let dataController: DataController
 
-        init(receiptDraft: ReceiptDraft, dataController: DataController) {
+        init(receiptDraft: Draft, dataController: DataController) {
             self.receiptDraft = receiptDraft
             self.dataController = dataController
         }
@@ -50,7 +50,7 @@ extension RecognizerView {
         private var allCharsOnDraft = [CGRect]()
 
         private func buildContent() {
-            var receiptLines = [ReceiptLine]()
+            var receiptLines = [DraftLine]()
             var imageTextBoundingBoxes = UIImage()
             var imageCharsBoundingBoxes = UIImage()
 
@@ -91,12 +91,12 @@ extension RecognizerView {
             }
         }
 
-        private func getReceiptLines() -> [ReceiptLine] {
+        private func getReceiptLines() -> [DraftLine] {
             guard !allTextObservations.isEmpty else { return [] }
 
             let sortedObservations = allTextObservations.sorted { $0.boundingBox.minY > $1.boundingBox.minY }
 
-            var lines = [RecognizedLine()]
+            var lines = [ObservedLine()]
             var totalReached = false
             var i = 0
 
@@ -106,10 +106,10 @@ extension RecognizerView {
                 } else {
                     if i > 1, let updatedLine = mergeTwoLines(lines[i-1...i]) {
                         lines[i-1] = updatedLine
-                        lines[i] = RecognizedLine()
+                        lines[i] = ObservedLine()
                     } else {
                         i += 1
-                        lines.append(RecognizedLine())
+                        lines.append(ObservedLine())
                     }
 
                     if i > 1, !totalReached, lines[i-1].value != nil {
@@ -133,7 +133,7 @@ extension RecognizerView {
                 lines[i].enabled = true
             }
 
-            var receiptLines = [ReceiptLine]()
+            var receiptLines = [DraftLine]()
             var totalFound = false
 
             for line in lines {
@@ -143,11 +143,11 @@ extension RecognizerView {
                     }
 
                     let boundingBox = cgRectFromNormalizedRect(line.boundingBox, for: receiptDraft.scanImage.size)
-                    let receiptLine = ReceiptLine(label: line.label, value: String(value), selected: !totalFound, boundingBox: boundingBox)
+                    let receiptLine = DraftLine(label: line.label, value: String(value), selected: !totalFound, boundingBox: boundingBox)
                     receiptLines.append(receiptLine)
                 } else {
                     let boundingBox = cgRectFromNormalizedRect(line.boundingBox, for: receiptDraft.scanImage.size)
-                    let receiptLine = ReceiptLine(label: line.label, value: "", selected: false, boundingBox: boundingBox)
+                    let receiptLine = DraftLine(label: line.label, value: "", selected: false, boundingBox: boundingBox)
                     receiptLines.append(receiptLine)
                 }
             }
@@ -209,7 +209,7 @@ extension RecognizerView {
             return scaledBox.applying(cgTransform)
         }
 
-        private func mergeTwoLines(_ lines: ArraySlice<RecognizedLine>) -> RecognizedLine? {
+        private func mergeTwoLines(_ lines: ArraySlice<ObservedLine>) -> ObservedLine? {
             guard lines.count == 2 else { return nil }
 
             var firstLine = lines.first!
@@ -217,10 +217,10 @@ extension RecognizerView {
 
             if (firstLine.value == nil) != (secondLine.value == nil) && isYCloseForMerge(firstLine, secondLine) {
                 if firstLine.value != nil {
-                    firstLine.additionalLines.append(secondLine)
+                    firstLine.linkedLines.append(secondLine)
                     return firstLine
                 } else {
-                    secondLine.additionalLines.append(firstLine)
+                    secondLine.linkedLines.append(firstLine)
                     return secondLine
                 }
             } else {
@@ -229,7 +229,7 @@ extension RecognizerView {
         }
 
 
-        private func hasSameBaseline(_ observation: VNRecognizedTextObservation, in line: RecognizedLine) -> Bool {
+        private func hasSameBaseline(_ observation: VNRecognizedTextObservation, in line: ObservedLine) -> Bool {
             guard !line.observations.isEmpty else { return true }
 
             let observationChars = observation.boundingBox.filterInnerRects(from: allCharsOnDraft, with: boundingBoxIntersectionThreshold)
@@ -241,7 +241,7 @@ extension RecognizerView {
             return lineBaseline ~~ observationBaseline
         }
 
-        private func isYCloseForMerge(_ firstLine: RecognizedLine, _ secondLine: RecognizedLine) -> Bool {
+        private func isYCloseForMerge(_ firstLine: ObservedLine, _ secondLine: ObservedLine) -> Bool {
             firstLine.boundingBox.minY - secondLine.boundingBox.maxY < min(secondLine.boundingBox.height, firstLine.boundingBox.height) / 2
         }
     }
