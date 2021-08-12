@@ -10,6 +10,14 @@ import SwiftUI
 struct ReceiptsView: View {
     static let tag: String? = "Receipts"
 
+    @EnvironmentObject var dataController: DataController
+
+    var body: some View {
+        ReceiptsViewChild(dataController: dataController)
+    }
+}
+
+struct ReceiptsViewChild: View {
     @StateObject var viewModel: ViewModel
 
     @State private var isShowingAddReceiptsView = false
@@ -55,6 +63,6 @@ struct ReceiptsView: View {
 
 struct ReceiptsView_Previews: PreviewProvider {
     static var previews: some View {
-        ReceiptsView(dataController: DataController())
+        ReceiptsView()
     }
 }

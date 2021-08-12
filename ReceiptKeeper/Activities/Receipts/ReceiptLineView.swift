@@ -8,24 +8,43 @@
 import SwiftUI
 
 struct ReceiptLineView: View {
-    @ObservedObject var receiptLine: ReceiptLine
-    let receiptDraft: ReceiptDraft
+    @Binding var receiptLine: ReceiptLine
+    @ObservedObject var receiptDraft: ReceiptDraft
+
+    @State private var isShowingPopup = false
 
     var body: some View {
         if receiptLine.selected {
-            VStack {
-                TextField("Label", text: $receiptLine.label)
+            HStack {
+                Button {
+                    isShowingPopup = true
+                } label: {
+                    Image(systemName: "squareshape.dashed.squareshape")
+                        .font(.title.weight(.thin))
+                        .foregroundColor(.primary)
+                }
+                .buttonStyle(.borderless)
+                .buttonBorderShape(.roundedRectangle)
+                .controlSize(.mini)
 
-                TextField("Value", text: $receiptLine.value)
-                    .multilineTextAlignment(.trailing)
+                VStack{
+                    TextField("Label", text: $receiptLine.label)
+
+                    TextField("Value", text: $receiptLine.value)
+                        .multilineTextAlignment(.trailing)
+                }
             }
+
         } else {
             HStack {
                 Text(receiptLine.text)
                 Spacer()
                 Menu {
                     Button {
-                        receiptLine.selected = true
+                        withAnimation {
+                            receiptDraft.objectWillChange.send()
+                            receiptLine.selected = true
+                        }
                     } label: {
                         Label("Add to purchased items", systemImage: "cart.badge.plus")
                     }

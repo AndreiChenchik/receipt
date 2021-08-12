@@ -9,7 +9,7 @@ import Foundation
 import Vision
 import UIKit
 
-extension RecognizerView {
+extension RecognizerViewChild {
     class ViewModel: ObservableObject {
         @Published var receiptDraft: ReceiptDraft
         

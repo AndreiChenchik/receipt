@@ -111,8 +111,8 @@
 		3872875726BF1871008B312B /* Receipts */ = {
 			isa = PBXGroup;
 			children = (
-				3872875826BF1EE8008B312B /* ReceiptsViewModel.swift */,
 				38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */,
+				3872875826BF1EE8008B312B /* ReceiptsViewModel.swift */,
 				3872875526BF181E008B312B /* EmptyReceiptsListView.swift */,
 				3872875326BF180B008B312B /* ReceiptsListView.swift */,
 				3872875A26BF2931008B312B /* Receipt.swift */,

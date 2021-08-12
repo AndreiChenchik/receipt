@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension ReceiptsView {
+extension ReceiptsViewChild {
     class ViewModel: ObservableObject {
         let dataController: DataController
 

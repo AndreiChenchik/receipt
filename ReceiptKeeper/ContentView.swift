@@ -11,11 +11,9 @@ import VisionKit
 struct ContentView: View {
     @SceneStorage("selectedView") var selectedView: String?
 
-    @EnvironmentObject var dataController: DataController
-
     var body: some View {
         TabView(selection: $selectedView) {
-            ReceiptsView(dataController: dataController)
+            ReceiptsView()
                 .tag(ReceiptsView.tag)
                 .tabItem {
                     Label("Receipts", systemImage: "doc.on.doc")

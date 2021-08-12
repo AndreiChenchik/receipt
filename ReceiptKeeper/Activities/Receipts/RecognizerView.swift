@@ -8,17 +8,28 @@
 import SwiftUI
 
 struct RecognizerView: View {
+    @EnvironmentObject var dataController: DataController
+
+    @ObservedObject var receiptDraft: ReceiptDraft
+
+    var body: some View {
+        RecognizerViewChild(receiptDraft: receiptDraft, dataController: dataController)
+    }
+}
+
+struct RecognizerViewChild: View {
     @StateObject var viewModel: ViewModel
-    @StateObject var receiptDraft: ReceiptDraft
+
+    @ObservedObject var receiptDraft: ReceiptDraft
 
     init(receiptDraft: ReceiptDraft, dataController: DataController) {
         let viewModel = ViewModel(receiptDraft: receiptDraft, dataController: dataController)
         _viewModel = StateObject(wrappedValue: viewModel)
-        _receiptDraft = StateObject(wrappedValue: receiptDraft)
+        _receiptDraft = ObservedObject(wrappedValue: receiptDraft)
     }
 
     var body: some View {
-        if viewModel.isRecognitionDone {
+        if !receiptDraft.receiptLines.isEmpty {
             Form {
                 Section(header: Text("Title")) {
                     TextField("Store title", text: $receiptDraft.storeTitle)
@@ -30,17 +41,16 @@ struct RecognizerView: View {
                 }
 
                 Section(header: Text("Items")) {
-                    ForEach(receiptDraft.receiptLines.filter { $0.selected }) { line in
+                    ForEach($receiptDraft.selectedReceiptLines) { $line in
                         ReceiptLineView(receiptLine: line, receiptDraft: receiptDraft)
-                            .swipeActions(edge: .trailing) {
-                                Button {
-                                    let thisLine = receiptDraft.receiptLines.first { $0 == line }
-                                    thisLine?.selected = false
-                                } label: {
-                                    Label("Remove", systemImage: "trash")
-                                }
-                                .tint(.red)
+                    }
+                    .onDelete { indexSet in
+                        withAnimation {
+                            for index in indexSet {
+                                receiptDraft.objectWillChange.send()
+                                receiptDraft.selectedReceiptLines[index].selected = false
                             }
+                        }
                     }
                 }
 
@@ -69,25 +79,23 @@ struct RecognizerView: View {
                 }
 
                 Section(header: Text("Other lines")) {
-                    ForEach(receiptDraft.receiptLines.filter { !$0.selected }) { line in
+                    ForEach(receiptDraft.unselectedReceiptLines) { line in
                         ReceiptLineView(receiptLine: line, receiptDraft: receiptDraft)
-                            .swipeActions(edge: .leading) {
-                                Button {
-                                    let thisLine = receiptDraft.receiptLines.first { $0 == line }
-                                    thisLine?.selected = false
-                                } label: {
-                                    Label("Add to purchased items", systemImage: "cart.badge.plus")
-                                }
-                                .tint(.green)
-                            }
                     }
                 }
             }
+            .onAppear(perform: {
+                print(viewModel.isRecognitionDone)
+            })
             .navigationTitle("New receipt")
             .navigationBarTitleDisplayMode(.inline)
         } else {
             ProgressView()
-                .onAppear(perform: viewModel.recognizeDraft)
+                .onAppear {
+                    print(viewModel.isRecognitionDone)
+                    viewModel.recognizeDraft()
+                    print(viewModel.isRecognitionDone)
+                }
         }
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Combine
 
 class ReceiptDraft: Identifiable, ObservableObject {
     let id = UUID()
@@ -23,7 +24,6 @@ class ReceiptDraft: Identifiable, ObservableObject {
     @Published var totalValue = ""
 
     @Published var receiptLines = [ReceiptLine]()
-
     var selectedReceiptLines: [ReceiptLine] { receiptLines.filter { $0.selected } }
     var unselectedReceiptLines: [ReceiptLine] { receiptLines.filter { !$0.selected } }
 

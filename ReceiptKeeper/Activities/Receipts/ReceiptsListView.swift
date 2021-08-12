@@ -16,7 +16,7 @@ struct ReceiptsListView: View {
                 Section(header: Text("Drafts")) {
                     ForEach(dataController.drafts) { receiptDraft in
                         NavigationLink {
-                            RecognizerView(receiptDraft: receiptDraft, dataController: dataController)
+                            RecognizerView(receiptDraft: receiptDraft)
                         } label: {
                             VStack(alignment: .leading) {
                                 Text(receiptDraft.dateCreated, style: .date)
