@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		384A64BB26C589C000412F02 /* DraftDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A64BA26C589C000412F02 /* DraftDateTime.swift */; };
 		3859F9CB26C26EA200F2BEE5 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3859F9CA26C26EA200F2BEE5 /* UIImage.swift */; };
 		3859F9CD26C2AD6600F2BEE5 /* DraftLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3859F9CC26C2AD6600F2BEE5 /* DraftLine.swift */; };
 		3859F9CF26C2BA0400F2BEE5 /* SelectedDraftLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3859F9CE26C2BA0400F2BEE5 /* SelectedDraftLineView.swift */; };
@@ -27,12 +28,14 @@
 		388C181026C25FBE009D0F23 /* Baseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388C180F26C25FBE009D0F23 /* Baseline.swift */; };
 		38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9226BABED900CE2946 /* ScannerView.swift */; };
 		38E89E3F26BD7051006A0D49 /* VNRecognizedTextObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E3E26BD7051006A0D49 /* VNRecognizedTextObservation.swift */; };
-		38E89E4726BD9731006A0D49 /* ObservedLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E4626BD9731006A0D49 /* ObservedLine.swift */; };
+		38E89E4726BD9731006A0D49 /* RecognizedTextLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E4626BD9731006A0D49 /* RecognizedTextLine.swift */; };
 		38E9908426C19B52007FF507 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E9908326C19B52007FF507 /* CGRect.swift */; };
 		38F20D5B26BBFE0E007D0A0E /* ReceiptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */; };
+		38F7B72B26CBCF88008E9CF0 /* RecognizedTextBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F7B72A26CBCF88008E9CF0 /* RecognizedTextBlock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		384A64BA26C589C000412F02 /* DraftDateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftDateTime.swift; sourceTree = "<group>"; };
 		3859F9CA26C26EA200F2BEE5 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		3859F9CC26C2AD6600F2BEE5 /* DraftLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftLine.swift; sourceTree = "<group>"; };
 		3859F9CE26C2BA0400F2BEE5 /* SelectedDraftLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedDraftLineView.swift; sourceTree = "<group>"; };
@@ -55,9 +58,10 @@
 		38BB9B9226BABED900CE2946 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		38BB9B9426BAC05E00CE2946 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		38E89E3E26BD7051006A0D49 /* VNRecognizedTextObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VNRecognizedTextObservation.swift; sourceTree = "<group>"; };
-		38E89E4626BD9731006A0D49 /* ObservedLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservedLine.swift; sourceTree = "<group>"; };
+		38E89E4626BD9731006A0D49 /* RecognizedTextLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedTextLine.swift; sourceTree = "<group>"; };
 		38E9908326C19B52007FF507 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsView.swift; sourceTree = "<group>"; };
+		38F7B72A26CBCF88008E9CF0 /* RecognizedTextBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedTextBlock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,11 +133,13 @@
 			children = (
 				38BB9B9226BABED900CE2946 /* ScannerView.swift */,
 				3872875C26BF293A008B312B /* Draft.swift */,
+				384A64BA26C589C000412F02 /* DraftDateTime.swift */,
 				3859F9CC26C2AD6600F2BEE5 /* DraftLine.swift */,
 				388C180F26C25FBE009D0F23 /* Baseline.swift */,
 				3872875F26C016F4008B312B /* RecognizerView.swift */,
 				3872876126C01700008B312B /* RecognizerViewModel.swift */,
-				38E89E4626BD9731006A0D49 /* ObservedLine.swift */,
+				38F7B72A26CBCF88008E9CF0 /* RecognizedTextBlock.swift */,
+				38E89E4626BD9731006A0D49 /* RecognizedTextLine.swift */,
 				3859F9CE26C2BA0400F2BEE5 /* SelectedDraftLineView.swift */,
 				3882AF2926C55EF1005A8064 /* UnselectedDraftLineView.swift */,
 			);
@@ -230,7 +236,7 @@
 			files = (
 				388C181026C25FBE009D0F23 /* Baseline.swift in Sources */,
 				3872875D26BF293A008B312B /* Draft.swift in Sources */,
-				38E89E4726BD9731006A0D49 /* ObservedLine.swift in Sources */,
+				38E89E4726BD9731006A0D49 /* RecognizedTextLine.swift in Sources */,
 				3872875626BF181E008B312B /* EmptyReceiptsListView.swift in Sources */,
 				3872876026C016F4008B312B /* RecognizerView.swift in Sources */,
 				3859F9CD26C2AD6600F2BEE5 /* DraftLine.swift in Sources */,
@@ -241,10 +247,12 @@
 				38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */,
 				386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */,
 				3872875226BF11E5008B312B /* DataController.swift in Sources */,
+				384A64BB26C589C000412F02 /* DraftDateTime.swift in Sources */,
 				3872876226C01700008B312B /* RecognizerViewModel.swift in Sources */,
 				3872875926BF1EE8008B312B /* ReceiptsViewModel.swift in Sources */,
 				38E89E3F26BD7051006A0D49 /* VNRecognizedTextObservation.swift in Sources */,
 				386C193426C1111300F09FFE /* ReceiptItem.swift in Sources */,
+				38F7B72B26CBCF88008E9CF0 /* RecognizedTextBlock.swift in Sources */,
 				3859F9CB26C26EA200F2BEE5 /* UIImage.swift in Sources */,
 				3872875426BF180B008B312B /* ReceiptsListView.swift in Sources */,
 				38E9908426C19B52007FF507 /* CGRect.swift in Sources */,

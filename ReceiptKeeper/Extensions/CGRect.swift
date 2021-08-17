@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreGraphics
+import Vision
 
 extension CGRect {
     var area: CGFloat { height * width }
@@ -32,5 +33,12 @@ extension CGRect {
         }
 
         return filteredChars
+    }
+
+    func imageRectFromNormalizedRect(with imageSize: CGSize) -> CGRect {
+        let scaledBox = VNImageRectForNormalizedRect(self, Int(imageSize.width), Int(imageSize.height))
+        let cgTransform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -imageSize.height)
+
+        return scaledBox.applying(cgTransform)
     }
 }

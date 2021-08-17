@@ -33,7 +33,7 @@ struct UnselectedDraftLineView: View {
                 }
 
                 Button {
-                    receiptDraft.transactionDate = receiptLine.label
+                    receiptDraft.transactionDate = DraftDateTime(from: receiptLine.label)
                 } label: {
                     Label("Extract purchase date", systemImage: "calendar")
                 }

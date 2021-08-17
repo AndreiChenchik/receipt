@@ -26,7 +26,7 @@ extension UIImage {
         return image
     }
 
-    func croppedToRect(_ rect: CGRect) -> UIImage {
+    func cropped(to rect: CGRect) -> UIImage {
         if let cgImage = self.cgImage, let croppedCGImage = cgImage.cropping(to: rect) {
             return UIImage(cgImage: croppedCGImage)
         }

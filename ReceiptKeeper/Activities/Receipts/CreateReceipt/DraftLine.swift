@@ -30,3 +30,26 @@ class DraftLine: ObservableObject, Identifiable, Equatable {
         self.boundingBox = boundingBox
     }
 }
+
+extension DraftLine {
+    static func buildArray(from recognizedTextLines: [RecognizedTextLine]) -> [DraftLine] {
+        var draftLines = [DraftLine]()
+        var totalFound = false
+
+        for line in recognizedTextLines {
+            if let value = line.value {
+                if line.label.lowercased() == "total" && !totalFound {
+                    totalFound = true
+                }
+
+                let draftLine = DraftLine(label: line.label, value: String(value), selected: !totalFound, boundingBox: line.boundingBox)
+                draftLines.append(draftLine)
+            } else {
+                let draftLine = DraftLine(label: line.label, value: "", selected: false, boundingBox: line.boundingBox)
+                draftLines.append(draftLine)
+            }
+        }
+
+        return draftLines
+    }
+}

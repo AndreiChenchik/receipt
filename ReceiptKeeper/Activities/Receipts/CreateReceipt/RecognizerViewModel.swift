@@ -20,26 +20,105 @@ extension RecognizerView {
             self.dataController = dataController
         }
 
-        func recognizeDraft() {
-            guard let cgImage = receiptDraft.scanImage.cgImage else { return }
+        func recognizeScan(_ cgImage: CGImage) -> (text: [VNRecognizedTextObservation], chars: [VNTextObservation])? {
+            var textObservations: [VNRecognizedTextObservation]? = nil
+            var charObservations: [VNTextObservation]? = nil
 
-            let recognitionGroup = DispatchGroup()
+            let imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 
-            recognitionGroup.enter()
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.recognizeText(from: cgImage)
-                recognitionGroup.leave()
+            let recognizeTextRequest = VNRecognizeTextRequest { request, _ in
+                textObservations = request.results as? [VNRecognizedTextObservation]
+            }
+            recognizeTextRequest.recognitionLevel = .accurate
+            recognizeTextRequest.usesLanguageCorrection = true
+
+            let recognizeCharsRequest = VNDetectTextRectanglesRequest { request, _ in
+                charObservations = request.results as? [VNTextObservation]
+            }
+            recognizeCharsRequest.reportCharacterBoxes = true
+
+            do {
+                try imageRequestHandler.perform([recognizeTextRequest, recognizeCharsRequest])
+            } catch let error {
+                print(error.localizedDescription)
             }
 
-            recognitionGroup.enter()
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.locateAllChars(from: cgImage)
-                recognitionGroup.leave()
+            if let textObservations = textObservations, let charObservations = charObservations {
+                return (textObservations, charObservations)
+            } else {
+                return nil
+            }
+        }
+
+        func recognize() async {
+            guard let image = receiptDraft.scanImage, let cgImage = image.cgImage else { return }
+
+            guard let (textObservations, charObservations) = recognizeScan(cgImage) else { return }
+
+            let charBoundingBoxes: [CGRect] = charObservations.reduce([]) { partialResult, charObservation in
+                let characterRects = charObservation.characterBoxes?.map { $0.boundingBox.imageRectFromNormalizedRect(with: image.size) } ?? []
+                return partialResult + characterRects
+            }
+            async let imageCharsBoundingBoxes = image.getLayerWithRects(charBoundingBoxes, with: .green, using: .fill, opacity: 0.15)
+
+            async let textBlocks = collectTextBlocks(from: textObservations, with: charBoundingBoxes, on: image.size)
+            let receivedTextBlocks = await textBlocks
+            async let draftLines = DraftLine.buildArray(from: composeLines(from: receivedTextBlocks))
+
+            let textBoundingBoxes = receivedTextBlocks.map { $0.boundingBox }
+            async let imageTextBoundingBoxes = image.getLayerWithRects(textBoundingBoxes, with: .blue, opacity: 0.4)
+
+            let receivedDraftLines = await draftLines
+            let receivedScanCharBoxesLayer = await imageCharsBoundingBoxes
+            let receivedScanTextBoxesLayer = await imageTextBoundingBoxes
+
+            DispatchQueue.main.async { [weak self] in
+                self?.receiptDraft.draftLines = receivedDraftLines
+                self?.receiptDraft.scanTextBoxesLayer = receivedScanTextBoxesLayer
+                self?.receiptDraft.scanCharBoxesLayer = receivedScanCharBoxesLayer
             }
 
-            recognitionGroup.notify(queue: .global(qos: .userInitiated)) {
-                self.buildContent()
+        }
+
+        private func collectTextBlocks(from textObservations: [VNRecognizedTextObservation], with charBoundingBoxes: [CGRect], on imageSize: CGSize) -> [RecognizedTextBlock] {
+            let textBlocks: [RecognizedTextBlock] = textObservations.map { observation in
+                let text = observation.topCandidates(1).first?.string ?? ""
+                let boundingBox = observation.boundingBox.imageRectFromNormalizedRect(with: imageSize)
+                let innerCharBoundingBoxes = boundingBox.filterInnerRects(from: charBoundingBoxes, with: 0.98)
+
+                return RecognizedTextBlock(text: text, boundingBox: boundingBox, chars: innerCharBoundingBoxes)
             }
+
+            return textBlocks
+        }
+
+        private func composeLines(from textBlocks: [RecognizedTextBlock]) -> [RecognizedTextLine] {
+            let sortedTextBlocks = textBlocks.sorted { $0.boundingBox.minY < $1.boundingBox.minY }
+
+            var composedLines = [RecognizedTextLine]()
+            var currentLine = RecognizedTextLine()
+
+            for block in sortedTextBlocks {
+                if let newLine = RecognizedTextLine(from: currentLine, combinedWith: block) {
+                    currentLine = newLine
+                } else {
+                    if let lastLine = composedLines.last {
+                        if let newLine = RecognizedTextLine(from: currentLine, combinedWith: lastLine) {
+                            currentLine = newLine
+                            composedLines.removeLast()
+                        } else if currentLine.isLinkedWith(lastLine) {
+                            currentLine.linkedLines.append(lastLine)
+                            composedLines.removeLast()
+                        }
+                    }
+
+                    composedLines.append(currentLine)
+                    currentLine = RecognizedTextLine(textBlocks: [block])
+                }
+            }
+            if !currentLine.textBlocks.isEmpty { composedLines.append(currentLine) }
+
+            return composedLines
         }
 
         private let boundingBoxIntersectionThreshold = 0.98
@@ -49,200 +128,31 @@ extension RecognizerView {
         private var allTextObservations = [VNRecognizedTextObservation]()
         private var allCharsOnDraft = [CGRect]()
 
-        private func buildContent() {
-            var receiptLines = [DraftLine]()
-            var imageTextBoundingBoxes = UIImage()
-            var imageCharsBoundingBoxes = UIImage()
-
-            let buildGroup = DispatchGroup()
-
-            buildGroup.enter()
-            DispatchQueue.global(qos: .userInitiated).async {
-                receiptLines = self.getReceiptLines()
-                buildGroup.leave()
-            }
-
-            buildGroup.enter()
-            DispatchQueue.global(qos: .userInitiated).async {
-                let image = self.receiptDraft.scanImage
-                let boundingBoxes = self.allTextObservations.map { self.cgRectFromNormalizedRect($0.boundingBox, for: image.size) }
-
-                imageTextBoundingBoxes = image.getLayerWithRects(boundingBoxes, with: .blue, opacity: 0.4)
-                buildGroup.leave()
-            }
-
-            buildGroup.enter()
-            DispatchQueue.global(qos: .userInitiated).async {
-                let image = self.receiptDraft.scanImage
-                let boundingBoxes = self.allCharsOnDraft.map { self.cgRectFromNormalizedRect($0, for: image.size) }
-
-                imageCharsBoundingBoxes = image.getLayerWithRects(boundingBoxes, with: .green, using: .fill, opacity: 0.15)
-                buildGroup.leave()
-            }
-
-            buildGroup.notify(queue: .main) {
-                self.receiptDraft.scanTextBoxesLayer = imageTextBoundingBoxes
-                self.receiptDraft.scanCharBoxesLayer = imageCharsBoundingBoxes
-
-                let totalLine = receiptLines.first { $0.value != "" && $0.label.lowercased() == "total" }
-                self.receiptDraft.totalValue = totalLine?.value ?? ""
-                self.receiptDraft.receiptLines = receiptLines
-                self.receiptDraft.storeTitle = receiptLines.first?.label ?? "Receipt"
-            }
-        }
-
-        private func getReceiptLines() -> [DraftLine] {
-            guard !allTextObservations.isEmpty else { return [] }
-
-            let sortedObservations = allTextObservations.sorted { $0.boundingBox.minY > $1.boundingBox.minY }
-
-            var lines = [ObservedLine()]
-            var totalReached = false
-            var i = 0
-
-            for observation in sortedObservations {
-                if self.hasSameBaseline(observation, in: lines[i]) {
-                    lines[i].observations.append(observation)
-                } else {
-                    if i > 1, let updatedLine = mergeTwoLines(lines[i-1...i]) {
-                        lines[i-1] = updatedLine
-                        lines[i] = ObservedLine()
-                    } else {
-                        i += 1
-                        lines.append(ObservedLine())
-                    }
-
-                    if i > 1, !totalReached, lines[i-1].value != nil {
-                        lines[i-1].enabled = true
-
-                        if lines[i-1].label.lowercased() == "total" {
-                            totalReached = true
-                        }
-                    }
-
-                    lines[i].observations.append(observation)
-                }
-            }
-
-            if i > 1, let updatedLine = mergeTwoLines(lines[i-1...i]) {
-                lines[i-1] = updatedLine
-                lines = lines.dropLast()
-            }
-
-            if lines[i].value != nil {
-                lines[i].enabled = true
-            }
-
-            var receiptLines = [DraftLine]()
-            var totalFound = false
-
-            for line in lines {
-                if let value = line.value {
-                    if line.label.lowercased() == "total" && !totalFound {
-                        totalFound = true
-                    }
-
-                    let boundingBox = cgRectFromNormalizedRect(line.boundingBox, for: receiptDraft.scanImage.size)
-                    let receiptLine = DraftLine(label: line.label, value: String(value), selected: !totalFound, boundingBox: boundingBox)
-                    receiptLines.append(receiptLine)
-                } else {
-                    let boundingBox = cgRectFromNormalizedRect(line.boundingBox, for: receiptDraft.scanImage.size)
-                    let receiptLine = DraftLine(label: line.label, value: "", selected: false, boundingBox: boundingBox)
-                    receiptLines.append(receiptLine)
-                }
-            }
-
-            return receiptLines
-        }
-
-        private func recognizeText(from cgImage: CGImage) {
-            let imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-
-            let recognizeTextRequest = VNRecognizeTextRequest { [weak self] request, error in
-                guard let self = self else { return }
-
-                guard let results = request.results as? [VNRecognizedTextObservation] else { return }
-                self.allTextObservations = results
-            }
-
-            recognizeTextRequest.recognitionLevel = .accurate
-            recognizeTextRequest.usesLanguageCorrection = true
-
-            do {
-                try imageRequestHandler.perform([recognizeTextRequest])
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        }
-
-        private func locateAllChars(from cgImage: CGImage) {
-            let imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-
-            let recognizeCharsRequest = VNDetectTextRectanglesRequest { [weak self] request, error in
-                guard let self = self else { return }
-                guard let results = request.results as? [VNTextObservation] else { return }
-
-                let charsObservations = results.reduce([CGRect]()) { partialResult, textObservation in
-                    guard let characterBoxes = textObservation.characterBoxes else {
-                        return partialResult
-                    }
-
-                    return partialResult + characterBoxes.map { $0.boundingBox }
-                }
-
-                self.allCharsOnDraft = charsObservations
-            }
-
-            recognizeCharsRequest.reportCharacterBoxes = true
-
-            do {
-                try imageRequestHandler.perform([recognizeCharsRequest])
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        }
-
-        private func cgRectFromNormalizedRect(_ rect: CGRect, for size: CGSize) -> CGRect {
-            let scaledBox = VNImageRectForNormalizedRect(rect, Int(size.width), Int(size.height))
-            let cgTransform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -size.height)
-
-            return scaledBox.applying(cgTransform)
-        }
-
-        private func mergeTwoLines(_ lines: ArraySlice<ObservedLine>) -> ObservedLine? {
-            guard lines.count == 2 else { return nil }
-
-            var firstLine = lines.first!
-            var secondLine = lines.last!
-
-            if (firstLine.value == nil) != (secondLine.value == nil) && isYCloseForMerge(firstLine, secondLine) {
-                if firstLine.value != nil {
-                    firstLine.linkedLines.append(secondLine)
-                    return firstLine
-                } else {
-                    secondLine.linkedLines.append(firstLine)
-                    return secondLine
-                }
-            } else {
-                return nil
-            }
-        }
+        //        private func mergeTwoLines(_ lines: ArraySlice<RecognizedTextLine>) -> RecognizedTextLine? {
+        //            guard lines.count == 2 else { return nil }
+        //
+        //            var firstLine = lines.first!
+        //            var secondLine = lines.last!
+        //
+        //            if (firstLine.value == nil) != (secondLine.value == nil) && isYCloseForMerge(firstLine, secondLine) {
+        //                if firstLine.value != nil {
+        //                    firstLine.linkedLines.append(secondLine)
+        //                    return firstLine
+        //                } else {
+        //                    secondLine.linkedLines.append(firstLine)
+        //                    return secondLine
+        //                }
+        //            } else {
+        //                return nil
+        //            }
+        //        }
 
 
-        private func hasSameBaseline(_ observation: VNRecognizedTextObservation, in line: ObservedLine) -> Bool {
-            guard !line.observations.isEmpty else { return true }
 
-            let observationChars = observation.boundingBox.filterInnerRects(from: allCharsOnDraft, with: boundingBoxIntersectionThreshold)
-            let observationBaseline = Baseline(of: observationChars)
-
-            let lineChars = line.boundingBox.filterInnerRects(from: allCharsOnDraft, with: boundingBoxIntersectionThreshold)
-            let lineBaseline = Baseline(of: lineChars)
-
-            return lineBaseline ~~ observationBaseline
-        }
-
-        private func isYCloseForMerge(_ firstLine: ObservedLine, _ secondLine: ObservedLine) -> Bool {
+        private func isYCloseForMerge(_ firstLine: RecognizedTextLine, _ secondLine: RecognizedTextLine) -> Bool {
             firstLine.boundingBox.minY - secondLine.boundingBox.maxY < min(secondLine.boundingBox.height, firstLine.boundingBox.height) / 2
         }
+
+
     }
 }

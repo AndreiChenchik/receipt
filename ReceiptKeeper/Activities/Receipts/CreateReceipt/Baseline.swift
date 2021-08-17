@@ -11,29 +11,40 @@ import CoreGraphics
 infix operator ~~: ComparisonPrecedence
 
 struct Baseline {
-    static var angleThreshold: CGFloat { CGFloat.pi / 180 * 20 }
-    static var interceptDifferenceThreshold = 0.8
-    static var errorThreshold = 0.8
+    static var angleThreshold: CGFloat { CGFloat.pi / 180 * 10 }
+    static var midYDifferenceThreshold = 1.0
+    static var errorThreshold = 1.0
 
     static func ~~ (lhs: Baseline, rhs: Baseline) -> Bool {
         let lhsAngle = atan(lhs.slope)
-        let rhsAngle = atan(lhs.slope)
+        let rhsAngle = atan(rhs.slope)
 
-        if abs(rhsAngle - lhsAngle) < angleThreshold {
-            let lineHeight = average([rhs.lineHeight, lhs.lineHeight])
-            let interceptDifference = abs(lhs.intercept - rhs.intercept) / lineHeight
+        let lineHeight = average([rhs.lineHeight, lhs.lineHeight])
 
-            if interceptDifference < interceptDifferenceThreshold {
+        let leftMaxX = min(lhs.boundingBox.maxX, rhs.boundingBox.maxX)
+        let rightMinX = max(lhs.boundingBox.minX, rhs.boundingBox.minX)
+        let midX = leftMaxX + (rightMinX - leftMaxX) / 2
+
+        print("minX \(leftMaxX) midX \(midX) maxX \(rightMinX)")
+
+        let midYDifference = abs(lhs.y(midX) - rhs.y(midX)) / lineHeight
+
+        let angleDifference = abs(rhsAngle - lhsAngle)
+        let error = min(lhs.averageCharErrorRatio(with: rhs), rhs.averageCharErrorRatio(with: lhs))
+
+        if angleDifference < angleThreshold {
+            if midYDifference < midYDifferenceThreshold {
                 return true
             }
-        } else if min(lhs.averageCharErrorRatio(with: rhs), rhs.averageCharErrorRatio(with: lhs)) < errorThreshold {
+        } else if error < errorThreshold {
             return true
         }
 
+        print("chars \(lhs.rects.count) & \(rhs.rects.count) \n slopes \(lhs.slope) & \(rhs.slope), \n intercepts \(lhs.intercept) & \(rhs.intercept), \n line heights \(lhs.lineHeight) & \(rhs.lineHeight) \n angles \(lhsAngle) & \(rhsAngle) \n angle difference \(angleDifference * 180 / CGFloat.pi), intercept difference \(midYDifference), error \(error)")
         return false
     }
 
-    init(of rects: [CGRect]) {
+    init(of rects: [CGRect], withBounding boundingBox: CGRect) {
         let points = rects.map { $0.lowerMid }
 
         let xs = points.map { $0.x }
@@ -45,6 +56,7 @@ struct Baseline {
         self.rects = rects
         self.slope = sum1 / sum2
         self.intercept = Self.average(ys) - slope * Self.average(xs)
+        self.boundingBox = boundingBox
     }
 
     private func averageCharErrorRatio(with baseline: Baseline) -> CGFloat {
@@ -69,6 +81,7 @@ struct Baseline {
     private let slope: CGFloat
     private let intercept: CGFloat
     private let rects: [CGRect]
+    private var boundingBox: CGRect
 
     private var lineHeight: CGFloat {
         let heights = rects.map { $0.height }
