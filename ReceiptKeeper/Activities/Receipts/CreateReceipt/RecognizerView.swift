@@ -52,28 +52,10 @@ struct RecognizerView: View {
                         TextField("Total value", text: $receiptDraft.totalValue)
                     }
                     
-                    if let scanImage = receiptDraft.scanImage {
+                    if receiptDraft.scanImage != nil {
                         Section {
                             NavigationLink {
-                                ZStack {
-                                    Image(uiImage: scanImage)
-                                        .resizable()
-                                        .scaledToFit()
-                                    
-                                    if let charBoxesLayer = receiptDraft.scanCharBoxesLayer {
-                                        Image(uiImage: charBoxesLayer)
-                                            .resizable()
-                                            .scaledToFit()
-                                    }
-                                    
-                                    if let textBoxesLayer = receiptDraft.scanTextBoxesLayer {
-                                        Image(uiImage: textBoxesLayer)
-                                            .resizable()
-                                            .scaledToFit()
-                                    }
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .padding(.vertical, 15)
+                                RecognizedImageView(receiptDraft: receiptDraft)
                             } label: {
                                 Text("Recognized Image")
                             }

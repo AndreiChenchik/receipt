@@ -25,6 +25,7 @@
 		3872876026C016F4008B312B /* RecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872875F26C016F4008B312B /* RecognizerView.swift */; };
 		3872876226C01700008B312B /* RecognizerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872876126C01700008B312B /* RecognizerViewModel.swift */; };
 		3882AF2A26C55EF1005A8064 /* UnselectedDraftLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3882AF2926C55EF1005A8064 /* UnselectedDraftLineView.swift */; };
+		388834AA26CD68260004AAFF /* RecognizedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388834A926CD68260004AAFF /* RecognizedImageView.swift */; };
 		388C181026C25FBE009D0F23 /* Baseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388C180F26C25FBE009D0F23 /* Baseline.swift */; };
 		38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9226BABED900CE2946 /* ScannerView.swift */; };
 		38E89E3F26BD7051006A0D49 /* VNRecognizedTextObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E3E26BD7051006A0D49 /* VNRecognizedTextObservation.swift */; };
@@ -54,6 +55,7 @@
 		3872875F26C016F4008B312B /* RecognizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizerView.swift; sourceTree = "<group>"; };
 		3872876126C01700008B312B /* RecognizerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizerViewModel.swift; sourceTree = "<group>"; };
 		3882AF2926C55EF1005A8064 /* UnselectedDraftLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnselectedDraftLineView.swift; sourceTree = "<group>"; };
+		388834A926CD68260004AAFF /* RecognizedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedImageView.swift; sourceTree = "<group>"; };
 		388C180F26C25FBE009D0F23 /* Baseline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Baseline.swift; sourceTree = "<group>"; };
 		38BB9B9226BABED900CE2946 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		38BB9B9426BAC05E00CE2946 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				3859F9CC26C2AD6600F2BEE5 /* DraftLine.swift */,
 				388C180F26C25FBE009D0F23 /* Baseline.swift */,
 				3872875F26C016F4008B312B /* RecognizerView.swift */,
+				388834A926CD68260004AAFF /* RecognizedImageView.swift */,
 				3872876126C01700008B312B /* RecognizerViewModel.swift */,
 				38F7B72A26CBCF88008E9CF0 /* RecognizedTextBlock.swift */,
 				38E89E4626BD9731006A0D49 /* RecognizedTextLine.swift */,
@@ -246,6 +249,7 @@
 				3872875B26BF2931008B312B /* Receipt.swift in Sources */,
 				38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */,
 				386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */,
+				388834AA26CD68260004AAFF /* RecognizedImageView.swift in Sources */,
 				3872875226BF11E5008B312B /* DataController.swift in Sources */,
 				384A64BB26C589C000412F02 /* DraftDateTime.swift in Sources */,
 				3872876226C01700008B312B /* RecognizerViewModel.swift in Sources */,
