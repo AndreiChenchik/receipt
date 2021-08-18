@@ -74,6 +74,12 @@ extension RecognizerView {
 
             DispatchQueue.main.async { [weak self] in
                 self?.receiptDraft.draftLines = receivedDraftLines
+
+                let totalLine = receivedDraftLines.first { $0.value != "" && $0.label.lowercased() == "total" }
+                self?.receiptDraft.totalValue = totalLine?.value ?? ""
+                self?.receiptDraft.storeTitle = receivedDraftLines.first?.label ?? "Receipt"
+                self?.receiptDraft.transactionDate = DraftDateTime(from: receivedDraftLines.map { $0.label })
+
                 self?.receiptDraft.scanTextBoxesLayer = receivedScanTextBoxesLayer
                 self?.receiptDraft.scanCharBoxesLayer = receivedScanCharBoxesLayer
             }
@@ -106,9 +112,6 @@ extension RecognizerView {
                         if let newLine = RecognizedTextLine(from: currentLine, combinedWith: lastLine) {
                             currentLine = newLine
                             composedLines.removeLast()
-                        } else if currentLine.isLinkedWith(lastLine) {
-                            currentLine.linkedLines.append(lastLine)
-                            composedLines.removeLast()
                         }
                     }
 
@@ -120,39 +123,5 @@ extension RecognizerView {
 
             return composedLines
         }
-
-        private let boundingBoxIntersectionThreshold = 0.98
-        private let xOverlapThreshold = 0.02
-        private let midYOffsetThreshold = 0.6
-
-        private var allTextObservations = [VNRecognizedTextObservation]()
-        private var allCharsOnDraft = [CGRect]()
-
-        //        private func mergeTwoLines(_ lines: ArraySlice<RecognizedTextLine>) -> RecognizedTextLine? {
-        //            guard lines.count == 2 else { return nil }
-        //
-        //            var firstLine = lines.first!
-        //            var secondLine = lines.last!
-        //
-        //            if (firstLine.value == nil) != (secondLine.value == nil) && isYCloseForMerge(firstLine, secondLine) {
-        //                if firstLine.value != nil {
-        //                    firstLine.linkedLines.append(secondLine)
-        //                    return firstLine
-        //                } else {
-        //                    secondLine.linkedLines.append(firstLine)
-        //                    return secondLine
-        //                }
-        //            } else {
-        //                return nil
-        //            }
-        //        }
-
-
-
-        private func isYCloseForMerge(_ firstLine: RecognizedTextLine, _ secondLine: RecognizedTextLine) -> Bool {
-            firstLine.boundingBox.minY - secondLine.boundingBox.maxY < min(secondLine.boundingBox.height, firstLine.boundingBox.height) / 2
-        }
-
-
     }
 }
