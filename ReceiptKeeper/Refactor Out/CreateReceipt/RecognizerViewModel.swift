@@ -86,37 +86,37 @@ extension RecognizerView {
 
         }
 
-        private func collectTextBlocks(from textObservations: [VNRecognizedTextObservation], with charBoundingBoxes: [CGRect], on imageSize: CGSize) -> [RecognizedTextBlock] {
-            let textBlocks: [RecognizedTextBlock] = textObservations.map { observation in
+        private func collectTextBlocks(from textObservations: [VNRecognizedTextObservation], with charBoundingBoxes: [CGRect], on imageSize: CGSize) -> [RecognizedContent.Line.TextBlock] {
+            let textBlocks: [RecognizedContent.Line.TextBlock] = textObservations.map { observation in
                 let text = observation.topCandidates(1).first?.string ?? ""
                 let boundingBox = observation.boundingBox.imageRectFromNormalizedRect(with: imageSize)
                 let innerCharBoundingBoxes = boundingBox.filterInnerRects(from: charBoundingBoxes, with: 0.98)
 
-                return RecognizedTextBlock(text: text, boundingBox: boundingBox, chars: innerCharBoundingBoxes)
+                return RecognizedContent.Line.TextBlock(text: text, boundingBox: boundingBox, chars: innerCharBoundingBoxes)
             }
 
             return textBlocks
         }
 
-        private func composeLines(from textBlocks: [RecognizedTextBlock]) -> [RecognizedTextLine] {
+        private func composeLines(from textBlocks: [RecognizedContent.Line.TextBlock]) -> [RecognizedContent.Line] {
             let sortedTextBlocks = textBlocks.sorted { $0.boundingBox.minY < $1.boundingBox.minY }
 
-            var composedLines = [RecognizedTextLine]()
-            var currentLine = RecognizedTextLine()
+            var composedLines = [RecognizedContent.Line]()
+            var currentLine = RecognizedContent.Line()
 
             for block in sortedTextBlocks {
-                if let newLine = RecognizedTextLine(from: currentLine, combinedWith: block) {
+                if let newLine = RecognizedContent.Line(from: currentLine, combinedWith: block) {
                     currentLine = newLine
                 } else {
                     if let lastLine = composedLines.last {
-                        if let newLine = RecognizedTextLine(from: currentLine, combinedWith: lastLine) {
+                        if let newLine = RecognizedContent.Line(from: currentLine, combinedWith: lastLine) {
                             currentLine = newLine
                             composedLines.removeLast()
                         }
                     }
 
                     composedLines.append(currentLine)
-                    currentLine = RecognizedTextLine(textBlocks: [block])
+                    currentLine = RecognizedContent.Line(textBlocks: [block])
                 }
             }
             if !currentLine.textBlocks.isEmpty { composedLines.append(currentLine) }

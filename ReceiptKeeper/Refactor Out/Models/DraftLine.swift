@@ -32,7 +32,7 @@ class DraftLine: ObservableObject, Identifiable, Equatable {
 }
 
 extension DraftLine {
-    static func buildArray(from recognizedTextLines: [RecognizedTextLine]) -> [DraftLine] {
+    static func buildArray(from recognizedTextLines: [RecognizedContent.Line]) -> [DraftLine] {
         var draftLines = [DraftLine]()
         var totalFound = false
 

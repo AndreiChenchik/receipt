@@ -9,11 +9,12 @@ import SwiftUI
 import VisionKit
 
 struct ScannerView: UIViewControllerRepresentable {
+    @Binding var newScanImages: [UIImage]
+
     static var isCapableToScan: Bool {
         VNDocumentCameraViewController.isSupported
     }
 
-    @EnvironmentObject var dataController: DataController
     @Environment(\.presentationMode) var presentationMode
 
     func makeUIViewController(context: Context) -> VNDocumentCameraViewController {
@@ -45,7 +46,7 @@ struct ScannerView: UIViewControllerRepresentable {
         func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
             for index in 0..<scan.pageCount {
                 let scanImage = scan.imageOfPage(at: index)
-                parent.dataController.addReceiptDraft(with: scanImage)
+                parent.newScanImages.append(scanImage)
             }
 
             parent.dismiss()
@@ -61,9 +62,3 @@ struct ScannerView: UIViewControllerRepresentable {
         }
     }
 }
-
-//  struct VisionPicker_Previews: PreviewProvider {
-//      static var previews: some View {
-//          ScannerView()
-//      }
-//  }

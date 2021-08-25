@@ -1,24 +1,37 @@
 //
-//  ObservedLine.swift
-//  ObservedLine
+//  Line.swift
+//  Line
 //
 //  Created by Andrei Chenchik on 6/8/21.
 //
 
 import Foundation
-import Vision
+import CoreGraphics
 
-struct RecognizedTextLine {
-    var textBlocks = [RecognizedTextBlock]()
-    var linkedLines = [RecognizedTextLine]()
+extension RecognizedContent {
+    enum LineType: Codable {
+        case unknown, date, address, total, item
+    }
+
+    struct Line: Codable, Identifiable {
+        var id = UUID()
+        var textBlocks = [TextBlock]()
+        var linkedLines = [Line]()
+        var lineType: LineType = .unknown
+    }
 }
 
-extension RecognizedTextLine {
-    var sortedTextBlocks: [RecognizedTextBlock] {
+extension RecognizedContent.Line {
+    init(text: String, boundingBox: CGRect, chars: [CGRect]) {
+        let textBlock = TextBlock(text: text, boundingBox: boundingBox, chars: chars)
+        self.textBlocks = [textBlock]
+    }
+
+    var sortedTextBlocks: [TextBlock] {
         textBlocks.sorted { $0.boundingBox.minX < $1.boundingBox.minX }
     }
 
-    var sortedLinkedLines: [RecognizedTextLine] {
+    var sortedLinkedLines: [Self] {
         linkedLines.sorted { $0.boundingBox.minY < $1.boundingBox.minY }
     }
 
@@ -65,7 +78,7 @@ extension RecognizedTextLine {
     }
 }
 
-extension RecognizedTextLine {
+extension RecognizedContent.Line {
     var boundingBox: CGRect {
         let rects = textBlocks.map { $0.boundingBox } + linkedLines.map { $0.boundingBox }
         let boundingBox = rects.reduce(CGRect.null) { $0.union($1) }
@@ -82,11 +95,11 @@ extension RecognizedTextLine {
     }
 }
 
-extension RecognizedTextLine {
+extension RecognizedContent.Line {
     static let possibleOverlapRatio = 0.02
     static let possibleDistanceRatio = 0.5
 
-    init?(from line: RecognizedTextLine, combinedWith additionalLine: RecognizedTextLine) {
+    init?(from line: Self, combinedWith additionalLine: Self) {
         if line.textBlocks.isEmpty {
             self.textBlocks = additionalLine.textBlocks
             self.linkedLines = additionalLine.linkedLines
@@ -114,12 +127,12 @@ extension RecognizedTextLine {
         return nil
     }
 
-    init?(from line: RecognizedTextLine, combinedWith textBlock: RecognizedTextBlock) {
-        let textBlockLine = RecognizedTextLine(textBlocks: [textBlock])
+    init?(from line: Self, combinedWith textBlock: TextBlock) {
+        let textBlockLine = Self(textBlocks: [textBlock])
         self.init(from: line, combinedWith: textBlockLine)
     }
 
-    private func isCloseEnough(with otherLine: RecognizedTextLine) -> Bool {
+    private func isCloseEnough(with otherLine: Self) -> Bool {
         let upperLowerY = min(self.boundingBox.maxY, otherLine.boundingBox.maxY)
         let lowerUpperY = max(self.boundingBox.minY, otherLine.boundingBox.minY)
 
@@ -130,7 +143,7 @@ extension RecognizedTextLine {
         return distanceRatio < Self.possibleDistanceRatio
     }
 
-    private func doNotOverlap(with otherLine: RecognizedTextLine) -> Bool {
+    private func doNotOverlap(with otherLine: Self) -> Bool {
         let blocksCombinations = zip(self.textBlocks, otherLine.textBlocks)
 
         let overlapValue: CGFloat = blocksCombinations.reduce(0.0) { partialResult, pair in
