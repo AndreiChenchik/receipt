@@ -65,4 +65,39 @@ extension Receipt {
     var receiptCreationDate: Date {
         creationDate ?? Date()
     }
+
+    var totalString: String {
+        get {
+            total?.stringValue ?? "0"
+        }
+
+        set {
+            total = NSDecimalNumber(string: newValue)
+        }
+    }
+
+    var receiptVenueAddress: String {
+        get {
+            venueAddress ?? ""
+        }
+
+        set {
+            venueAddress = newValue
+        }
+    }
+
+    var receiptPurchaseDate: Date {
+        get {
+            purchaseDate ?? Date()
+        }
+
+        set {
+            purchaseDate = newValue
+        }
+    }
+
+
+    var receiptItems: [Item] {
+        items?.allObjects as? [Item] ?? []
+    }
 }

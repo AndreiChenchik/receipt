@@ -7,22 +7,34 @@
 
 import Foundation
 import CoreGraphics
+import SwiftUI
 
 extension RecognizedContent {
-    enum LineType: Codable {
-        case unknown, date, address, total, item
-    }
-
     struct Line: Codable, Identifiable {
-        var id = UUID()
-        var textBlocks = [TextBlock]()
-        var linkedLines = [Line]()
-        var lineType: LineType = .unknown
+        enum ContentType: Codable {
+            case unknown, date, address, total, item, venue
+        }
+
+        let id: UUID
+        let textBlocks: [TextBlock]
+        let linkedLines: [Self]
+        let contentType: ContentType
+
+        init(id: UUID = UUID(), textBlocks: [TextBlock] = [], linkedLines: [Self] = [], contentType: ContentType = .unknown) {
+            self.id = id
+            self.textBlocks = textBlocks
+            self.linkedLines = linkedLines
+            self.contentType = contentType
+        }
     }
 }
 
 extension RecognizedContent.Line {
     init(text: String, boundingBox: CGRect, chars: [CGRect]) {
+        self.id = UUID()
+        self.linkedLines = [Self]()
+        self.contentType = .unknown
+
         let textBlock = TextBlock(text: text, boundingBox: boundingBox, chars: chars)
         self.textBlocks = [textBlock]
     }
@@ -35,6 +47,25 @@ extension RecognizedContent.Line {
         linkedLines.sorted { $0.boundingBox.minY < $1.boundingBox.minY }
     }
 
+    var text: String {
+        if let valueString = valueString {
+            if label.isEmpty {
+                return valueString
+            } else {
+                return label + "\n" + valueString
+            }
+        } else {
+            return label
+        }
+    }
+
+    var valueString: String? {
+        if let value = value {
+            return String(format: "%.2f", value)
+        } else {
+            return nil
+        }
+    }
 
     var label: String {
         guard !textBlocks.isEmpty else { return "" }
@@ -45,15 +76,15 @@ extension RecognizedContent.Line {
         if lineContents.isEmpty {
             let linkedContents = sortedLinkedLines.map { $0.label }
 
-            return linkedContents.joined(separator: " ")
+            return linkedContents.joined(separator: "\n")
         } else {
-            var label = lineContents.joined(separator: " ")
+            var label = lineContents.joined(separator: "\n")
 
             for linkedLine in sortedLinkedLines {
                 if linkedLine.boundingBox.minY < boundingBox.minY {
-                    label = linkedLine.label + " " + label
+                    label = linkedLine.label + "\n" + label
                 } else {
-                    label = label + " " + linkedLine.label
+                    label = label + "\n" + linkedLine.label
                 }
             }
 
@@ -96,28 +127,40 @@ extension RecognizedContent.Line {
 }
 
 extension RecognizedContent.Line {
-    static let possibleOverlapRatio = 0.02
-    static let possibleDistanceRatio = 0.5
+    static let possibleXOverlapRatio = 0.02
+    static let possibleYDistanceRatio = 0.5
 
     init?(from line: Self, combinedWith additionalLine: Self) {
         if line.textBlocks.isEmpty {
+            self.id = additionalLine.id
+            self.contentType = additionalLine.contentType
             self.textBlocks = additionalLine.textBlocks
             self.linkedLines = additionalLine.linkedLines
             return
         }
 
         if line.baseline ~~ additionalLine.baseline && line.doNotOverlap(with: additionalLine) {
+            self.id = line.id
+            self.contentType = line.contentType
             self.textBlocks = line.textBlocks + additionalLine.textBlocks
             self.linkedLines = line.linkedLines + additionalLine.linkedLines
             return
         }
 
+        return nil
+    }
+
+    init?(from line: Self, linkedWith additionalLine: Self) {
         if line.isCloseEnough(with: additionalLine) {
             if line.value != nil && additionalLine.value == nil {
+                self.id = line.id
+                self.contentType = line.contentType
                 self.textBlocks = line.textBlocks
                 self.linkedLines = line.linkedLines + [additionalLine]
                 return
-            } else if line.value != nil && additionalLine.value == nil {
+            } else if line.value == nil && additionalLine.value != nil {
+                self.id = additionalLine.id
+                self.contentType = additionalLine.contentType
                 self.textBlocks = additionalLine.textBlocks
                 self.linkedLines = additionalLine.linkedLines + [line]
                 return
@@ -127,26 +170,21 @@ extension RecognizedContent.Line {
         return nil
     }
 
-    init?(from line: Self, combinedWith textBlock: TextBlock) {
-        let textBlockLine = Self(textBlocks: [textBlock])
-        self.init(from: line, combinedWith: textBlockLine)
-    }
-
     private func isCloseEnough(with otherLine: Self) -> Bool {
         let upperLowerY = min(self.boundingBox.maxY, otherLine.boundingBox.maxY)
         let lowerUpperY = max(self.boundingBox.minY, otherLine.boundingBox.minY)
 
-        let distance = lowerUpperY - upperLowerY
+        let yDistance = lowerUpperY - upperLowerY
         let height = min(self.boundingBox.height, otherLine.boundingBox.height)
 
-        let distanceRatio = distance / height
-        return distanceRatio < Self.possibleDistanceRatio
+        let yDistanceRatio = yDistance / height
+        return yDistanceRatio < Self.possibleYDistanceRatio
     }
 
     private func doNotOverlap(with otherLine: Self) -> Bool {
         let blocksCombinations = zip(self.textBlocks, otherLine.textBlocks)
 
-        let overlapValue: CGFloat = blocksCombinations.reduce(0.0) { partialResult, pair in
+        let yOverlapValue: CGFloat = blocksCombinations.reduce(0.0) { partialResult, pair in
             let lhsXRange = pair.0.boundingBox.minX...pair.0.boundingBox.maxX
             let rhsXRange = pair.1.boundingBox.minX...pair.1.boundingBox.maxX
             let intersection = lhsXRange.clamped(to: rhsXRange)
@@ -154,8 +192,16 @@ extension RecognizedContent.Line {
             return partialResult + intersection.upperBound - intersection.lowerBound
         }
 
-        let overlapRatio = overlapValue / self.boundingBox.width
+        let yOverlapRatio = yOverlapValue / self.boundingBox.width
 
-        return overlapRatio <= Self.possibleOverlapRatio
+        return yOverlapRatio <= Self.possibleXOverlapRatio
+    }
+}
+
+extension RecognizedContent.Line {
+    static var exclusiveContentTypes: [ContentType] = [.venue, .total, .date]
+
+    func withChangedContentType(to contentType: ContentType) -> Self {
+        Self(id: self.id, textBlocks: self.textBlocks, linkedLines: self.linkedLines, contentType: contentType)
     }
 }

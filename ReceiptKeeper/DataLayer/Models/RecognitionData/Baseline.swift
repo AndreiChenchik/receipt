@@ -26,8 +26,6 @@ extension RecognizedContent.Line {
             let rightMinX = max(lhs.boundingBox.minX, rhs.boundingBox.minX)
             let midX = leftMaxX + (rightMinX - leftMaxX) / 2
 
-            print("minX \(leftMaxX) midX \(midX) maxX \(rightMinX)")
-
             let midYDifference = abs(lhs.y(midX) - rhs.y(midX)) / lineHeight
 
             let angleDifference = abs(rhsAngle - lhsAngle)

@@ -31,14 +31,33 @@ extension EditReceiptView {
 
         var body: some View {
             Form {
-                TextField("Title", text: $viewModel.title)
+                Text("Condis")
 
-                Section {
-                    DatePicker("Purchase date", selection: $viewModel.purchaseDate, in: ...Date())
+                Section(header: Text("Date & location")) {
+                    TextField("Venue Address", text: $viewModel.receipt.receiptVenueAddress)
+                    DatePicker("Purchase date", selection: $viewModel.receipt.receiptPurchaseDate, in: ...Date())
                 }
 
-                Section {
-                    TextField("Title", text: $viewModel.total)
+                Section(header: Text("Shopping cart")) {
+                    ForEach(viewModel.receipt.receiptItems) { item in
+                        VStack(alignment: .leading) {
+                            Text(item.title ?? "Unknown")
+                            Text("\(item.price ?? 0)")
+                        }
+                    }
+                    .onDelete { _ = $0.map { viewModel.dataController.delete(viewModel.receipt.receiptItems[$0]) }
+                    }
+                    Button {
+                        withAnimation {
+                            viewModel.addItem()
+                        }
+                    } label: {
+                        Label("Add New Item", systemImage: "plus")
+                    }
+                }
+
+                Section(header: Text("Total")) {
+                    TextField("Total amount", text: $viewModel.receipt.totalString)
                 }
 
                 Section {
@@ -46,6 +65,7 @@ extension EditReceiptView {
                 }
             }
             .onDisappear(perform: viewModel.saveChanges)
+            .navigationTitle("Receipt")
         }
     }
 }
@@ -55,3 +75,49 @@ extension EditReceiptView {
 //        EditReceiptView()
 //    }
 //}
+
+
+//struct SelectedDraftLineView: View {
+//    @ObservedObject var receiptLine: DraftLine
+//    @ObservedObject var receiptDraft: Draft
+//
+//    @Binding var lineSelectedForPopup: DraftLine?
+//
+//    var body: some View {
+//        HStack {
+//            VStack{
+//                TextField("Label", text: $receiptLine.label)
+//
+//                TextField("Value", text: $receiptLine.value)
+//                    .multilineTextAlignment(.trailing)
+//            }
+//        }
+//        .frame(height: receiptLine.selected ? 55 : 35)
+//        .swipeActions {
+//            Button(role: .destructive) {
+//                withAnimation {
+//                    receiptDraft.objectWillChange.send()
+//                    receiptLine.selected = false
+//                }
+//            } label: {
+//                Image(systemName: "cart.badge.minus")
+//            }
+//        }
+//        .swipeActions(edge: .leading, allowsFullSwipe: false) {
+//            Button {
+//                withAnimation {
+//                    lineSelectedForPopup = receiptLine
+//                }
+//            } label: {
+//                Image(systemName: "square.dashed.inset.filled")
+//            }
+//            .tint(.blue)
+//        }
+//    }
+//}
+//
+////struct ReceiptLineView_Previews: PreviewProvider {
+////    static var previews: some View {
+////        SelectedDraftLineView()
+////    }
+////}

@@ -9,8 +9,10 @@ import SwiftUI
 
 struct RecognizedContentView: View {
     @ObservedObject var receipt: Receipt
+    @EnvironmentObject var dataController: DataController
 
     @State private var isShowingScanImageView = false
+    @State private var selectedLine: RecognizedContent.Line? = nil
 
     var viewScanButton: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
@@ -25,24 +27,18 @@ struct RecognizedContentView: View {
         }
     }
 
-    func lineIcon(for line: RecognizedContent.Line) -> String {
-        switch line.lineType {
-        case .total:
-            return "sum"
-        case .item:
-            return "cart"
-        default:
-            return "questionmark"
-        }
+    func saveChanges() {
+        dataController.updateReceipt(withID: receipt.objectID, from: receipt.recognitionData?.content)
     }
 
     var body: some View {
         if let lines = receipt.recognitionData?.content.lines {
             List {
                 ForEach(lines) { line in
-                    Label("\(line.label) '\(line.value ?? 0)", systemImage: lineIcon(for: line))
+                    RecognizedContentLineView(receipt: receipt, line: line)
                 }
             }
+            .onDisappear(perform: saveChanges)
             .sheet(isPresented: $isShowingScanImageView) {
                 ScanImageView(receipt: receipt)
             }
@@ -51,6 +47,7 @@ struct RecognizedContentView: View {
             .toolbar {
                 viewScanButton
             }
+
         }
     }
 }

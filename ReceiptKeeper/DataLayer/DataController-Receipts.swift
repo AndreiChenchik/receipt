@@ -10,11 +10,13 @@ import CoreData
 
 extension DataController {
     func save(in context: NSManagedObjectContext) {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving your data: \(error.localizedDescription)")
-            context.rollback()
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                print("Error saving your data: \(error.localizedDescription)")
+                context.rollback()
+            }
         }
     }
 
@@ -39,10 +41,41 @@ extension DataController {
         container.performBackgroundTask { context in
             if let receipt = try? context.existingObject(with: receiptObjectID) as? Receipt {
                 if let recognizedContent = recognizedContent {
-                    receipt.recognitionData = RecognitionData(content: recognizedContent)
-                }
+                    let recognitionData = RecognitionData(content: recognizedContent)
+                    receipt.recognitionData = recognitionData
 
-                receipt.state = .draft
+                    if receipt.purchaseDateLineUUID != recognitionData.purchaseDate?.id {
+                        receipt.purchaseDate = recognitionData.purchaseDate?.value
+                        receipt.purchaseDateLineUUID = recognitionData.purchaseDate?.id
+                    }
+
+                    if receipt.totalLineUUID != recognitionData.receiptTotal?.id {
+                        receipt.total = recognitionData.receiptTotal?.value
+                        receipt.totalLineUUID = recognitionData.receiptTotal?.id
+                    }
+
+                    if receipt.venueAddressLineUUID != recognitionData.venueAddress?.id {
+                        receipt.venueAddress = recognitionData.venueAddress?.value
+                        receipt.venueAddressLineUUID = recognitionData.venueAddress?.id
+                    }
+
+                    if receipt.purchaseDateLineUUID != recognitionData.purchaseDate?.id {
+                        receipt.purchaseDate = recognitionData.purchaseDate?.value
+                        receipt.purchaseDateLineUUID = recognitionData.purchaseDate?.id
+                    }
+
+                    let cartItemsLineUUIDS = receipt.receiptItems.compactMap { $0.recognizedLineUUID }
+                    let newItemLines = recognitionData.content.lines.filter { $0.contentType == .item && !cartItemsLineUUIDS.contains($0.id)}
+                    for itemLine in newItemLines {
+                        let item = Item(context: context)
+                        item.receipt = receipt
+                        item.recognizedLineUUID = itemLine.id
+                        item.title = itemLine.label
+                        item.price = NSDecimalNumber(value: itemLine.value ?? 0)
+                    }
+
+                    receipt.state = .draft
+                }
 
                 self.save(in: context)
             }

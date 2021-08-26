@@ -14,31 +14,21 @@
 		380311EF26D57AF500B8B168 /* DataController-Receipts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380311EE26D57AF500B8B168 /* DataController-Receipts.swift */; };
 		380311F226D63F7400B8B168 /* ReceiptRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380311F126D63F7400B8B168 /* ReceiptRowView.swift */; };
 		380311F426D656F700B8B168 /* RecognizedObservations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380311F326D656F700B8B168 /* RecognizedObservations.swift */; };
-		382DD12A26D65BDB00C6DA95 /* Binding-onChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD12926D65BDB00C6DA95 /* Binding-onChange.swift */; };
 		382DD12D26D663EF00C6DA95 /* RecognizedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */; };
 		382DD12F26D665F400C6DA95 /* ScanImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD12E26D665F400C6DA95 /* ScanImageView.swift */; };
 		382DD13126D66F9F00C6DA95 /* EditReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */; };
-		384A64BB26C589C000412F02 /* DraftDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A64BA26C589C000412F02 /* DraftDateTime.swift */; };
+		382DD13326D7B9AB00C6DA95 /* RecognizedContentLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */; };
 		3859F9CB26C26EA200F2BEE5 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3859F9CA26C26EA200F2BEE5 /* UIImage.swift */; };
-		3859F9CD26C2AD6600F2BEE5 /* DraftLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3859F9CC26C2AD6600F2BEE5 /* DraftLine.swift */; };
-		3859F9CF26C2BA0400F2BEE5 /* SelectedDraftLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3859F9CE26C2BA0400F2BEE5 /* SelectedDraftLineView.swift */; };
-		386C193426C1111300F09FFE /* ReceiptItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386C193326C1111300F09FFE /* ReceiptItem.swift */; };
 		386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */; };
 		386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6B26BABE0400F1E4AB /* ContentView.swift */; };
 		386EBE6E26BABE0400F1E4AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386EBE6D26BABE0400F1E4AB /* Assets.xcassets */; };
 		386EBE7126BABE0400F1E4AB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386EBE7026BABE0400F1E4AB /* Preview Assets.xcassets */; };
 		3872875226BF11E5008B312B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872875126BF11E5008B312B /* DataController.swift */; };
 		3872875926BF1EE8008B312B /* ReceiptsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872875826BF1EE8008B312B /* ReceiptsViewModel.swift */; };
-		3872875B26BF2931008B312B /* Receipt_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872875A26BF2931008B312B /* Receipt_old.swift */; };
-		3872875D26BF293A008B312B /* Draft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872875C26BF293A008B312B /* Draft.swift */; };
-		3872876026C016F4008B312B /* RecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872875F26C016F4008B312B /* RecognizerView.swift */; };
-		3872876226C01700008B312B /* RecognizerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3872876126C01700008B312B /* RecognizerViewModel.swift */; };
 		387E09F626CEA4E1007D0542 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 387E09F526CEA4E1007D0542 /* CloudKit.framework */; };
 		387E09F926CEA5E1007D0542 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 387E09F726CEA5E1007D0542 /* Main.xcdatamodeld */; };
 		387E09FC26CEE57C007D0542 /* RecognitionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387E09FB26CEE57C007D0542 /* RecognitionData.swift */; };
 		387E0A0026D2D00E007D0542 /* RecognitionDataTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387E09FF26D2D00E007D0542 /* RecognitionDataTransformer.swift */; };
-		3882AF2A26C55EF1005A8064 /* UnselectedDraftLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3882AF2926C55EF1005A8064 /* UnselectedDraftLineView.swift */; };
-		388834AA26CD68260004AAFF /* RecognizedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388834A926CD68260004AAFF /* RecognizedImageView.swift */; };
 		388C181026C25FBE009D0F23 /* Baseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388C180F26C25FBE009D0F23 /* Baseline.swift */; };
 		38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9226BABED900CE2946 /* ScannerView.swift */; };
 		38C1ACC326D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C1ACC226D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift */; };
@@ -56,15 +46,11 @@
 		380311EE26D57AF500B8B168 /* DataController-Receipts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Receipts.swift"; sourceTree = "<group>"; };
 		380311F126D63F7400B8B168 /* ReceiptRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptRowView.swift; sourceTree = "<group>"; };
 		380311F326D656F700B8B168 /* RecognizedObservations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedObservations.swift; sourceTree = "<group>"; };
-		382DD12926D65BDB00C6DA95 /* Binding-onChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding-onChange.swift"; sourceTree = "<group>"; };
 		382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedContentView.swift; sourceTree = "<group>"; };
 		382DD12E26D665F400C6DA95 /* ScanImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanImageView.swift; sourceTree = "<group>"; };
 		382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReceiptViewModel.swift; sourceTree = "<group>"; };
-		384A64BA26C589C000412F02 /* DraftDateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftDateTime.swift; sourceTree = "<group>"; };
+		382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedContentLineView.swift; sourceTree = "<group>"; };
 		3859F9CA26C26EA200F2BEE5 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
-		3859F9CC26C2AD6600F2BEE5 /* DraftLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftLine.swift; sourceTree = "<group>"; };
-		3859F9CE26C2BA0400F2BEE5 /* SelectedDraftLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedDraftLineView.swift; sourceTree = "<group>"; };
-		386C193326C1111300F09FFE /* ReceiptItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptItem.swift; sourceTree = "<group>"; };
 		386EBE6626BABE0400F1E4AB /* ReceiptKeeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReceiptKeeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptKeeperApp.swift; sourceTree = "<group>"; };
 		386EBE6B26BABE0400F1E4AB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -72,17 +58,11 @@
 		386EBE7026BABE0400F1E4AB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3872875126BF11E5008B312B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		3872875826BF1EE8008B312B /* ReceiptsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsViewModel.swift; sourceTree = "<group>"; };
-		3872875A26BF2931008B312B /* Receipt_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt_old.swift; sourceTree = "<group>"; };
-		3872875C26BF293A008B312B /* Draft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Draft.swift; sourceTree = "<group>"; };
-		3872875F26C016F4008B312B /* RecognizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizerView.swift; sourceTree = "<group>"; };
-		3872876126C01700008B312B /* RecognizerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizerViewModel.swift; sourceTree = "<group>"; };
 		387E09F326CEA4CE007D0542 /* ReceiptKeeper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ReceiptKeeper.entitlements; sourceTree = "<group>"; };
 		387E09F526CEA4E1007D0542 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		387E09F826CEA5E1007D0542 /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
 		387E09FB26CEE57C007D0542 /* RecognitionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionData.swift; sourceTree = "<group>"; };
 		387E09FF26D2D00E007D0542 /* RecognitionDataTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionDataTransformer.swift; sourceTree = "<group>"; };
-		3882AF2926C55EF1005A8064 /* UnselectedDraftLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnselectedDraftLineView.swift; sourceTree = "<group>"; };
-		388834A926CD68260004AAFF /* RecognizedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedImageView.swift; sourceTree = "<group>"; };
 		388C180F26C25FBE009D0F23 /* Baseline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Baseline.swift; sourceTree = "<group>"; };
 		38BB9B9226BABED900CE2946 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		38BB9B9426BAC05E00CE2946 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -105,15 +85,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		380311E726D5440F00B8B168 /* Refactor Out */ = {
-			isa = PBXGroup;
-			children = (
-				387E09FA26CEB977007D0542 /* Models */,
-				3882AF2B26C58758005A8064 /* CreateReceipt */,
-			);
-			path = "Refactor Out";
-			sourceTree = "<group>";
-		};
 		380311EC26D571D200B8B168 /* ReceiptsView */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +126,7 @@
 				380311E326D4348300B8B168 /* EditReceiptView.swift */,
 				382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */,
 				382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */,
+				382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */,
 				382DD12E26D665F400C6DA95 /* ScanImageView.swift */,
 			);
 			path = EditReceiptsView;
@@ -182,7 +154,6 @@
 			children = (
 				387E09F326CEA4CE007D0542 /* ReceiptKeeper.entitlements */,
 				38E89E3D26BD703E006A0D49 /* Extensions */,
-				380311E726D5440F00B8B168 /* Refactor Out */,
 				38E89E3A26BD6A28006A0D49 /* Activities */,
 				38BB9B9426BAC05E00CE2946 /* Info.plist */,
 				380311ED26D57A9D00B8B168 /* DataLayer */,
@@ -222,30 +193,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		387E09FA26CEB977007D0542 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				3872875C26BF293A008B312B /* Draft.swift */,
-				384A64BA26C589C000412F02 /* DraftDateTime.swift */,
-				3859F9CC26C2AD6600F2BEE5 /* DraftLine.swift */,
-				3872875A26BF2931008B312B /* Receipt_old.swift */,
-				386C193326C1111300F09FFE /* ReceiptItem.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		3882AF2B26C58758005A8064 /* CreateReceipt */ = {
-			isa = PBXGroup;
-			children = (
-				3872875F26C016F4008B312B /* RecognizerView.swift */,
-				388834A926CD68260004AAFF /* RecognizedImageView.swift */,
-				3872876126C01700008B312B /* RecognizerViewModel.swift */,
-				3859F9CE26C2BA0400F2BEE5 /* SelectedDraftLineView.swift */,
-				3882AF2926C55EF1005A8064 /* UnselectedDraftLineView.swift */,
-			);
-			path = CreateReceipt;
-			sourceTree = "<group>";
-		};
 		38C1ACC126D3A1B00030C6C0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,7 +215,6 @@
 			children = (
 				38E9908326C19B52007FF507 /* CGRect.swift */,
 				3859F9CA26C26EA200F2BEE5 /* UIImage.swift */,
-				382DD12926D65BDB00C6DA95 /* Binding-onChange.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -346,39 +292,29 @@
 				388C181026C25FBE009D0F23 /* Baseline.swift in Sources */,
 				380311EB26D5715700B8B168 /* ReceiptsViewModel-Recognizer.swift in Sources */,
 				380311E426D4348300B8B168 /* EditReceiptView.swift in Sources */,
-				3872875D26BF293A008B312B /* Draft.swift in Sources */,
 				38E89E4726BD9731006A0D49 /* Line.swift in Sources */,
 				387E09F926CEA5E1007D0542 /* Main.xcdatamodeld in Sources */,
-				3872876026C016F4008B312B /* RecognizerView.swift in Sources */,
 				380311E626D4454C00B8B168 /* RecognizedContent.swift in Sources */,
-				3859F9CD26C2AD6600F2BEE5 /* DraftLine.swift in Sources */,
 				387E09FC26CEE57C007D0542 /* RecognitionData.swift in Sources */,
 				38F20D5B26BBFE0E007D0A0E /* ReceiptsView.swift in Sources */,
 				382DD13126D66F9F00C6DA95 /* EditReceiptViewModel.swift in Sources */,
 				386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */,
 				380311F426D656F700B8B168 /* RecognizedObservations.swift in Sources */,
 				382DD12F26D665F400C6DA95 /* ScanImageView.swift in Sources */,
-				3882AF2A26C55EF1005A8064 /* UnselectedDraftLineView.swift in Sources */,
 				382DD12D26D663EF00C6DA95 /* RecognizedContentView.swift in Sources */,
-				3872875B26BF2931008B312B /* Receipt_old.swift in Sources */,
 				380311F226D63F7400B8B168 /* ReceiptRowView.swift in Sources */,
 				38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */,
 				386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */,
-				388834AA26CD68260004AAFF /* RecognizedImageView.swift in Sources */,
 				3872875226BF11E5008B312B /* DataController.swift in Sources */,
 				38C1ACC326D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift in Sources */,
-				384A64BB26C589C000412F02 /* DraftDateTime.swift in Sources */,
-				3872876226C01700008B312B /* RecognizerViewModel.swift in Sources */,
 				380311E926D5448C00B8B168 /* SelectSomethingView.swift in Sources */,
 				3872875926BF1EE8008B312B /* ReceiptsViewModel.swift in Sources */,
-				386C193426C1111300F09FFE /* ReceiptItem.swift in Sources */,
 				38F7B72B26CBCF88008E9CF0 /* TextBlock.swift in Sources */,
-				382DD12A26D65BDB00C6DA95 /* Binding-onChange.swift in Sources */,
 				3859F9CB26C26EA200F2BEE5 /* UIImage.swift in Sources */,
 				380311EF26D57AF500B8B168 /* DataController-Receipts.swift in Sources */,
 				38E9908426C19B52007FF507 /* CGRect.swift in Sources */,
+				382DD13326D7B9AB00C6DA95 /* RecognizedContentLineView.swift in Sources */,
 				387E0A0026D2D00E007D0542 /* RecognitionDataTransformer.swift in Sources */,
-				3859F9CF26C2BA0400F2BEE5 /* SelectedDraftLineView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
