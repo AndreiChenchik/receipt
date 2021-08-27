@@ -19,6 +19,10 @@
 		382DD13126D66F9F00C6DA95 /* EditReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */; };
 		382DD13326D7B9AB00C6DA95 /* RecognizedContentLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */; };
 		3859F9CB26C26EA200F2BEE5 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3859F9CA26C26EA200F2BEE5 /* UIImage.swift */; };
+		385DBC2426D9119A00B0D245 /* Binding-onChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2326D9119A00B0D245 /* Binding-onChange.swift */; };
+		385DBC2726D98B7B00B0D245 /* VendorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2626D98B7B00B0D245 /* VendorsView.swift */; };
+		385DBC2926D98BED00B0D245 /* VendorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2826D98BED00B0D245 /* VendorsViewModel.swift */; };
+		385DBC2B26D9973E00B0D245 /* TextFieldAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2A26D9973E00B0D245 /* TextFieldAlertViewController.swift */; };
 		386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */; };
 		386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6B26BABE0400F1E4AB /* ContentView.swift */; };
 		386EBE6E26BABE0400F1E4AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386EBE6D26BABE0400F1E4AB /* Assets.xcassets */; };
@@ -51,6 +55,10 @@
 		382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReceiptViewModel.swift; sourceTree = "<group>"; };
 		382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedContentLineView.swift; sourceTree = "<group>"; };
 		3859F9CA26C26EA200F2BEE5 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		385DBC2326D9119A00B0D245 /* Binding-onChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding-onChange.swift"; sourceTree = "<group>"; };
+		385DBC2626D98B7B00B0D245 /* VendorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendorsView.swift; sourceTree = "<group>"; };
+		385DBC2826D98BED00B0D245 /* VendorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendorsViewModel.swift; sourceTree = "<group>"; };
+		385DBC2A26D9973E00B0D245 /* TextFieldAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewController.swift; sourceTree = "<group>"; };
 		386EBE6626BABE0400F1E4AB /* ReceiptKeeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReceiptKeeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptKeeperApp.swift; sourceTree = "<group>"; };
 		386EBE6B26BABE0400F1E4AB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -89,8 +97,8 @@
 			isa = PBXGroup;
 			children = (
 				38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */,
-				380311F126D63F7400B8B168 /* ReceiptRowView.swift */,
 				3872875826BF1EE8008B312B /* ReceiptsViewModel.swift */,
+				380311F126D63F7400B8B168 /* ReceiptRowView.swift */,
 				380311EA26D5715700B8B168 /* ReceiptsViewModel-Recognizer.swift */,
 				380311F326D656F700B8B168 /* RecognizedObservations.swift */,
 			);
@@ -124,12 +132,22 @@
 			isa = PBXGroup;
 			children = (
 				380311E326D4348300B8B168 /* EditReceiptView.swift */,
+				385DBC2A26D9973E00B0D245 /* TextFieldAlertViewController.swift */,
 				382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */,
 				382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */,
 				382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */,
 				382DD12E26D665F400C6DA95 /* ScanImageView.swift */,
 			);
 			path = EditReceiptsView;
+			sourceTree = "<group>";
+		};
+		385DBC2526D98B6700B0D245 /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+				385DBC2626D98B7B00B0D245 /* VendorsView.swift */,
+				385DBC2826D98BED00B0D245 /* VendorsViewModel.swift */,
+			);
+			path = Vendors;
 			sourceTree = "<group>";
 		};
 		386EBE5D26BABE0400F1E4AB = {
@@ -205,6 +223,7 @@
 		38E89E3A26BD6A28006A0D49 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				385DBC2526D98B6700B0D245 /* Vendors */,
 				3872875726BF1871008B312B /* Receipts */,
 			);
 			path = Activities;
@@ -215,6 +234,7 @@
 			children = (
 				38E9908326C19B52007FF507 /* CGRect.swift */,
 				3859F9CA26C26EA200F2BEE5 /* UIImage.swift */,
+				385DBC2326D9119A00B0D245 /* Binding-onChange.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -301,10 +321,13 @@
 				386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */,
 				380311F426D656F700B8B168 /* RecognizedObservations.swift in Sources */,
 				382DD12F26D665F400C6DA95 /* ScanImageView.swift in Sources */,
+				385DBC2926D98BED00B0D245 /* VendorsViewModel.swift in Sources */,
 				382DD12D26D663EF00C6DA95 /* RecognizedContentView.swift in Sources */,
 				380311F226D63F7400B8B168 /* ReceiptRowView.swift in Sources */,
+				385DBC2B26D9973E00B0D245 /* TextFieldAlertViewController.swift in Sources */,
 				38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */,
 				386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */,
+				385DBC2726D98B7B00B0D245 /* VendorsView.swift in Sources */,
 				3872875226BF11E5008B312B /* DataController.swift in Sources */,
 				38C1ACC326D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift in Sources */,
 				380311E926D5448C00B8B168 /* SelectSomethingView.swift in Sources */,
@@ -313,6 +336,7 @@
 				3859F9CB26C26EA200F2BEE5 /* UIImage.swift in Sources */,
 				380311EF26D57AF500B8B168 /* DataController-Receipts.swift in Sources */,
 				38E9908426C19B52007FF507 /* CGRect.swift in Sources */,
+				385DBC2426D9119A00B0D245 /* Binding-onChange.swift in Sources */,
 				382DD13326D7B9AB00C6DA95 /* RecognizedContentLineView.swift in Sources */,
 				387E0A0026D2D00E007D0542 /* RecognitionDataTransformer.swift in Sources */,
 			);

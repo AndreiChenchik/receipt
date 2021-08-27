@@ -81,12 +81,11 @@ extension RecognitionData {
         }
     }
 
-    var venueTitile: (id: UUID, value: String)? {
+    var venueTitile: String? {
         if let line = content.lines.first(where: { $0.contentType == .venue }) {
-            let id = line.id
             let venueName = line.label
 
-            return (id: id, value: venueName)
+            return venueName
         }
 
         return nil

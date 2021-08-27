@@ -15,9 +15,10 @@ struct ContentView: View {
         TabView(selection: $selectedView) {
             ReceiptsView()
                 .tag(ReceiptsView.tag)
-                .tabItem {
-                    Label("Receipts", systemImage: "doc.on.doc")
-                }
+                .tabItem { Label("Receipts", systemImage: "doc.on.doc") }
+            VendorsView()
+                .tag(VendorsView.tag)
+                .tabItem { Label("Vendors", systemImage: "crown") }
         }
     }
 }

@@ -19,7 +19,7 @@ struct ReceiptsView: View {
 extension ReceiptsView {
     struct InnerView: View {
         @StateObject var viewModel: ViewModel
-
+        
         @State private var isShowingScannerView = false
 
         init(dataController: DataController) {

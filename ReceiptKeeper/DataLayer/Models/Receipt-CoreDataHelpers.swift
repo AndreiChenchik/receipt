@@ -66,36 +66,17 @@ extension Receipt {
         creationDate ?? Date()
     }
 
-    var totalString: String {
-        get {
-            total?.stringValue ?? "0"
-        }
-
-        set {
-            total = NSDecimalNumber(string: newValue)
-        }
-    }
-
-    var receiptVenueAddress: String {
-        get {
-            venueAddress ?? ""
-        }
-
-        set {
-            venueAddress = newValue
+    var receiptPurchaseAddress: String { venueAddress ?? "" }
+    var receiptPurchaseDate: Date { purchaseDate ?? Date() }
+    var receiptTotal: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        if let total = total {
+            return formatter.string(from: total) ?? ""
+        } else {
+            return ""
         }
     }
-
-    var receiptPurchaseDate: Date {
-        get {
-            purchaseDate ?? Date()
-        }
-
-        set {
-            purchaseDate = newValue
-        }
-    }
-
 
     var receiptItems: [Item] {
         items?.allObjects as? [Item] ?? []

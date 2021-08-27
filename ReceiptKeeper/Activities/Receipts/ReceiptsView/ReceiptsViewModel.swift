@@ -22,7 +22,7 @@ extension ReceiptsView {
         init(dataController: DataController) {
             self.dataController = dataController
 
-            let request: NSFetchRequest<Receipt> = Receipt.fetchRequest()
+            let request = Receipt.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(keyPath: \Receipt.creationDate, ascending: false)]
             
             receiptsController = NSFetchedResultsController(

@@ -5,23 +5,26 @@
 //  Created by Andrei Chenchik on 23/8/21.
 //
 
+import CoreData
 import SwiftUI
 
 struct EditReceiptView: View {
     var receipt: Receipt
     @EnvironmentObject var dataController: DataController
-    
+
     var body: some View {
         InnerView(receipt: receipt, dataController: dataController)
+        
     }
 }
 
 
 extension EditReceiptView {
     struct InnerView: View {
-        @StateObject var viewModel: ViewModel
+        @Environment(\.presentationMode) var presentationMode
 
         @ObservedObject var receipt: Receipt
+        @StateObject var viewModel: ViewModel
 
         init(receipt: Receipt, dataController: DataController) {
             let viewModel = ViewModel(receipt: receipt, dataController: dataController)
@@ -31,22 +34,27 @@ extension EditReceiptView {
 
         var body: some View {
             Form {
-                Text("Condis")
+                Picker("Select vendor", selection: $viewModel.receiptVendorIndex) {
+                    ForEach(viewModel.vendors) { vendor in
+                        Text(vendor.title ?? "Unknown").tag(vendor.uuid?.hashValue ?? -1)
+                    }
+                    Label("Add new vendor", systemImage: "plus").tag(-2)
+                }
 
                 Section(header: Text("Date & location")) {
-                    TextField("Venue Address", text: $viewModel.receipt.receiptVenueAddress)
-                    DatePicker("Purchase date", selection: $viewModel.receipt.receiptPurchaseDate, in: ...Date())
+                    TextField("Venue Address", text: $viewModel.receiptPurchaseAddress)
+                    DatePicker("Purchase date", selection: $viewModel.receiptPurchaseDate, in: ...Date())
                 }
 
                 Section(header: Text("Shopping cart")) {
-                    ForEach(viewModel.receipt.receiptItems) { item in
+                    ForEach(viewModel.receipt.receiptItems, id: \.self) { item in
                         VStack(alignment: .leading) {
                             Text(item.title ?? "Unknown")
                             Text("\(item.price ?? 0)")
                         }
                     }
-                    .onDelete { _ = $0.map { viewModel.dataController.delete(viewModel.receipt.receiptItems[$0]) }
-                    }
+                    .onDelete(perform: viewModel.deleteItems)
+                    
                     Button {
                         withAnimation {
                             viewModel.addItem()
@@ -57,14 +65,21 @@ extension EditReceiptView {
                 }
 
                 Section(header: Text("Total")) {
-                    TextField("Total amount", text: $viewModel.receipt.totalString)
+                    TextField("Total amount", text: $viewModel.receiptTotal)
+                        .keyboardType(.decimalPad)
                 }
 
                 Section {
-                    NavigationLink("Recognized Receipt", destination: RecognizedContentView(receipt: receipt))
+                    NavigationLink("Recognized Receipt", destination: RecognizedContentView(receipt: viewModel.receipt))
                 }
             }
-            .onDisappear(perform: viewModel.saveChanges)
+            .alert(isPresented: $viewModel.isShowingNewVendorAlert, TextFieldAlert(title: "Create new vendor", message: "Set a name for new vendor", defaultText: viewModel.venueTitle ?? "", action: { (text) in
+                        if let text = text {
+                            self.viewModel.addVendor(title: text)
+                        } else {
+                            print("canceled")
+                        }
+            }))
             .navigationTitle("Receipt")
         }
     }
