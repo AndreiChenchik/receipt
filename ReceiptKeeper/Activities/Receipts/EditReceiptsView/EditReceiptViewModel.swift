@@ -9,6 +9,7 @@ import Combine
 import CoreData
 import Foundation
 import SwiftUI
+import MapKit
 
 extension EditReceiptView {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
@@ -19,33 +20,33 @@ extension EditReceiptView {
 
         @Published var vendors = [Vendor]()
 
-
-        @Published var venueTitle: String?
-        var isShowingNewVendorAlert = false {
+        let addNewVendorTag = "addNewVendor"
+        @Published var venueTitle = ""
+        @Published var isShowingNewVendorAlert = false {
             didSet {
-                if isShowingNewVendorAlert == false && receiptVendorIndex == -2 {
-                    receiptVendorIndex = -1
+                if isShowingNewVendorAlert == false && receiptVendorTag == "addNewVendor" {
+                    receiptVendorTag = "none"
                 }
             }
         }
-        @Published var receiptVendorIndex = -1 {
+        @Published var receiptVendorTag = "none" {
             didSet {
-                guard receiptVendorIndex != -1 else { return }
-                guard receipt.vendor?.uuid?.hashValue != receiptVendorIndex else { return }
+                guard receiptVendorTag != "none" else { return }
+                guard receipt.vendor?.uuid?.uuidString != receiptVendorTag else { return }
 
-                if receiptVendorIndex == -2 {
+                if receiptVendorTag == addNewVendorTag {
                     isShowingNewVendorAlert = true
                     return
                 }
 
-                if let receiptVendor = vendors.first(where: { $0.uuid?.hashValue == receiptVendorIndex }) {
+                if let receiptVendor = vendors.first(where: { $0.uuid?.uuidString == receiptVendorTag }) {
                     receipt.vendor = receiptVendor
                     dataController.saveIfNeeded()
                 }
             }
         }
 
-        @Published var receiptTotal: String {
+        @Published var receiptTotal = "" {
             didSet {
                 guard receiptTotal != receipt.receiptTotal else { return }
 
@@ -62,7 +63,7 @@ extension EditReceiptView {
             }
         }
         
-        @Published var receiptPurchaseDate: Date {
+        @Published var receiptPurchaseDate = Date() {
             didSet {
                 guard receiptPurchaseDate != receipt.receiptPurchaseDate else { return }
 
@@ -72,27 +73,65 @@ extension EditReceiptView {
             }
         }
 
-        @Published var receiptPurchaseAddress: String {
+        @Published var addressLocation: MKCoordinateRegion?
+        @Published var receiptPurchaseAddress = "" {
             didSet {
                 guard receiptPurchaseAddress != receipt.receiptPurchaseAddress else { return }
 
                 receipt.venueAddress = receiptPurchaseAddress
-
+                loadCoordinates(from: receiptPurchaseAddress)
+                
                 dataController.saveIfNeeded()
             }
         }
 
         private var cancellables = Set<AnyCancellable>()
 
+        func getCoordinate( addressString : String,
+                            completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
+            let geocoder = CLGeocoder()
+            geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+                if error == nil {
+                    if let placemark = placemarks?[0] {
+                        let location = placemark.location!
+
+                        completionHandler(location.coordinate, nil)
+                        return
+                    }
+                }
+
+                completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
+            }
+        }
+
+
+        func updateFormFields(from receipt: Receipt) {
+            receiptTotal = receipt.receiptTotal
+            receiptPurchaseDate = receipt.receiptPurchaseDate
+
+            receiptPurchaseAddress = receipt.receiptPurchaseAddress
+            loadCoordinates(from: receiptPurchaseAddress)
+
+            receiptVendorTag = receipt.vendor?.uuid?.uuidString ?? ""
+            venueTitle = receipt.recognitionData?.venueTitle?.value ?? ""
+        }
+
+        func loadCoordinates(from addressString: String) {
+            if !addressString.isEmpty {
+                getCoordinate(addressString: receiptPurchaseAddress) { [weak self] coordinate, error in
+                    if error != nil || (coordinate.latitude == -180 && coordinate.longitude == -180) {
+                        self?.addressLocation = nil
+                    } else {
+                        self?.addressLocation = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
+                    }
+                }
+            }
+        }
+
         init(receipt: Receipt, dataController: DataController) {
             self.dataController = dataController
 
             self.receipt = receipt
-            self.receiptTotal = receipt.receiptTotal
-            self.receiptPurchaseDate = receipt.receiptPurchaseDate
-            self.receiptPurchaseAddress = receipt.receiptPurchaseAddress
-            self.receiptVendorIndex = receipt.vendor?.uuid?.hashValue ?? -1
-            self.venueTitle = receipt.recognitionData?.venueTitile
 
             let vendorsRequest = Vendor.fetchRequest()
             vendorsRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Vendor.title, ascending: false)]
@@ -106,6 +145,10 @@ extension EditReceiptView {
 
             super.init()
 
+            withAnimation {
+                updateFormFields(from: receipt)
+
+            }
 
             fetchVendors()
             vendorsController.delegate = self
@@ -113,13 +156,7 @@ extension EditReceiptView {
             dataController.publisher(for: receipt, in: dataController.viewContext, changeTypes: [.updated])
                 .sink(receiveValue: { [weak self] change in
                     guard let updatedReceipt = change.object else { return }
-
-                    self?.receipt.objectWillChange.send()
-                    self?.receiptTotal = updatedReceipt.receiptTotal
-                    self?.receiptPurchaseDate = updatedReceipt.receiptPurchaseDate
-                    self?.receiptPurchaseAddress = updatedReceipt.receiptPurchaseAddress
-                    self?.receiptVendorIndex = updatedReceipt.vendor?.uuid?.hashValue ?? -1
-                    self?.venueTitle = updatedReceipt.recognitionData?.venueTitile
+                    self?.updateFormFields(from: updatedReceipt)
                 })
                 .store(in: &cancellables)
         }
@@ -148,14 +185,21 @@ extension EditReceiptView {
 
         func deleteItems(indexSet: IndexSet) {
             for index in indexSet.reversed() {
-                let item = receipt.receiptItems[index]
+                let item = receipt.receiptItemsSorted[index]
+
+                if let line = receipt.recognitionData?.content.lines.first(where: { $0.id == item.recognizedLineUUID }) {
+                    receipt.recognitionData = receipt.recognitionData?.withChangedLineContentType(for: line, to: .unknown)
+                }
+
                 dataController.delete(item)
             }
 
             dataController.saveIfNeeded()
         }
 
-        func addVendor(title: String) {
+        func addVendor(with title: String?) {
+            guard let title = title else { return }
+
             let vendor = Vendor(context: dataController.viewContext)
             let uuid = UUID()
 
@@ -163,10 +207,19 @@ extension EditReceiptView {
             vendor.uuid = uuid
 
             receipt.vendor = vendor
-            receiptVendorIndex = uuid.hashValue
+            receiptVendorTag = uuid.uuidString
 
             dataController.saveIfNeeded()
             fetchVendors()
+        }
+
+        var isShowingRecognizedData: Bool {
+            receipt.recognitionData != nil
+        }
+
+        func saveReceipt() {
+            receipt.state = .ready
+            dataController.saveIfNeeded()
         }
     }
 }

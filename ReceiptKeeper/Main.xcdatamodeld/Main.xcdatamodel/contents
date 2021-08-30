@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19197" systemVersion="21A5304g" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="quantity" optional="YES" attributeType="Decimal" defaultValueString="0"/>
         <attribute name="recognizedLineUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -22,6 +23,7 @@
         <attribute name="stateValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="total" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="totalLineUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="vendorLineUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="venueAddress" optional="YES" attributeType="String"/>
         <attribute name="venueAddressLineUUID" optional="YES" attributeType="String"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Item" inverseName="receipt" inverseEntity="Item"/>
@@ -38,9 +40,9 @@
         <relationship name="vendors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vendor" inverseName="category" inverseEntity="Vendor"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-141.140625" positionY="-138.58203125" width="128" height="119"/>
+        <element name="Item" positionX="-141.140625" positionY="-138.58203125" width="128" height="134"/>
         <element name="ItemType" positionX="32.8125" positionY="-15.00390625" width="128" height="74"/>
-        <element name="Receipt" positionX="34.58984375" positionY="-221.078125" width="128" height="209"/>
+        <element name="Receipt" positionX="34.58984375" positionY="-221.078125" width="128" height="224"/>
         <element name="Vendor" positionX="201.640625" positionY="-177.76171875" width="128" height="89"/>
         <element name="VendorCategory" positionX="370.046875" positionY="-177.91796875" width="128" height="59"/>
     </elements>

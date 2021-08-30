@@ -14,10 +14,8 @@ struct EditReceiptView: View {
 
     var body: some View {
         InnerView(receipt: receipt, dataController: dataController)
-        
     }
 }
-
 
 extension EditReceiptView {
     struct InnerView: View {
@@ -32,26 +30,57 @@ extension EditReceiptView {
             _receipt = ObservedObject(wrappedValue: receipt)
         }
 
+        var saveButton: some ToolbarContent {
+            ToolbarItem(placement: .primaryAction) {
+                if receipt.state == .draft {
+                    Button(action: {
+                        viewModel.saveReceipt()
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Label("Save", systemImage: "checkmark.circle")
+                    }
+                }
+            }
+        }
+
         var body: some View {
             Form {
-                Picker("Select vendor", selection: $viewModel.receiptVendorIndex) {
-                    ForEach(viewModel.vendors) { vendor in
-                        Text(vendor.title ?? "Unknown").tag(vendor.uuid?.hashValue ?? -1)
-                    }
-                    Label("Add new vendor", systemImage: "plus").tag(-2)
-                }
+                    Picker("Store", selection: $viewModel.receiptVendorTag) {
+                        ForEach(viewModel.vendors) { vendor in
+                            Text(vendor.vendorTitle)
+                                .tag(vendor.vendorTag)
+                        }
 
-                Section(header: Text("Date & location")) {
-                    TextField("Venue Address", text: $viewModel.receiptPurchaseAddress)
-                    DatePicker("Purchase date", selection: $viewModel.receiptPurchaseDate, in: ...Date())
+                        Label("Add new vendor", systemImage: "plus")
+                            .tag(viewModel.addNewVendorTag)
+                    }
+
+
+
+                Section(header: Text("Purchase Date & location")) {
+                    HStack {
+                        Image(systemName: "calendar.badge.clock")
+                            .frame(width: 30)
+
+                        DatePicker("Purchased", selection: $viewModel.receiptPurchaseDate, in: ...Date())
+                    }
+
+
+                    HStack {
+                        Image(systemName: "mappin.and.ellipse")
+                            .frame(width: 30)
+
+                        TextField("Venue Address", text: $viewModel.receiptPurchaseAddress)
+                    }
+
+                    if let region = viewModel.addressLocation {
+                        ReceiptMapView(region: region)
+                    }
                 }
 
                 Section(header: Text("Shopping cart")) {
-                    ForEach(viewModel.receipt.receiptItems, id: \.self) { item in
-                        VStack(alignment: .leading) {
-                            Text(item.title ?? "Unknown")
-                            Text("\(item.price ?? 0)")
-                        }
+                    ForEach(viewModel.receipt.receiptItemsSorted) { item in
+                        EditReceiptItemView(item: item)
                     }
                     .onDelete(perform: viewModel.deleteItems)
                     
@@ -65,21 +94,40 @@ extension EditReceiptView {
                 }
 
                 Section(header: Text("Total")) {
-                    TextField("Total amount", text: $viewModel.receiptTotal)
-                        .keyboardType(.decimalPad)
+                    HStack {
+                        Image(systemName: "sum")
+                            .frame(width: 30)
+
+                        TextField("Total amount", text: $viewModel.receiptTotal)
+                            .keyboardType(.decimalPad)
+
+                        Spacer()
+
+                        Text("€")
+                    }
                 }
 
-                Section {
-                    NavigationLink("Recognized Receipt", destination: RecognizedContentView(receipt: viewModel.receipt))
+                if viewModel.isShowingRecognizedData {
+                    Section {
+                        NavigationLink(destination: RecognizedContentView(receipt: viewModel.receipt)) {
+                            HStack {
+                                Image(systemName: "doc.text.viewfinder")
+                                    .frame(width: 30)
+
+                                Text("Recognized Receipt")
+                            }
+                        }
+                    }
                 }
             }
-            .alert(isPresented: $viewModel.isShowingNewVendorAlert, TextFieldAlert(title: "Create new vendor", message: "Set a name for new vendor", defaultText: viewModel.venueTitle ?? "", action: { (text) in
-                        if let text = text {
-                            self.viewModel.addVendor(title: text)
-                        } else {
-                            print("canceled")
-                        }
-            }))
+            .alert(isPresented: $viewModel.isShowingNewVendorAlert,
+                   TextFieldAlert(title: "Create new vendor",
+                                  message: "Set a name for new vendor",
+                                  defaultText: viewModel.venueTitle,
+                                  action: self.viewModel.addVendor))
+            .toolbar {
+                saveButton
+            }
             .navigationTitle("Receipt")
         }
     }
@@ -90,49 +138,3 @@ extension EditReceiptView {
 //        EditReceiptView()
 //    }
 //}
-
-
-//struct SelectedDraftLineView: View {
-//    @ObservedObject var receiptLine: DraftLine
-//    @ObservedObject var receiptDraft: Draft
-//
-//    @Binding var lineSelectedForPopup: DraftLine?
-//
-//    var body: some View {
-//        HStack {
-//            VStack{
-//                TextField("Label", text: $receiptLine.label)
-//
-//                TextField("Value", text: $receiptLine.value)
-//                    .multilineTextAlignment(.trailing)
-//            }
-//        }
-//        .frame(height: receiptLine.selected ? 55 : 35)
-//        .swipeActions {
-//            Button(role: .destructive) {
-//                withAnimation {
-//                    receiptDraft.objectWillChange.send()
-//                    receiptLine.selected = false
-//                }
-//            } label: {
-//                Image(systemName: "cart.badge.minus")
-//            }
-//        }
-//        .swipeActions(edge: .leading, allowsFullSwipe: false) {
-//            Button {
-//                withAnimation {
-//                    lineSelectedForPopup = receiptLine
-//                }
-//            } label: {
-//                Image(systemName: "square.dashed.inset.filled")
-//            }
-//            .tint(.blue)
-//        }
-//    }
-//}
-//
-////struct ReceiptLineView_Previews: PreviewProvider {
-////    static var previews: some View {
-////        SelectedDraftLineView()
-////    }
-////}

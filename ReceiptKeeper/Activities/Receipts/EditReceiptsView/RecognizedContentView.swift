@@ -43,7 +43,6 @@ struct RecognizedContentView: View {
                 ScanImageView(receipt: receipt)
             }
             .navigationTitle("Recognized content")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 viewScanButton
             }

@@ -93,7 +93,7 @@ struct RecognizedContent: Codable {
             if !line.label.isEmpty && !isVenueFound {
                 contentType = .venue
                 isVenueFound = true
-            } else if line.label.lowercased().contains("total") && !isTotalReached {
+            } else if line.label.lowercased().contains("total") && line.value != nil && !isTotalReached {
                 contentType = .total
                 isTotalReached = true
             } else if !isDateFound && Self.getDateTime(from: line.text.replacingOccurrences(of: "\n", with: " ")) != nil {

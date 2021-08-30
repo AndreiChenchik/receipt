@@ -37,52 +37,56 @@ struct RecognizedContentLineView: View {
     }
 
     var body: some View {
-        Label {
-            Text(line.text)
-                .foregroundColor(.primary)
-        } icon: {
-            Menu {
-                Button {
-                    changeLineType(for: line, to: .item)
-                } label: {
-                    Label("Add to purchased items", systemImage: "cart")
-                }
-
-                Button {
-                    changeLineType(for: line, to: .total)
-                } label: {
-                    Label("Use as total", systemImage: "sum")
-                }
-
-                Button {
-                    changeLineType(for: line, to: .date)
-                } label: {
-                    Label("Extract purchase date", systemImage: "calendar.badge.clock")
-                }
-
-                Button {
-                    changeLineType(for: line, to: .venue)
-                } label: {
-                    Label("Use as venue title", systemImage: "crown")
-                }
-
-                Button {
-                    changeLineType(for: line, to: .address)
-                } label: {
-                    Label("Add to store address", systemImage: "mappin.and.ellipse")
-                }
-
-                Button {
-                    changeLineType(for: line, to: .unknown)
-                } label: {
-                    Label("Don't use this line", systemImage: "xmark")
-                }
+        Menu {
+            Button {
+                changeLineType(for: line, to: .item)
             } label: {
-                Image(systemName: lineIcon(for: line))
+                Label("Cart Item", systemImage: "cart")
             }
+
+            Button {
+                changeLineType(for: line, to: .total)
+            } label: {
+                Label("Total", systemImage: "sum")
+            }
+
+            Button {
+                changeLineType(for: line, to: .date)
+            } label: {
+                Label("Purchase Date", systemImage: "calendar.badge.clock")
+            }
+
+            Button {
+                changeLineType(for: line, to: .venue)
+            } label: {
+                Label("Store Title", systemImage: "crown")
+            }
+
+            Button {
+                changeLineType(for: line, to: .address)
+            } label: {
+                Label("Store Address", systemImage: "mappin.and.ellipse")
+            }
+
+            Button {
+                changeLineType(for: line, to: .unknown)
+            } label: {
+                Label("Don't use", systemImage: "xmark")
+            }
+        } label: {
+            Label {
+                Text(line.text)
+                    .foregroundColor(.primary)
+            } icon: {
+
+                Image(systemName: lineIcon(for: line))
+
+
+            }
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: true, vertical: false)
+            .contentShape(Rectangle())
         }
-        .multilineTextAlignment(.leading)
-        .fixedSize(horizontal: true, vertical: false)
     }
 }
 

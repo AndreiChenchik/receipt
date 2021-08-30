@@ -16,17 +16,17 @@ extension Receipt {
         case draft = 2
         case ready = 3
     }
-
+    
     /// An enum wrapper around **state** field
     var state: ReceiptState {
         get { ReceiptState(rawValue: stateValue) ?? .unknown }
         set { stateValue = newValue.rawValue }
     }
-
+    
     /// A string representation of current **state**
     var stateString: String {
         let stateString: String
-
+        
         switch state {
         case .unknown:
             stateString = "Unknown"
@@ -37,10 +37,10 @@ extension Receipt {
         case .ready:
             stateString = "Ready"
         }
-
+        
         return stateString
     }
-
+    
     /// A *UIImage* wrapper around **scanImageData** field
     var scanImage: UIImage? {
         get {
@@ -48,10 +48,10 @@ extension Receipt {
                let uiImage = UIImage(data: scanImageData) {
                 return uiImage
             }
-
+            
             return nil
         }
-
+        
         set {
             if let newValue = newValue,
                let data = newValue.jpegData(compressionQuality: 0.0) {
@@ -59,26 +59,39 @@ extension Receipt {
             }
         }
     }
-
+    
     /// Wrapper around optional **creationDate** with
     /// nil value been replaced by current date and time
     var receiptCreationDate: Date {
         creationDate ?? Date()
     }
-
+    
     var receiptPurchaseAddress: String { venueAddress ?? "" }
     var receiptPurchaseDate: Date { purchaseDate ?? Date() }
     var receiptTotal: String {
+        guard let total = total else { return "" }
+        
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        if let total = total {
-            return formatter.string(from: total) ?? ""
-        } else {
-            return ""
-        }
+        
+        return formatter.string(from: total) ?? ""
     }
-
+    
     var receiptItems: [Item] {
         items?.allObjects as? [Item] ?? []
+    }
+    
+    var receiptItemsSorted: [Item] {
+        receiptItems.sorted { first, second in
+            if let firstCreation = first.creationDate, let secondCreation = second.creationDate {
+                return firstCreation < secondCreation
+            } else {
+                return first.itemTitle < second.itemTitle
+            }
+        }
+    }
+    
+    var vendorTitle: String {
+        vendor?.vendorTitle ?? "Unknown vendor"
     }
 }

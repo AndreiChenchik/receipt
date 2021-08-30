@@ -72,15 +72,49 @@ extension DataController {
                         item.recognizedLineUUID = itemLine.id
                         item.title = itemLine.label
                         item.price = NSDecimalNumber(value: itemLine.value ?? 0)
+                        item.creationDate = Date()
                     }
 
-                    receipt.state = .draft
+                    if receipt.vendorLineUUID != recognitionData.venueTitle?.id,
+                       let title = recognitionData.venueTitle?.value,
+                       let vendor = searchVendor(for: title, in: context) {
+                        receipt.vendor = vendor
+                        receipt.vendorLineUUID = recognitionData.venueTitle?.id
+                        print("set")
+                    }
+
+                    if receipt.state == .processing {
+                        receipt.state = .draft
+                    }
                 }
 
                 self.save(in: context)
             }
 
             completionHandler()
+        }
+
+        func searchVendor(for title: String, in context: NSManagedObjectContext) -> Vendor? {
+            let vendorsRequest = Vendor.fetchRequest()
+            vendorsRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Vendor.title, ascending: false)]
+
+            let vendorsController = NSFetchedResultsController(
+                fetchRequest: vendorsRequest,
+                managedObjectContext: context,
+                sectionNameKeyPath: nil,
+                cacheName: nil
+            )
+
+            do {
+                try vendorsController.performFetch()
+                let vendors = vendorsController.fetchedObjects ?? []
+                let receiptVendor = vendors.first { !$0.vendorTitle.isEmpty && title.lowercased().contains($0.vendorTitle.lowercased()) }
+                return receiptVendor
+            } catch {
+                print("Failed to fetch receipts: \(error.localizedDescription)")
+            }
+
+            return nil
         }
     }
 }

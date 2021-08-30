@@ -10,13 +10,39 @@ import SwiftUI
 struct ReceiptRowView: View {
     @ObservedObject var receipt: Receipt
 
+    var receiptPurchaseDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+
+        return formatter.string(from: receipt.receiptPurchaseDate)
+    }
+
+    var receiptCreationDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+
+        return formatter.string(from: receipt.receiptCreationDate)
+    }
+
     var normalReceipt: some View {
         NavigationLink(destination: EditReceiptView(receipt: receipt)) {
-            VStack(alignment: .leading) {
-                Text(receipt.receiptCreationDate, style: .date)
-                Text(receipt.receiptCreationDate, style: .time)
-                    .font(.caption)
-                    .opacity(0.5)
+            HStack {
+                Image(systemName: "cart")
+                    .frame(width: 30)
+
+                VStack(alignment: .leading) {
+                    Text(receipt.vendorTitle)
+                    Text(receiptPurchaseDate)
+                        .font(.caption)
+                        .opacity(0.5)
+                }
+
+                Spacer()
+
+                Text(receipt.receiptTotal)
+                Text("€")
             }
         }
     }
@@ -25,15 +51,19 @@ struct ReceiptRowView: View {
         NavigationLink(destination: EditReceiptView(receipt: receipt)) {
             HStack {
                 Image(systemName: "doc.text")
-                    .frame(width: 20, height: 20)
+                    .frame(width: 30)
 
                 VStack(alignment: .leading) {
-                    Text("Unknown")
-                    Text("Draft from 2012.12.12 14:20")
+                    Text(receipt.vendorTitle)
+                    Text(receiptPurchaseDate)
                         .font(.caption)
                         .opacity(0.5)
                 }
-                .padding(.horizontal, 5)
+
+                Spacer()
+
+                Text(receipt.receiptTotal)
+                Text("€")
             }
         }
     }
@@ -44,7 +74,7 @@ struct ReceiptRowView: View {
                 .frame(width: 20, height: 20)
             VStack(alignment: .leading) {
                 Text("Processing")
-                Text("Draft from 2012.12.12 14:20")
+                Text("Draft from \(receiptCreationDate)")
                     .font(.caption)
                     .opacity(0.5)
             }
