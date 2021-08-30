@@ -29,11 +29,17 @@ struct ReceiptRowView: View {
     var normalReceipt: some View {
         NavigationLink(destination: EditReceiptView(receipt: receipt)) {
             HStack {
-                Image(systemName: "cart")
-                    .frame(width: 30)
+                if let vendorIcon = receipt.vendor?.vendorIcon {
+                    Text(vendorIcon)
+                        .font(.title2)
+                        .frame(width: 30)
+                } else {
+                    Image(systemName: "cart")
+                        .frame(width: 30)
+                }
 
                 VStack(alignment: .leading) {
-                    Text(receipt.vendorTitle)
+                    Text(receipt.vendorTitleWithoutIcon)
                     Text(receiptPurchaseDate)
                         .font(.caption)
                         .opacity(0.5)
@@ -54,7 +60,7 @@ struct ReceiptRowView: View {
                     .frame(width: 30)
 
                 VStack(alignment: .leading) {
-                    Text(receipt.vendorTitle)
+                    Text(receipt.vendorTitleWithoutIcon)
                     Text(receiptPurchaseDate)
                         .font(.caption)
                         .opacity(0.5)

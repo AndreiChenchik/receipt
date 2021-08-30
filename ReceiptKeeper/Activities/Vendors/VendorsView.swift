@@ -26,11 +26,29 @@ extension VendorsView {
         }
 
         var body: some View {
-            List {
-                ForEach(viewModel.vendors) { vendor in
-                    Text(vendor.title ?? "Unknown")
+            NavigationView {
+                List {
+                    ForEach(viewModel.vendors) { vendor in
+                        HStack {
+                            if let vendorIcon = vendor.vendorIcon {
+                                Text("\(vendorIcon)")
+                                    .font(.title2)
+                                    .frame(width: 30)
+
+                                Text(vendor.vendorTitleWithoutIcon)
+                            } else {
+                                Text(vendor.vendorTitle)
+                            }
+
+                            Spacer()
+
+                            Text(vendor.vendorReceiptsSumString)
+                            Text(" €")
+                        }
+                    }
+                    .onDelete(perform: viewModel.deleteVendor)
                 }
-                .onDelete(perform: viewModel.deleteVendor)
+                .navigationTitle("Vendors")
             }
         }
     }

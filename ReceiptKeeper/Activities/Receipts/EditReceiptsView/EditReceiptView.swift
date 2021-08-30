@@ -45,6 +45,10 @@ extension EditReceiptView {
 
         var body: some View {
             Form {
+                HStack {
+                    Image(systemName: "crown")
+                        .frame(width: 30)
+
                     Picker("Store", selection: $viewModel.receiptVendorTag) {
                         ForEach(viewModel.vendors) { vendor in
                             Text(vendor.vendorTitle)
@@ -54,6 +58,7 @@ extension EditReceiptView {
                         Label("Add new vendor", systemImage: "plus")
                             .tag(viewModel.addNewVendorTag)
                     }
+                }
 
 
 

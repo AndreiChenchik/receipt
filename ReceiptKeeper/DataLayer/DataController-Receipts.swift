@@ -80,7 +80,6 @@ extension DataController {
                        let vendor = searchVendor(for: title, in: context) {
                         receipt.vendor = vendor
                         receipt.vendorLineUUID = recognitionData.venueTitle?.id
-                        print("set")
                     }
 
                     if receipt.state == .processing {
@@ -108,7 +107,7 @@ extension DataController {
             do {
                 try vendorsController.performFetch()
                 let vendors = vendorsController.fetchedObjects ?? []
-                let receiptVendor = vendors.first { !$0.vendorTitle.isEmpty && title.lowercased().contains($0.vendorTitle.lowercased()) }
+                let receiptVendor = vendors.first { !$0.vendorTitleWithoutIcon.isEmpty && title.lowercased().contains($0.vendorTitleWithoutIcon.lowercased()) }
                 return receiptVendor
             } catch {
                 print("Failed to fetch receipts: \(error.localizedDescription)")

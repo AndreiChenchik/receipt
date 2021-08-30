@@ -94,6 +94,10 @@ extension Receipt {
     var vendorTitle: String {
         vendor?.vendorTitle ?? "Unknown vendor"
     }
+
+    var vendorTitleWithoutIcon: String {
+        vendor?.vendorTitleWithoutIcon ?? "Unknown vendor"
+    }
 }
 
 
@@ -103,7 +107,7 @@ extension Receipt {
         let viewContext = controller.container.viewContext
 
         let vendor = Vendor(context: viewContext)
-        vendor.title = "Example Vendor"
+        vendor.title = "🛃 Example Vendor"
         vendor.uuid = UUID()
 
         let receipt = Receipt(context: viewContext)

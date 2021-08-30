@@ -26,9 +26,10 @@ extension DataController {
     func createSampleData() throws {
         let viewContext = container.viewContext
 
+        let icons = ["♻️ ", "🚸 ", "🔱 ", ""]
         for vendorCounter in 1...3 {
             let vendor = Vendor(context: viewContext)
-            vendor.title = "Vendor \(vendorCounter)"
+            vendor.title = icons.randomElement()! + "Vendor \(vendorCounter)"
             vendor.uuid = UUID()
 
             for _ in 1...3 {
