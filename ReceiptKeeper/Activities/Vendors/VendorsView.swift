@@ -20,33 +20,53 @@ extension VendorsView {
     struct InnerView: View {
         @StateObject var viewModel: ViewModel
 
+        @State private var isShowingNewVendorScreen = false
+
         init(dataController: DataController) {
             let viewModel = ViewModel(dataController: dataController)
             _viewModel = StateObject(wrappedValue: viewModel)
         }
 
+        var newVendorButton: some ToolbarContent {
+            ToolbarItem(placement: .primaryAction) {
+                NavigationLink(destination: VendorEditView(), isActive: $isShowingNewVendorScreen) {
+                    Button(action: {
+                        isShowingNewVendorScreen = true
+                    }) {
+                        Label("Add store", systemImage: "plus")
+                    }
+                }
+            }
+        }
+
+
         var body: some View {
             NavigationView {
                 List {
                     ForEach(viewModel.vendors) { vendor in
-                        HStack {
-                            if let vendorIcon = vendor.vendorIcon {
-                                Text("\(vendorIcon)")
-                                    .font(.title2)
-                                    .frame(width: 30)
+                        NavigationLink(destination: VendorEditView(vendor: vendor)) {
+                            HStack {
+                                if let vendorIcon = vendor.vendorIcon {
+                                    Text("\(vendorIcon)")
+                                        .font(.title2)
+                                        .frame(width: 30)
 
-                                Text(vendor.vendorTitleWithoutIcon)
-                            } else {
-                                Text(vendor.vendorTitle)
+                                    Text(vendor.vendorTitleWithoutIcon)
+                                } else {
+                                    Text(vendor.vendorTitle)
+                                }
+
+                                Spacer()
+
+                                Text(vendor.vendorReceiptsSumString)
+                                Text("€")
                             }
-
-                            Spacer()
-
-                            Text(vendor.vendorReceiptsSumString)
-                            Text(" €")
                         }
                     }
                     .onDelete(perform: viewModel.deleteVendor)
+                }
+                .toolbar {
+                    newVendorButton
                 }
                 .navigationTitle("Vendors")
             }

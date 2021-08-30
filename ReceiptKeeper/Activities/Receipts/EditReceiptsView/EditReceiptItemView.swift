@@ -43,13 +43,16 @@ struct EditReceiptItemView: View {
                 .padding(.top, 11)
                 .frame(width: 30)
 
-            TextEditor(text: $title.onChange(update))
-                .offset(x: -5)
-                .onAppear {
-                    let text = title
-                    title = ""
-                    title = text
-                }
+            ZStack(alignment: .topLeading) {
+                Text(title)
+                    .padding(.top, 8)
+                    .opacity(0)
+
+                TextEditor(text: $title.onChange(update))
+                    .offset(x: -5)
+
+
+            }
 
             VStack(alignment: .leading, spacing: 0) {
                 Text("Price")

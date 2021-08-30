@@ -19,6 +19,7 @@
 		382DD13126D66F9F00C6DA95 /* EditReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */; };
 		382DD13326D7B9AB00C6DA95 /* RecognizedContentLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */; };
 		3843197926DD375500E78F73 /* Character-Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3843197826DD375500E78F73 /* Character-Emoji.swift */; };
+		3843197D26DD50FC00E78F73 /* VendorEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3843197C26DD50FC00E78F73 /* VendorEditView.swift */; };
 		3859F9CB26C26EA200F2BEE5 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3859F9CA26C26EA200F2BEE5 /* UIImage.swift */; };
 		385DBC2426D9119A00B0D245 /* Binding-onChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2326D9119A00B0D245 /* Binding-onChange.swift */; };
 		385DBC2726D98B7B00B0D245 /* VendorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2626D98B7B00B0D245 /* VendorsView.swift */; };
@@ -62,6 +63,7 @@
 		382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReceiptViewModel.swift; sourceTree = "<group>"; };
 		382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedContentLineView.swift; sourceTree = "<group>"; };
 		3843197826DD375500E78F73 /* Character-Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character-Emoji.swift"; sourceTree = "<group>"; };
+		3843197C26DD50FC00E78F73 /* VendorEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendorEditView.swift; sourceTree = "<group>"; };
 		3859F9CA26C26EA200F2BEE5 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		385DBC2326D9119A00B0D245 /* Binding-onChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding-onChange.swift"; sourceTree = "<group>"; };
 		385DBC2626D98B7B00B0D245 /* VendorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendorsView.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				385DBC2626D98B7B00B0D245 /* VendorsView.swift */,
+				3843197C26DD50FC00E78F73 /* VendorEditView.swift */,
 				385DBC2826D98BED00B0D245 /* VendorsViewModel.swift */,
 			);
 			path = Vendors;
@@ -364,6 +367,7 @@
 				38E9908426C19B52007FF507 /* CGRect.swift in Sources */,
 				385DBC3526DD069B00B0D245 /* EmojiTextField.swift in Sources */,
 				3843197926DD375500E78F73 /* Character-Emoji.swift in Sources */,
+				3843197D26DD50FC00E78F73 /* VendorEditView.swift in Sources */,
 				385DBC2426D9119A00B0D245 /* Binding-onChange.swift in Sources */,
 				382DD13326D7B9AB00C6DA95 /* RecognizedContentLineView.swift in Sources */,
 				387E0A0026D2D00E007D0542 /* RecognitionDataTransformer.swift in Sources */,

@@ -53,3 +53,16 @@ extension Vendor {
         return formatter.string(from: vendorReceiptsSum) ?? ""
     }
 }
+
+extension Vendor {
+    static var example: Vendor {
+        let controller = DataController.preview
+        let viewContext = controller.container.viewContext
+
+        let vendor = Vendor(context: viewContext)
+        vendor.title = "🛃 Example Vendor"
+        vendor.uuid = UUID()
+        
+        return vendor
+    }
+}
