@@ -26,8 +26,12 @@ struct ReceiptMapView: View {
     }
 }
 
-//struct ReceiptMapView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReceiptMapView()
-//    }
-//}
+struct ReceiptMapView_Previews: PreviewProvider {
+    static let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 41.9, longitude: 12.5),
+                                           span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+    static var previews: some View {
+        Form {
+            ReceiptMapView(region: region)
+        }
+    }
+}

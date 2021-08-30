@@ -88,7 +88,10 @@ extension ReceiptsView {
 }
 
 struct ReceiptsView_Previews: PreviewProvider {
+    static var dataController = DataController.preview
+
     static var previews: some View {
         ReceiptsView()
+            .environmentObject(dataController)
     }
 }

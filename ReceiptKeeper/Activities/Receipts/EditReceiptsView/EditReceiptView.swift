@@ -133,8 +133,11 @@ extension EditReceiptView {
     }
 }
 
-//struct EditReceiptView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditReceiptView()
-//    }
-//}
+struct EditReceiptView_Previews: PreviewProvider {
+    static var dataController = DataController.preview
+
+    static var previews: some View {
+        EditReceiptView(receipt: Receipt.example)
+            .environmentObject(dataController)
+    }
+}

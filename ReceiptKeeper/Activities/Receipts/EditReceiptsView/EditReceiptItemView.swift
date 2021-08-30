@@ -68,8 +68,12 @@ struct EditReceiptItemView: View {
     }
 }
 
-//struct EditReceiptItemView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditReceiptItemView_swift()
-//    }
-//}
+struct EditReceiptItemView_Previews: PreviewProvider {
+    static var dataController = DataController.preview
+
+    static var previews: some View {
+        Form {
+            EditReceiptItemView(item: Item.example)
+        }
+    }
+}

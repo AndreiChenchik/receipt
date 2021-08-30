@@ -97,8 +97,10 @@ struct ReceiptRowView: View {
     }
 }
 
-//struct ReceiptRowView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReceiptRowView()
-//    }
-//}
+struct ReceiptRowView_Previews: PreviewProvider {
+    static var previews: some View {
+        Form {
+            ReceiptRowView(receipt: Receipt.example)
+        }
+    }
+}

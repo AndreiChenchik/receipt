@@ -17,3 +17,19 @@ extension Item {
     }
     var itemTitle: String { title ?? "Unknown item" }
 }
+
+extension Item {
+    static var example: Item {
+        let controller = DataController.preview
+        let viewContext = controller.container.viewContext
+
+        let item = Item(context: viewContext)
+        item.title = "6 x ESTRELLA DAMM LLAUNA"
+        item.creationDate = Date()
+
+        let price = Double.random(in: 0...4.99)
+        item.price = NSDecimalNumber(value: price)
+
+        return item
+    }
+}
