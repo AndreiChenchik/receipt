@@ -146,8 +146,8 @@
 			children = (
 				380311E326D4348300B8B168 /* EditReceiptView.swift */,
 				382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */,
-				385DBC3226DCD42C00B0D245 /* ReceiptMapView.swift */,
 				385DBC3026DB7EBC00B0D245 /* EditReceiptItemView.swift */,
+				385DBC3226DCD42C00B0D245 /* ReceiptMapView.swift */,
 				382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */,
 				382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */,
 				382DD12E26D665F400C6DA95 /* ScanImageView.swift */,

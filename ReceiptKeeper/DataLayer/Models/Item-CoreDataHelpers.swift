@@ -24,10 +24,10 @@ extension Item {
         let viewContext = controller.container.viewContext
 
         let item = Item(context: viewContext)
-        item.title = "6 x ESTRELLA DAMM LLAUNA"
+        item.title = "Nayeco Comedero Inox.\nN. Tiquet:\n-\nAntideslizante 300ml. 12cm G\nPVP Unid.: 4,95"
         item.creationDate = Date()
 
-        let price = Double.random(in: 0...4.99)
+        let price = Double(Int.random(in: 0...499)) / 100.0
         item.price = NSDecimalNumber(value: price)
 
         return item

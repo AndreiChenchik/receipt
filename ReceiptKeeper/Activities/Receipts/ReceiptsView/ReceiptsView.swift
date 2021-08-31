@@ -43,7 +43,7 @@ extension ReceiptsView {
         var receiptsList: some View {
             List {
                 receiptsListSection(from: viewModel.draftReceipts,
-                                    header: "Review Drafts (\(viewModel.draftReceipts.count))")
+                                    header: "Drafts for review (\(viewModel.draftReceipts.count))")
 
                 receiptsListSection(from: viewModel.readyReceipts,
                                     header: "Purchases")

@@ -37,37 +37,38 @@ struct EditReceiptItemView: View {
     }
 
     var body: some View {
-        HStack(alignment:.top) {
+        HStack(alignment: .top) {
             Image(systemName: "cart")
                 .foregroundColor(.accentColor)
-                .padding(.top, 11)
-                .frame(width: 30)
+                .frame(width: 30, height: 30)
 
             ZStack(alignment: .topLeading) {
                 Text(title)
-                    .padding(.top, 8)
+                    .fixedSize(horizontal: true, vertical: false)
                     .opacity(0)
 
                 TextEditor(text: $title.onChange(update))
-                    .offset(x: -5)
-
-
+                    .padding(.vertical, -9)
+                    .padding(.horizontal, -5)
             }
+            .padding(.horizontal, 5)
 
             VStack(alignment: .leading, spacing: 0) {
                 Text("Price")
                     .font(.caption)
                     .foregroundColor(.secondary)
+                
                 HStack(spacing: 0) {
                     TextField("Item price", text: $priceString.onChange(update), prompt: Text("0,00"))
                         .keyboardType(.decimalPad)
+
                     Text("€")
                 }
             }
-            .padding(.top, 7)
             .padding(.bottom, 5)
-            .frame(width: 55)
+            .frame(width: 50)
         }
+        .padding(.vertical, 4)
     }
 }
 

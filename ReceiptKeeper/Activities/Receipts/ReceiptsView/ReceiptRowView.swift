@@ -32,10 +32,11 @@ struct ReceiptRowView: View {
                 if let vendorIcon = receipt.vendor?.vendorIcon {
                     Text(vendorIcon)
                         .font(.title2)
-                        .frame(width: 30)
+                        .frame(width: 30, height: 30)
                 } else {
                     Image(systemName: "cart")
-                        .frame(width: 30)
+                        .font(.title2)
+                        .frame(width: 30, height: 30)
                 }
 
                 VStack(alignment: .leading) {
@@ -57,7 +58,8 @@ struct ReceiptRowView: View {
         NavigationLink(destination: EditReceiptView(receipt: receipt)) {
             HStack {
                 Image(systemName: "doc.text")
-                    .frame(width: 30)
+                    .font(.title2)
+                    .frame(width: 30, height: 30)
 
                 VStack(alignment: .leading) {
                     Text(receipt.vendorTitleWithoutIcon)
@@ -77,14 +79,14 @@ struct ReceiptRowView: View {
     var processingReceipt: some View {
         HStack {
             ProgressView()
-                .frame(width: 20, height: 20)
+                .frame(width: 30, height: 30)
+            
             VStack(alignment: .leading) {
                 Text("Processing")
                 Text("Draft from \(receiptCreationDate)")
                     .font(.caption)
                     .opacity(0.5)
             }
-            .padding(.horizontal, 5)
         }
     }
 

@@ -45,11 +45,11 @@ extension EditReceiptView {
 
         var body: some View {
             Form {
-                    Picker("Store", selection: $viewModel.receiptVendor) {
-                        ForEach(viewModel.vendors) { vendor in
-                            Text(vendor.vendorTitle)
-                        }
+                Picker("Store", selection: $viewModel.receiptVendor) {
+                    ForEach(viewModel.vendors) { vendor in
+                        Text(vendor.vendorTitle)
                     }
+                }
 
                 Section(header: Text("Purchase Date & location")) {
                     HStack {

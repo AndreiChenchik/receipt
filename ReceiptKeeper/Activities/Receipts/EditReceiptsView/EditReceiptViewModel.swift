@@ -21,8 +21,10 @@ extension EditReceiptView {
         @Published var vendors = [Vendor]()
 
         @Published var venueTitle = ""
-        @Published var receiptVendor: Vendor? {
+        @Published var receiptVendor = Vendor() {
             didSet {
+                guard receiptVendor != receipt.vendor else { return }
+
                 receipt.vendor = receiptVendor
                 dataController.saveIfNeeded()
             }
@@ -96,7 +98,10 @@ extension EditReceiptView {
             receiptPurchaseAddress = receipt.receiptPurchaseAddress
             loadCoordinates(from: receiptPurchaseAddress)
 
-            receiptVendor = receipt.vendor
+            if let vendor = receipt.vendor {
+                receiptVendor = vendor
+            }
+
             venueTitle = receipt.recognitionData?.venueTitle?.value ?? ""
         }
 
