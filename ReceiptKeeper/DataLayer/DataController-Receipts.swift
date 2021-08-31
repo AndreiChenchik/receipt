@@ -110,7 +110,7 @@ extension DataController {
                 let receiptVendor = vendors.first { !$0.vendorTitleWithoutIcon.isEmpty && title.lowercased().contains($0.vendorTitleWithoutIcon.lowercased()) }
                 return receiptVendor
             } catch {
-                print("Failed to fetch receipts: \(error.localizedDescription)")
+                print("Error fetching receipts array: \(error.localizedDescription)")
             }
 
             return nil

@@ -40,7 +40,7 @@ extension ReceiptsView {
                 try receiptsController.performFetch()
                 allReceipts = receiptsController.fetchedObjects ?? []
             } catch {
-                print("Failed to fetch receipts: \(error.localizedDescription)")
+                print("Error fetching receipts array: \(error.localizedDescription)")
             }
         }
 

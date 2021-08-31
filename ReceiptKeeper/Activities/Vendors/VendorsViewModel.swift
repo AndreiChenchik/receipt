@@ -36,7 +36,7 @@ extension VendorsView {
                 try resultsController.performFetch()
                 vendors = resultsController.fetchedObjects ?? []
             } catch {
-                print("Failed to fetch vendors: \(error.localizedDescription)")
+                print("Error fetching vendors array: \(error.localizedDescription)")
             }
         }
 
