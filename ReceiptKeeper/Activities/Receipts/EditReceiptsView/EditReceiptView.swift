@@ -55,8 +55,6 @@ extension EditReceiptView {
                             .tag(viewModel.addNewVendorTag)
                     }
 
-
-
                 Section(header: Text("Purchase Date & location")) {
                     HStack {
                         Image(systemName: "calendar.badge.clock")

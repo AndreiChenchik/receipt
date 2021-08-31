@@ -52,7 +52,7 @@ extension ReceiptsView.ViewModel {
         do {
             try imageRequestHandler.perform([recognizeTextRequest, recognizeCharsRequest])
         } catch let error {
-            print(error.localizedDescription)
+            print("Failed to recognize and extract contents from image: \(error.localizedDescription)")
         }
 
         if let textObservations = textObservations, let charObservations = charObservations {
