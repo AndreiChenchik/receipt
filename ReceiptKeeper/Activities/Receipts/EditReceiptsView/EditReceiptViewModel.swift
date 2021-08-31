@@ -20,29 +20,11 @@ extension EditReceiptView {
 
         @Published var vendors = [Vendor]()
 
-        let addNewVendorTag = "addNewVendor"
         @Published var venueTitle = ""
-        @Published var isShowingNewVendorAlert = false {
+        @Published var receiptVendor: Vendor? {
             didSet {
-                if isShowingNewVendorAlert == false && receiptVendorTag == "addNewVendor" {
-                    receiptVendorTag = "none"
-                }
-            }
-        }
-        @Published var receiptVendorTag = "none" {
-            didSet {
-                guard receiptVendorTag != "none" else { return }
-                guard receipt.vendor?.uuid?.uuidString != receiptVendorTag else { return }
-
-                if receiptVendorTag == addNewVendorTag {
-                    isShowingNewVendorAlert = true
-                    return
-                }
-
-                if let receiptVendor = vendors.first(where: { $0.uuid?.uuidString == receiptVendorTag }) {
-                    receipt.vendor = receiptVendor
-                    dataController.saveIfNeeded()
-                }
+                receipt.vendor = receiptVendor
+                dataController.saveIfNeeded()
             }
         }
 
@@ -114,7 +96,7 @@ extension EditReceiptView {
             receiptPurchaseAddress = receipt.receiptPurchaseAddress
             loadCoordinates(from: receiptPurchaseAddress)
 
-            receiptVendorTag = receipt.vendor?.uuid?.uuidString ?? ""
+            receiptVendor = receipt.vendor
             venueTitle = receipt.recognitionData?.venueTitle?.value ?? ""
         }
 
@@ -199,22 +181,6 @@ extension EditReceiptView {
             }
 
             dataController.saveIfNeeded()
-        }
-
-        func addVendor(with title: String?) {
-            guard let title = title else { return }
-
-            let vendor = Vendor(context: dataController.viewContext)
-            let uuid = UUID()
-
-            vendor.title = title
-            vendor.uuid = uuid
-
-            receipt.vendor = vendor
-            receiptVendorTag = uuid.uuidString
-
-            dataController.saveIfNeeded()
-            fetchVendors()
         }
 
         var isShowingRecognizedData: Bool {

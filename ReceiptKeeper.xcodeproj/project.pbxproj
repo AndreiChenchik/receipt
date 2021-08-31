@@ -24,7 +24,6 @@
 		385DBC2426D9119A00B0D245 /* Binding-onChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2326D9119A00B0D245 /* Binding-onChange.swift */; };
 		385DBC2726D98B7B00B0D245 /* VendorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2626D98B7B00B0D245 /* VendorsView.swift */; };
 		385DBC2926D98BED00B0D245 /* VendorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2826D98BED00B0D245 /* VendorsViewModel.swift */; };
-		385DBC2B26D9973E00B0D245 /* TextFieldAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2A26D9973E00B0D245 /* TextFieldAlertViewController.swift */; };
 		385DBC2D26DB772800B0D245 /* Vendor-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2C26DB772800B0D245 /* Vendor-CoreDataHelpers.swift */; };
 		385DBC2F26DB780E00B0D245 /* Item-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2E26DB780E00B0D245 /* Item-CoreDataHelpers.swift */; };
 		385DBC3126DB7EBC00B0D245 /* EditReceiptItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC3026DB7EBC00B0D245 /* EditReceiptItemView.swift */; };
@@ -67,7 +66,6 @@
 		385DBC2326D9119A00B0D245 /* Binding-onChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding-onChange.swift"; sourceTree = "<group>"; };
 		385DBC2626D98B7B00B0D245 /* VendorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendorsView.swift; sourceTree = "<group>"; };
 		385DBC2826D98BED00B0D245 /* VendorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendorsViewModel.swift; sourceTree = "<group>"; };
-		385DBC2A26D9973E00B0D245 /* TextFieldAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewController.swift; sourceTree = "<group>"; };
 		385DBC2C26DB772800B0D245 /* Vendor-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vendor-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 		385DBC2E26DB780E00B0D245 /* Item-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 		385DBC3026DB7EBC00B0D245 /* EditReceiptItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReceiptItemView.swift; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 				382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */,
 				382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */,
 				382DD12E26D665F400C6DA95 /* ScanImageView.swift */,
-				385DBC2A26D9973E00B0D245 /* TextFieldAlertViewController.swift */,
 			);
 			path = EditReceiptsView;
 			sourceTree = "<group>";
@@ -349,7 +346,6 @@
 				385DBC2926D98BED00B0D245 /* VendorsViewModel.swift in Sources */,
 				382DD12D26D663EF00C6DA95 /* RecognizedContentView.swift in Sources */,
 				380311F226D63F7400B8B168 /* ReceiptRowView.swift in Sources */,
-				385DBC2B26D9973E00B0D245 /* TextFieldAlertViewController.swift in Sources */,
 				38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */,
 				386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */,
 				385DBC2726D98B7B00B0D245 /* VendorsView.swift in Sources */,

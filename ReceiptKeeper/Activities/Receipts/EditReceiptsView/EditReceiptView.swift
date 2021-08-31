@@ -45,14 +45,10 @@ extension EditReceiptView {
 
         var body: some View {
             Form {
-                    Picker("Store", selection: $viewModel.receiptVendorTag) {
+                    Picker("Store", selection: $viewModel.receiptVendor) {
                         ForEach(viewModel.vendors) { vendor in
                             Text(vendor.vendorTitle)
-                                .tag(vendor.vendorTag)
                         }
-
-                        Label("Add new vendor", systemImage: "plus")
-                            .tag(viewModel.addNewVendorTag)
                     }
 
                 Section(header: Text("Purchase Date & location")) {
@@ -118,11 +114,6 @@ extension EditReceiptView {
                     }
                 }
             }
-            .alert(isPresented: $viewModel.isShowingNewVendorAlert,
-                   TextFieldAlert(title: "Create new vendor",
-                                  message: "Set a name for new vendor",
-                                  defaultText: viewModel.venueTitle,
-                                  action: self.viewModel.addVendor))
             .toolbar {
                 saveButton
             }
