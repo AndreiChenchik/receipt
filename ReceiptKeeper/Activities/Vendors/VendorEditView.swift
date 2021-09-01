@@ -37,8 +37,8 @@ extension VendorEditView {
                 _vendor = ObservedObject(wrappedValue: vendor)
             } else {
                 let newVendor = Vendor(context: dataController.viewContext)
-                newVendor.uuid = UUID()
                 newVendor.title = vendorTitle
+
                 linkedReceipt?.vendor = vendor
                 linkedReceipt?.objectWillChange.send()
                 dataController.saveIfNeeded()

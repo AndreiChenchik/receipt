@@ -29,6 +29,10 @@
 		385DBC3126DB7EBC00B0D245 /* EditReceiptItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC3026DB7EBC00B0D245 /* EditReceiptItemView.swift */; };
 		385DBC3326DCD42C00B0D245 /* ReceiptMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC3226DCD42C00B0D245 /* ReceiptMapView.swift */; };
 		385DBC3726DD1D2600B0D245 /* DataController-Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC3626DD1D2600B0D245 /* DataController-Previews.swift */; };
+		38696D6526DF556A00835E9E /* TypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6426DF556900835E9E /* TypesView.swift */; };
+		38696D6726DF579200835E9E /* TypesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6626DF579200835E9E /* TypesViewModel.swift */; };
+		38696D6926DF596A00835E9E /* TypeEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6826DF596A00835E9E /* TypeEditView.swift */; };
+		38696D6B26DF5B4700835E9E /* ItemType-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6A26DF5B4700835E9E /* ItemType-CoreDataHelpers.swift */; };
 		386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */; };
 		386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6B26BABE0400F1E4AB /* ContentView.swift */; };
 		386EBE6E26BABE0400F1E4AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386EBE6D26BABE0400F1E4AB /* Assets.xcassets */; };
@@ -71,6 +75,10 @@
 		385DBC3026DB7EBC00B0D245 /* EditReceiptItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReceiptItemView.swift; sourceTree = "<group>"; };
 		385DBC3226DCD42C00B0D245 /* ReceiptMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptMapView.swift; sourceTree = "<group>"; };
 		385DBC3626DD1D2600B0D245 /* DataController-Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Previews.swift"; sourceTree = "<group>"; };
+		38696D6426DF556900835E9E /* TypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypesView.swift; sourceTree = "<group>"; };
+		38696D6626DF579200835E9E /* TypesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypesViewModel.swift; sourceTree = "<group>"; };
+		38696D6826DF596A00835E9E /* TypeEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeEditView.swift; sourceTree = "<group>"; };
+		38696D6A26DF5B4700835E9E /* ItemType-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemType-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 		386EBE6626BABE0400F1E4AB /* ReceiptKeeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReceiptKeeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptKeeperApp.swift; sourceTree = "<group>"; };
 		386EBE6B26BABE0400F1E4AB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -165,6 +173,16 @@
 			path = Vendors;
 			sourceTree = "<group>";
 		};
+		38696D6326DF554300835E9E /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				38696D6426DF556900835E9E /* TypesView.swift */,
+				38696D6626DF579200835E9E /* TypesViewModel.swift */,
+				38696D6826DF596A00835E9E /* TypeEditView.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
 		386EBE5D26BABE0400F1E4AB = {
 			isa = PBXGroup;
 			children = (
@@ -232,6 +250,7 @@
 				38C1ACC226D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift */,
 				385DBC2E26DB780E00B0D245 /* Item-CoreDataHelpers.swift */,
 				385DBC2C26DB772800B0D245 /* Vendor-CoreDataHelpers.swift */,
+				38696D6A26DF5B4700835E9E /* ItemType-CoreDataHelpers.swift */,
 				380311F026D585C500B8B168 /* RecognitionData */,
 			);
 			path = Models;
@@ -240,6 +259,7 @@
 		38E89E3A26BD6A28006A0D49 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				38696D6326DF554300835E9E /* Types */,
 				385DBC2526D98B6700B0D245 /* Vendors */,
 				3872875726BF1871008B312B /* Receipts */,
 			);
@@ -329,13 +349,16 @@
 			files = (
 				388C181026C25FBE009D0F23 /* Baseline.swift in Sources */,
 				380311EB26D5715700B8B168 /* ReceiptsViewModel-Recognizer.swift in Sources */,
+				38696D6526DF556A00835E9E /* TypesView.swift in Sources */,
 				380311E426D4348300B8B168 /* EditReceiptView.swift in Sources */,
 				38E89E4726BD9731006A0D49 /* Line.swift in Sources */,
+				38696D6B26DF5B4700835E9E /* ItemType-CoreDataHelpers.swift in Sources */,
 				387E09F926CEA5E1007D0542 /* Main.xcdatamodeld in Sources */,
 				385DBC2D26DB772800B0D245 /* Vendor-CoreDataHelpers.swift in Sources */,
 				380311E626D4454C00B8B168 /* RecognizedContent.swift in Sources */,
 				385DBC2F26DB780E00B0D245 /* Item-CoreDataHelpers.swift in Sources */,
 				387E09FC26CEE57C007D0542 /* RecognitionData.swift in Sources */,
+				38696D6726DF579200835E9E /* TypesViewModel.swift in Sources */,
 				38F20D5B26BBFE0E007D0A0E /* ReceiptsView.swift in Sources */,
 				382DD13126D66F9F00C6DA95 /* EditReceiptViewModel.swift in Sources */,
 				386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */,
@@ -347,6 +370,7 @@
 				382DD12D26D663EF00C6DA95 /* RecognizedContentView.swift in Sources */,
 				380311F226D63F7400B8B168 /* ReceiptRowView.swift in Sources */,
 				38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */,
+				38696D6926DF596A00835E9E /* TypeEditView.swift in Sources */,
 				386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */,
 				385DBC2726D98B7B00B0D245 /* VendorsView.swift in Sources */,
 				385DBC3126DB7EBC00B0D245 /* EditReceiptItemView.swift in Sources */,
