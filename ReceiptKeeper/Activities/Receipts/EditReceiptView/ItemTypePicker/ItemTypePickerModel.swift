@@ -59,6 +59,7 @@ extension ItemTypePicker {
             do {
                 try resultsController.performFetch()
                 types = resultsController.fetchedObjects ?? []
+                types.sort { $0.typeTitleWithoutIcon < $1.typeTitleWithoutIcon}
             } catch {
                 print("Error fetching vendors array: \(error.localizedDescription)")
             }
@@ -66,7 +67,7 @@ extension ItemTypePicker {
 
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
             if let newTypes = controller.fetchedObjects as? [ItemType] {
-                types = newTypes
+                types = newTypes.sorted { $0.typeTitleWithoutIcon < $1.typeTitleWithoutIcon}
             }
         }
 
