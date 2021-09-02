@@ -57,16 +57,19 @@ class DataController: ObservableObject {
         return managedObjectModel
     }()
 
-    /// Saves our CoreData context iff there are changes. This silently ignores
-    /// any errors caused by saving, but this should be fine because our
-    /// attributes are options.
-    func saveIfNeeded() {
-        if viewContext.hasChanges {
+    /// Saves our CoreData context iff there are changes. This will rollback if
+    /// any errors caused by saving.
+    /// - Parameter context: in what context should changes be saved,
+    /// will default to viewContext.
+    func saveIfNeeded(in context: NSManagedObjectContext? = nil) {
+        let context = context ?? viewContext
+
+        if context.hasChanges {
             do {
-                try viewContext.save()
+                try context.save()
             } catch {
                 print("Error saving your data: \(error.localizedDescription)")
-                viewContext.rollback()
+                context.rollback()
             }
         }
     }
@@ -77,49 +80,4 @@ class DataController: ObservableObject {
     }
 }
 
-extension DataController {
-    enum ChangeType {
-      case inserted, deleted, updated
-
-      var userInfoKey: String {
-        switch self {
-        case .inserted: return NSInsertedObjectIDsKey
-        case .deleted: return NSDeletedObjectIDsKey
-        case .updated: return NSUpdatedObjectIDsKey
-        }
-      }
-    }
-
-    private func managedObject(with id: NSManagedObjectID, changeType: ChangeType, from notification: Notification, in context: NSManagedObjectContext) -> NSManagedObject? {
-        guard let objects = notification.userInfo?[changeType.userInfoKey] as? Set<NSManagedObjectID>,
-              objects.contains(id) else {
-                  return nil
-              }
-
-        return context.object(with: id)
-    }
-
-    func publisher<T: NSManagedObject>(for managedObject: T,
-                                       in context: NSManagedObjectContext,
-                                       changeTypes: [ChangeType]) -> AnyPublisher<(object: T?, type: ChangeType), Never> {
-
-        let notification = NSManagedObjectContext.didMergeChangesObjectIDsNotification
-
-        return NotificationCenter.default.publisher(for: notification, object: context)
-            .compactMap({ notification in
-                for type in changeTypes {
-                    if let object = self.managedObject(with: managedObject.objectID,
-                                                       changeType: type,
-                                                       from: notification,
-                                                       in: context) as? T {
-
-                        return (object, type)
-                    }
-                }
-                return nil
-            })
-            .eraseToAnyPublisher()
-
-    }
-}
 

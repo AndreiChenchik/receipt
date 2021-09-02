@@ -9,17 +9,6 @@ import UIKit
 import CoreData
 
 extension DataController {
-    func save(in context: NSManagedObjectContext) {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print("Error saving your data: \(error.localizedDescription)")
-                context.rollback()
-            }
-        }
-    }
-
     func createReceipt(with scanImage: UIImage? = nil, _ completionHandler: @escaping (NSManagedObjectID) -> Void = {_ in}) {
         container.performBackgroundTask { context in
             let receipt = Receipt(context: context)
@@ -32,7 +21,7 @@ extension DataController {
                 receipt.state = .draft
             }
 
-            self.save(in: context)
+            self.saveIfNeeded(in: context)
             completionHandler(receipt.objectID)
         }
     }
@@ -87,7 +76,7 @@ extension DataController {
                     }
                 }
 
-                self.save(in: context)
+                self.saveIfNeeded(in: context)
             }
 
             completionHandler()
