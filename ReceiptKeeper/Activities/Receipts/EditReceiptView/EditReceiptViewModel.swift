@@ -20,16 +20,7 @@ extension EditReceiptView {
 
         @Published var venueTitle = ""
 
-        @Published var vendors = [Vendor]() {
-            didSet {
-                let newVendorIndex = vendors.firstIndex { receipt.vendor == $0 } ?? -1
-
-                if newVendorIndex != selectedVendorIndex {
-                    selectedVendorIndex = newVendorIndex
-                }
-            }
-        }
-
+        @Published var vendors = [Vendor]() { didSet { updateVendorIndex() } }
         @Published var selectedVendorIndex = -1 {
             didSet {
                 if selectedVendorIndex != -1 {
@@ -110,8 +101,9 @@ extension EditReceiptView {
             receiptPurchaseAddress = receipt.receiptPurchaseAddress
             loadCoordinates(from: receiptPurchaseAddress)
 
-            selectedVendorIndex = vendors.firstIndex { receipt.vendor == $0 } ?? -1
-
+            fetchVendors()
+            updateVendorIndex()
+            
             venueTitle = receipt.recognitionData?.venueTitle?.value ?? ""
         }
 
@@ -171,6 +163,15 @@ extension EditReceiptView {
             }
         }
 
+        func updateVendorIndex() {
+            let newVendorIndex = vendors.firstIndex { receipt.vendor == $0 } ?? -1
+
+            if newVendorIndex != selectedVendorIndex {
+                selectedVendorIndex = newVendorIndex
+            }
+        }
+
+
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
             if let newVendors = controller.fetchedObjects as? [Vendor] {
                 vendors = newVendors
@@ -179,6 +180,7 @@ extension EditReceiptView {
 
         func addItem() {
             let item = Item(context: dataController.viewContext)
+            item.creationDate = Date()
             item.receipt = receipt
 
             dataController.saveIfNeeded()
