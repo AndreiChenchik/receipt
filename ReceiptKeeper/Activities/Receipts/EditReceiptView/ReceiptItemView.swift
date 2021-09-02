@@ -1,19 +1,17 @@
 //
-//  EditReceiptItemView.swift
-//  EditReceiptItemView
+//  ReceiptItemView.swift
+//  ReceiptItemView
 //
 //  Created by Andrei Chenchik on 29/8/21.
 //
 
 import SwiftUI
 
-struct EditReceiptItemView: View {
+struct ReceiptItemView: View {
     @ObservedObject var item: Item
 
     @State private var title: String
     @State private var priceString: String
-
-    @EnvironmentObject var dataController: DataController
 
     init(item: Item) {
         self.item = item
@@ -32,19 +30,14 @@ struct EditReceiptItemView: View {
         } else {
             priceString = item.itemPriceString
         }
-
-        dataController.saveIfNeeded()
     }
 
     var body: some View {
         HStack(alignment: .top) {
-            Image(systemName: "cart")
-                .foregroundColor(.accentColor)
-                .frame(width: 30, height: 30)
+            ItemTypePicker(item: item)
 
             ZStack(alignment: .topLeading) {
                 Text(title)
-                    .fixedSize(horizontal: true, vertical: false)
                     .opacity(0)
 
                 TextEditor(text: $title.onChange(update))
@@ -61,7 +54,7 @@ struct EditReceiptItemView: View {
                 HStack(spacing: 0) {
                     TextField("Item price", text: $priceString.onChange(update), prompt: Text("0,00"))
                         .keyboardType(.decimalPad)
-
+                    
                     Text("€")
                 }
             }
@@ -72,12 +65,12 @@ struct EditReceiptItemView: View {
     }
 }
 
-struct EditReceiptItemView_Previews: PreviewProvider {
+struct ReceiptItemView_Previews: PreviewProvider {
     static var dataController = DataController.preview
 
     static var previews: some View {
         Form {
-            EditReceiptItemView(item: Item.example)
+            ReceiptItemView(item: Item.example)
         }
     }
 }

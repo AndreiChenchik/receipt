@@ -74,7 +74,7 @@ extension EditReceiptView {
 
                 Section(header: Text("Shopping cart")) {
                     ForEach(viewModel.receipt.receiptItemsSorted) { item in
-                        EditReceiptItemView(item: item)
+                        ReceiptItemView(item: item)
                     }
                     .onDelete(perform: viewModel.deleteItems)
                     
