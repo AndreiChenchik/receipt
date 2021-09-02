@@ -46,6 +46,7 @@
 		388C181026C25FBE009D0F23 /* Baseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388C180F26C25FBE009D0F23 /* Baseline.swift */; };
 		38B786FB26E0B4980011A53A /* ItemTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B786FA26E0B4980011A53A /* ItemTypePicker.swift */; };
 		38B786FD26E0B5690011A53A /* ItemTypePickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B786FC26E0B5690011A53A /* ItemTypePickerModel.swift */; };
+		38B7870126E112CE0011A53A /* DataController-Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B7870026E112CE0011A53A /* DataController-Publisher.swift */; };
 		38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9226BABED900CE2946 /* ScannerView.swift */; };
 		38C1ACC326D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C1ACC226D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift */; };
 		38E89E4726BD9731006A0D49 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E4626BD9731006A0D49 /* Line.swift */; };
@@ -96,6 +97,7 @@
 		388C180F26C25FBE009D0F23 /* Baseline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Baseline.swift; sourceTree = "<group>"; };
 		38B786FA26E0B4980011A53A /* ItemTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypePicker.swift; sourceTree = "<group>"; };
 		38B786FC26E0B5690011A53A /* ItemTypePickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypePickerModel.swift; sourceTree = "<group>"; };
+		38B7870026E112CE0011A53A /* DataController-Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Publisher.swift"; sourceTree = "<group>"; };
 		38BB9B9226BABED900CE2946 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		38BB9B9426BAC05E00CE2946 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		38C1ACC226D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Receipt-CoreDataHelpers.swift"; sourceTree = "<group>"; };
@@ -121,10 +123,8 @@
 			isa = PBXGroup;
 			children = (
 				38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */,
+				38B786FF26E1113D0011A53A /* ReceiptsViewModel */,
 				380311F126D63F7400B8B168 /* ReceiptRowView.swift */,
-				3872875826BF1EE8008B312B /* ReceiptsViewModel.swift */,
-				380311EA26D5715700B8B168 /* ReceiptsViewModel-Recognizer.swift */,
-				380311F326D656F700B8B168 /* RecognizedObservations.swift */,
 			);
 			path = ReceiptsView;
 			sourceTree = "<group>";
@@ -134,6 +134,7 @@
 			children = (
 				38C1ACC126D3A1B00030C6C0 /* Models */,
 				3872875126BF11E5008B312B /* DataController.swift */,
+				38B7870026E112CE0011A53A /* DataController-Publisher.swift */,
 				380311EE26D57AF500B8B168 /* DataController-Receipts.swift */,
 				385DBC3626DD1D2600B0D245 /* DataController-Previews.swift */,
 			);
@@ -157,9 +158,9 @@
 			isa = PBXGroup;
 			children = (
 				380311E326D4348300B8B168 /* EditReceiptView.swift */,
+				382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */,
 				385DBC3026DB7EBC00B0D245 /* ReceiptItemView.swift */,
 				385DBC3226DCD42C00B0D245 /* ReceiptMapView.swift */,
-				382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */,
 				38B786FE26E0B5730011A53A /* ItemTypePicker */,
 				38696D6D26E0B2E600835E9E /* RecognizedContentView */,
 			);
@@ -264,6 +265,16 @@
 				38B786FC26E0B5690011A53A /* ItemTypePickerModel.swift */,
 			);
 			path = ItemTypePicker;
+			sourceTree = "<group>";
+		};
+		38B786FF26E1113D0011A53A /* ReceiptsViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3872875826BF1EE8008B312B /* ReceiptsViewModel.swift */,
+				380311EA26D5715700B8B168 /* ReceiptsViewModel-Recognizer.swift */,
+				380311F326D656F700B8B168 /* RecognizedObservations.swift */,
+			);
+			path = ReceiptsViewModel;
 			sourceTree = "<group>";
 		};
 		38C1ACC126D3A1B00030C6C0 /* Models */ = {
@@ -393,6 +404,7 @@
 				380311F226D63F7400B8B168 /* ReceiptRowView.swift in Sources */,
 				38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */,
 				38696D6926DF596A00835E9E /* TypeEditView.swift in Sources */,
+				38B7870126E112CE0011A53A /* DataController-Publisher.swift in Sources */,
 				38B786FD26E0B5690011A53A /* ItemTypePickerModel.swift in Sources */,
 				386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */,
 				385DBC2726D98B7B00B0D245 /* VendorsView.swift in Sources */,

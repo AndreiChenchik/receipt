@@ -45,9 +45,9 @@ extension EditReceiptView {
 
         var body: some View {
             Form {
-                Picker("Store", selection: $viewModel.receiptVendor) {
-                    ForEach(viewModel.vendors) { vendor in
-                        Text(vendor.vendorTitle)
+                Picker("Store", selection: $viewModel.selectedVendorIndex) {
+                    ForEach(0..<viewModel.vendors.count) { index in
+                        Text(viewModel.vendors[index].vendorTitle).tag(index)
                     }
                 }
 
