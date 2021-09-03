@@ -10,7 +10,7 @@ import UIKit
 
 extension ReceiptsView {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
-        let dataController: DataController
+        let dataController = DataController.shared
         let receiptsController: NSFetchedResultsController<Receipt>
 
         @Published var allReceipts = [Receipt]()
@@ -19,9 +19,7 @@ extension ReceiptsView {
 
         @Published var newScanImages = [UIImage]()
 
-        init(dataController: DataController) {
-            self.dataController = dataController
-
+        override init() {
             let request = Receipt.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(keyPath: \Receipt.creationDate, ascending: false)]
             

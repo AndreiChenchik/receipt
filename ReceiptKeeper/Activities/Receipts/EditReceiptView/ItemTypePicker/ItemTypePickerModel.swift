@@ -50,7 +50,11 @@ extension ItemTypePicker {
             dataController.publisher(for: item, in: dataController.container.viewContext, changeTypes: [.updated])
                 .sink(receiveValue: { [weak self] change in
                     guard let updatedItem = change.object else { return }
-                    self?.selectedTypeURL = updatedItem.type?.objectURL ?? ""
+
+                    let newTypeURL = updatedItem.type?.objectURL ?? ""
+                    if newTypeURL != self?.selectedTypeURL {
+                        self?.selectedTypeURL = newTypeURL
+                    }
                 })
                 .store(in: &cancellables)
         }
@@ -58,7 +62,7 @@ extension ItemTypePicker {
         func updateItem() {
             if selectedTypeURL == "", item.type != nil {
                 dataController.updateItem(item.objectID, typeID: nil)
-            } else {
+            } else if item.type?.objectURL != selectedTypeURL {
                 dataController.updateItem(item.objectID, typeURL: selectedTypeURL)
             }
         }

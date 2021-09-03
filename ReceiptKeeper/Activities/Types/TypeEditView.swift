@@ -21,6 +21,7 @@ struct TypeEditView: View {
     init() {}
 
     init(type: ItemType) {
+        self.type = type
         _typeTitle = State(wrappedValue: type.typeTitle)
     }
 

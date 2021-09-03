@@ -71,10 +71,7 @@ class DataController: ObservableObject {
         do {
             try context.saveIfChanges()
         } catch {
-            print(error)
-            let error = error
             fatalError("Error saving your data: \(error.localizedDescription)")
-            //context.rollback()
         }
     }
 

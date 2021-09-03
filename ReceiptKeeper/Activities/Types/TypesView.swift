@@ -30,9 +30,7 @@ struct TypesView: View {
         NavigationView {
             List {
                 ForEach(viewModel.types, id: \.self) { type in
-                    NavigationLink(destination: TypeEditView(type: type).onDisappear(perform: {
-                        viewModel.fetchTypes()
-                    })) {
+                    NavigationLink(destination: TypeEditView(type: type)) {
                         HStack {
                             if let typeIcon = type.typeIcon {
                                 Text("\(typeIcon)")

@@ -28,7 +28,6 @@ extension DataController {
 
                 type.title = title
             }
-
         }
     }
 }

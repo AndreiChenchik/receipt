@@ -23,9 +23,9 @@ extension EditReceiptView {
         @Published var vendors = [Vendor]()
         @Published var selectedVendorURL = "" {
             didSet {
-                if selectedVendorURL == "" {
+                if selectedVendorURL == "", receipt.vendor != nil {
                     dataController.updateReceipt(receipt.objectID, vendorID: nil)
-                } else {
+                } else if receipt.vendor?.objectURL != selectedVendorURL {
                     dataController.updateReceipt(receipt.objectID, vendorURL: selectedVendorURL)
                 }
             }
