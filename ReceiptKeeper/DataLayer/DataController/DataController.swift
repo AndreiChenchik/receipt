@@ -11,11 +11,11 @@ import Foundation
 import UIKit
 
 class DataController: ObservableObject {
+    static let shared = DataController()
+    
     /// A CloudKit container used to store all our data
     let container: NSPersistentCloudKitContainer
-
-    /// A viewContext for CloudKit container
-    var viewContext: NSManagedObjectContext { container.viewContext }
+    var backgroundContext: NSManagedObjectContext
 
     /// Initializes a data controller, either in memory (for temporary use such as testing and previewing),
     /// or on permanent storage (for use in regular app runs.)
@@ -23,10 +23,11 @@ class DataController: ObservableObject {
     /// Defaults to permanent storage.
     /// - Parameter inMemory: Whether to store this data in temporary memory or not.
     init(inMemory: Bool = false) {
-        
         ValueTransformer.setValueTransformer(RecognitionDataTransformer(), forName: .recognitionDataTransformer)
 
         container = NSPersistentCloudKitContainer(name: "Main", managedObjectModel: Self.model)
+
+        self.backgroundContext = container.newBackgroundContext()
 
         // For testing and previewing purposes, we create a temporary,
         // in-memory database by writing to /dev/null so our data is
@@ -42,6 +43,9 @@ class DataController: ObservableObject {
 
             self.container.viewContext.automaticallyMergesChangesFromParent = true
             self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+
+            self.backgroundContext.automaticallyMergesChangesFromParent = true
+            self.backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         }
     }
 
@@ -62,21 +66,37 @@ class DataController: ObservableObject {
     /// - Parameter context: in what context should changes be saved,
     /// will default to viewContext.
     func saveIfNeeded(in context: NSManagedObjectContext? = nil) {
-        let context = context ?? viewContext
+        let context = context ?? container.viewContext
 
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print("Error saving your data: \(error.localizedDescription)")
-                context.rollback()
-            }
+        do {
+            try context.saveIfChanges()
+        } catch {
+            print(error)
+            let error = error
+            fatalError("Error saving your data: \(error.localizedDescription)")
+            //context.rollback()
         }
     }
 
     /// Delete CoreData object from storage
     func delete(_ object: NSManagedObject) {
-        viewContext.delete(object)
+        container.viewContext.delete(object)
+    }
+
+    func delete(_ objectIDs: [NSManagedObjectID]) {
+        backgroundContext.performAndWait {
+            for objectID in objectIDs {
+                if let object = try? backgroundContext.existingObject(with: objectID) {
+                    backgroundContext.delete(object)
+                }
+            }
+
+            do {
+                try backgroundContext.saveIfChanges()
+            } catch {
+                fatalError("Error deleting objects: \(error.localizedDescription)")
+            }
+        }
     }
 }
 

@@ -14,6 +14,7 @@
 		380311EF26D57AF500B8B168 /* DataController-Receipts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380311EE26D57AF500B8B168 /* DataController-Receipts.swift */; };
 		380311F226D63F7400B8B168 /* ReceiptRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380311F126D63F7400B8B168 /* ReceiptRowView.swift */; };
 		380311F426D656F700B8B168 /* RecognizedObservations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380311F326D656F700B8B168 /* RecognizedObservations.swift */; };
+		3822FE9E26E269BB0078ECD1 /* DataController-ItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FE9D26E269BB0078ECD1 /* DataController-ItemType.swift */; };
 		382DD12D26D663EF00C6DA95 /* RecognizedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */; };
 		382DD12F26D665F400C6DA95 /* ScanImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD12E26D665F400C6DA95 /* ScanImageView.swift */; };
 		382DD13126D66F9F00C6DA95 /* EditReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */; };
@@ -47,6 +48,8 @@
 		38B786FB26E0B4980011A53A /* ItemTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B786FA26E0B4980011A53A /* ItemTypePicker.swift */; };
 		38B786FD26E0B5690011A53A /* ItemTypePickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B786FC26E0B5690011A53A /* ItemTypePickerModel.swift */; };
 		38B7870126E112CE0011A53A /* DataController-Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B7870026E112CE0011A53A /* DataController-Publisher.swift */; };
+		38B7870326E1FDE00011A53A /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B7870226E1FDE00011A53A /* NSManagedObjectContext.swift */; };
+		38B7870726E22E120011A53A /* DataController-Vendors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B7870626E22E120011A53A /* DataController-Vendors.swift */; };
 		38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9226BABED900CE2946 /* ScannerView.swift */; };
 		38C1ACC326D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C1ACC226D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift */; };
 		38E89E4726BD9731006A0D49 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E4626BD9731006A0D49 /* Line.swift */; };
@@ -63,6 +66,7 @@
 		380311EE26D57AF500B8B168 /* DataController-Receipts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Receipts.swift"; sourceTree = "<group>"; };
 		380311F126D63F7400B8B168 /* ReceiptRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptRowView.swift; sourceTree = "<group>"; };
 		380311F326D656F700B8B168 /* RecognizedObservations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedObservations.swift; sourceTree = "<group>"; };
+		3822FE9D26E269BB0078ECD1 /* DataController-ItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-ItemType.swift"; sourceTree = "<group>"; };
 		382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedContentView.swift; sourceTree = "<group>"; };
 		382DD12E26D665F400C6DA95 /* ScanImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanImageView.swift; sourceTree = "<group>"; };
 		382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReceiptViewModel.swift; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 		38B786FA26E0B4980011A53A /* ItemTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypePicker.swift; sourceTree = "<group>"; };
 		38B786FC26E0B5690011A53A /* ItemTypePickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypePickerModel.swift; sourceTree = "<group>"; };
 		38B7870026E112CE0011A53A /* DataController-Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Publisher.swift"; sourceTree = "<group>"; };
+		38B7870226E1FDE00011A53A /* NSManagedObjectContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext.swift; sourceTree = "<group>"; };
+		38B7870626E22E120011A53A /* DataController-Vendors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Vendors.swift"; sourceTree = "<group>"; };
 		38BB9B9226BABED900CE2946 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		38BB9B9426BAC05E00CE2946 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		38C1ACC226D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Receipt-CoreDataHelpers.swift"; sourceTree = "<group>"; };
@@ -133,10 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				38C1ACC126D3A1B00030C6C0 /* Models */,
-				3872875126BF11E5008B312B /* DataController.swift */,
-				38B7870026E112CE0011A53A /* DataController-Publisher.swift */,
-				380311EE26D57AF500B8B168 /* DataController-Receipts.swift */,
-				385DBC3626DD1D2600B0D245 /* DataController-Previews.swift */,
+				38B7870526E22DFA0011A53A /* DataController */,
 			);
 			path = DataLayer;
 			sourceTree = "<group>";
@@ -277,6 +280,19 @@
 			path = ReceiptsViewModel;
 			sourceTree = "<group>";
 		};
+		38B7870526E22DFA0011A53A /* DataController */ = {
+			isa = PBXGroup;
+			children = (
+				3872875126BF11E5008B312B /* DataController.swift */,
+				38B7870626E22E120011A53A /* DataController-Vendors.swift */,
+				3822FE9D26E269BB0078ECD1 /* DataController-ItemType.swift */,
+				38B7870026E112CE0011A53A /* DataController-Publisher.swift */,
+				380311EE26D57AF500B8B168 /* DataController-Receipts.swift */,
+				385DBC3626DD1D2600B0D245 /* DataController-Previews.swift */,
+			);
+			path = DataController;
+			sourceTree = "<group>";
+		};
 		38C1ACC126D3A1B00030C6C0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +322,7 @@
 				3859F9CA26C26EA200F2BEE5 /* UIImage.swift */,
 				385DBC2326D9119A00B0D245 /* Binding-onChange.swift */,
 				3843197826DD375500E78F73 /* Character-Emoji.swift */,
+				38B7870226E1FDE00011A53A /* NSManagedObjectContext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -381,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				388C181026C25FBE009D0F23 /* Baseline.swift in Sources */,
+				38B7870326E1FDE00011A53A /* NSManagedObjectContext.swift in Sources */,
 				380311EB26D5715700B8B168 /* ReceiptsViewModel-Recognizer.swift in Sources */,
 				38696D6526DF556A00835E9E /* TypesView.swift in Sources */,
 				380311E426D4348300B8B168 /* EditReceiptView.swift in Sources */,
@@ -403,6 +421,7 @@
 				382DD12D26D663EF00C6DA95 /* RecognizedContentView.swift in Sources */,
 				380311F226D63F7400B8B168 /* ReceiptRowView.swift in Sources */,
 				38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */,
+				38B7870726E22E120011A53A /* DataController-Vendors.swift in Sources */,
 				38696D6926DF596A00835E9E /* TypeEditView.swift in Sources */,
 				38B7870126E112CE0011A53A /* DataController-Publisher.swift in Sources */,
 				38B786FD26E0B5690011A53A /* ItemTypePickerModel.swift in Sources */,
@@ -418,6 +437,7 @@
 				380311EF26D57AF500B8B168 /* DataController-Receipts.swift in Sources */,
 				38E9908426C19B52007FF507 /* CGRect.swift in Sources */,
 				3843197926DD375500E78F73 /* Character-Emoji.swift in Sources */,
+				3822FE9E26E269BB0078ECD1 /* DataController-ItemType.swift in Sources */,
 				3843197D26DD50FC00E78F73 /* VendorEditView.swift in Sources */,
 				385DBC2426D9119A00B0D245 /* Binding-onChange.swift in Sources */,
 				382DD13326D7B9AB00C6DA95 /* RecognizedContentLineView.swift in Sources */,

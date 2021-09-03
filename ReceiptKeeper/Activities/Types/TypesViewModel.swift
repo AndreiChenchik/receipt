@@ -10,20 +10,18 @@ import CoreData
 
 extension TypesView {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
-        let dataController: DataController
+        let dataController = DataController.shared
         let resultsController: NSFetchedResultsController<ItemType>
 
         @Published var types = [ItemType]()
 
-        init(dataController: DataController) {
-            self.dataController = dataController
-
+        override init() {
             let request = ItemType.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(keyPath: \ItemType.title, ascending: false)]
 
             resultsController = NSFetchedResultsController(
                 fetchRequest: request,
-                managedObjectContext: dataController.viewContext,
+                managedObjectContext: dataController.container.viewContext,
                 sectionNameKeyPath: nil,
                 cacheName: nil
             )
@@ -32,6 +30,10 @@ extension TypesView {
 
             resultsController.delegate = self
 
+            fetchTypes()
+        }
+
+        func fetchTypes() {
             do {
                 try resultsController.performFetch()
                 types = resultsController.fetchedObjects ?? []
@@ -46,12 +48,9 @@ extension TypesView {
             }
         }
 
-        func deleteItemType(indexSet: IndexSet) {
-            for index in indexSet.reversed() {
-                dataController.delete(types[index])
-            }
-
-            dataController.saveIfNeeded()
+        func delete(indexSet: IndexSet) {
+            let objectIDs = indexSet.map { types[$0].objectID }
+            dataController.delete(objectIDs)
         }
     }
 }

@@ -11,6 +11,8 @@ import VisionKit
 struct ContentView: View {
     @SceneStorage("selectedView") var selectedView: String?
 
+    @EnvironmentObject var dataController: DataController
+
     var body: some View {
         TabView(selection: $selectedView) {
             ReceiptsView()

@@ -18,13 +18,18 @@ extension ItemTypePicker {
         var selectedTypeIcon: String { item.type?.typeIcon ?? "❓" }
         @Published var selectedTypeIndex = -1 {
             didSet {
-                if selectedTypeIndex != -1 {
-                    item.type = types[selectedTypeIndex]
-                } else {
+                if selectedTypeIndex == -1 {
                     item.type = nil
+                    dataController.saveIfNeeded()
+
+                    return
                 }
 
-                dataController.saveIfNeeded()
+                if types.indices.contains(selectedTypeIndex),
+                   item.type?.objectID != types[selectedTypeIndex].objectID {
+                    item.type = types[selectedTypeIndex]
+                    dataController.saveIfNeeded()
+                }
             }
         }
 
@@ -47,7 +52,7 @@ extension ItemTypePicker {
 
             resultsController = NSFetchedResultsController(
                 fetchRequest: request,
-                managedObjectContext: dataController.viewContext,
+                managedObjectContext: dataController.container.viewContext,
                 sectionNameKeyPath: nil,
                 cacheName: nil
             )

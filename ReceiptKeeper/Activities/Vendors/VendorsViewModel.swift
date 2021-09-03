@@ -10,20 +10,18 @@ import CoreData
 
 extension VendorsView {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
-        let dataController: DataController
+        let dataController = DataController.shared
         let resultsController: NSFetchedResultsController<Vendor>
 
         @Published var vendors = [Vendor]()
 
-        init(dataController: DataController) {
-            self.dataController = dataController
-
+        override init() {
             let request = Vendor.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(keyPath: \Vendor.title, ascending: false)]
 
             resultsController = NSFetchedResultsController(
                 fetchRequest: request,
-                managedObjectContext: dataController.viewContext,
+                managedObjectContext: dataController.container.viewContext,
                 sectionNameKeyPath: nil,
                 cacheName: nil
             )
@@ -46,12 +44,9 @@ extension VendorsView {
             }
         }
 
-        func deleteVendor(indexSet: IndexSet) {
-            for index in indexSet.reversed() {
-                dataController.delete(vendors[index])
-            }
-
-            dataController.saveIfNeeded()
+        func delete(indexSet: IndexSet) {
+            let objectIDs = indexSet.map { vendors[$0].objectID }
+            dataController.delete(objectIDs)
         }
     }
 }

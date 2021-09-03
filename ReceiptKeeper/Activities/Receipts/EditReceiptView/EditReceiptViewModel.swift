@@ -131,7 +131,7 @@ extension EditReceiptView {
 
             vendorsController = NSFetchedResultsController(
                 fetchRequest: vendorsRequest,
-                managedObjectContext: dataController.viewContext,
+                managedObjectContext: dataController.container.viewContext,
                 sectionNameKeyPath: nil,
                 cacheName: nil
             )
@@ -146,7 +146,7 @@ extension EditReceiptView {
             fetchVendors()
             vendorsController.delegate = self
 
-            dataController.publisher(for: receipt, in: dataController.viewContext, changeTypes: [.updated])
+            dataController.publisher(for: receipt, in: dataController.container.viewContext, changeTypes: [.updated])
                 .sink(receiveValue: { [weak self] change in
                     guard let updatedReceipt = change.object else { return }
                     self?.updateFormFields(from: updatedReceipt)
@@ -179,7 +179,7 @@ extension EditReceiptView {
         }
 
         func addItem() {
-            let item = Item(context: dataController.viewContext)
+            let item = Item(context: dataController.container.viewContext)
             item.creationDate = Date()
             item.receipt = receipt
 

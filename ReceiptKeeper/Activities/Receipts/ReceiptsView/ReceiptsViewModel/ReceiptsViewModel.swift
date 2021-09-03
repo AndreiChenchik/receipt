@@ -27,7 +27,7 @@ extension ReceiptsView {
             
             receiptsController = NSFetchedResultsController(
                 fetchRequest: request,
-                managedObjectContext: dataController.viewContext,
+                managedObjectContext: dataController.container.viewContext,
                 sectionNameKeyPath: nil,
                 cacheName: nil
             )
