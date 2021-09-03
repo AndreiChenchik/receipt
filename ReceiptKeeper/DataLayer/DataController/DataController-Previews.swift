@@ -29,7 +29,7 @@ extension DataController {
         let icons = ["♻️ ", "🚸 ", "🔱 ", ""]
         for vendorCounter in 1...3 {
             let vendor = Vendor(context: viewContext)
-            vendor.title = icons.randomElement()! + "Vendor \(vendorCounter)"
+            vendor.title = icons[Int.random(in: 0..<icons.count)] + "Vendor \(vendorCounter)"
             vendor.uuid = UUID()
 
             for _ in 1...3 {

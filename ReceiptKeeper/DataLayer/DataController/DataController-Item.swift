@@ -11,10 +11,11 @@ import Foundation
 extension DataController {
     func updateItem(_ itemID: NSManagedObjectID, typeID: NSManagedObjectID?) {
         backgroundContext.performWaitAndSave {
-            let item = try! self.backgroundContext.existingObject(with: itemID) as! Item
+            guard let item = try? self.backgroundContext.existingObject(with: itemID) as? Item else { return }
 
-            if let typeID = typeID {
-                let type = try! self.backgroundContext.existingObject(with: typeID) as! ItemType
+            if let typeID = typeID,
+               let type = try? self.backgroundContext.existingObject(with: typeID) as? ItemType {
+
                 item.type = type
             } else {
                 item.type = nil
@@ -25,11 +26,13 @@ extension DataController {
 
     func updateItem(_ itemID: NSManagedObjectID, typeURL: String) {
         backgroundContext.performWaitAndSave {
-            let item = try! self.backgroundContext.existingObject(with: itemID) as! Item
-            let typeID = container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: URL(string: typeURL)!)!
-            let type = try! self.backgroundContext.existingObject(with: typeID) as! ItemType
+            if let item = try? self.backgroundContext.existingObject(with: itemID) as? Item,
+               let typeURL = URL(string: typeURL),
+               let typeID = container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: typeURL),
+               let type = try? self.backgroundContext.existingObject(with: typeID) as? ItemType {
 
-            item.type = type
+                item.type = type
+            }
         }
     }
 }

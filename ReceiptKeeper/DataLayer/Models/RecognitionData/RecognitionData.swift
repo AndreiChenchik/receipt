@@ -28,8 +28,12 @@ final public class RecognitionData: NSObject, NSSecureCoding {
     }
 
     public convenience required init?(coder: NSCoder) {
-        guard let contentData = coder.decodeObject(forKey: Key.content.rawValue) as? Data else { return nil }
-        let content = try! JSONDecoder().decode(RecognizedContent.self, from: contentData)
+        guard let contentData = coder.decodeObject(forKey: Key.content.rawValue) as? Data,
+              let content = try? JSONDecoder().decode(RecognizedContent.self, from: contentData) else {
+
+                  return nil
+              }
+
         self.init(content: content)
     }
 }

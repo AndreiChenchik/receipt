@@ -8,18 +8,14 @@
 import Foundation
 
 extension ItemType {
-    var typeTitle: String { title ?? "❓ Unknown category" }
+    var typeTitle: String { title ?? "Unknown category" }
 
-    var typeIcon: String? {
-        if let firstChar = typeTitle.first, firstChar.isEmoji {
-            return String(firstChar)
-        }
-
-        return nil
+    var typeIcon: String {
+        String(title?.first ?? Character(""))
     }
 
     var typeTitleWithoutIcon: String {
-        if typeIcon != nil {
+        if typeIcon.first?.isEmoji ?? false {
             let shortTitle = typeTitle.dropFirst().trimmingCharacters(in: .whitespacesAndNewlines)
             return String(shortTitle)
         } else {

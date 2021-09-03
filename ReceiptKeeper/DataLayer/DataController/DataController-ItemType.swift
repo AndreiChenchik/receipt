@@ -14,8 +14,9 @@ extension DataController {
             let type = ItemType(context: backgroundContext)
             type.title = title
 
-            if let itemID = itemID {
-                let item = try! self.backgroundContext.existingObject(with: itemID) as! Item
+            if let itemID = itemID,
+               let item = try? self.backgroundContext.existingObject(with: itemID) as? Item {
+                
                 item.type = type
             }
         }
@@ -23,8 +24,11 @@ extension DataController {
 
     func updateItemType(_ typeID: NSManagedObjectID, title: String) {
         backgroundContext.performWaitAndSave {
-            let type = try! self.backgroundContext.existingObject(with: typeID) as! ItemType
-            type.title = title
+            if let type = try? self.backgroundContext.existingObject(with: typeID) as? ItemType {
+
+                type.title = title
+            }
+
         }
     }
 }

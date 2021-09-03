@@ -32,13 +32,13 @@ struct ItemTypePicker: View {
             }
 
             Picker(selection: $viewModel.selectedTypeURL, label: Text("Select item type")) {
-                Text("Not selected").tag("")
+                Text("❓ Not selected").tag("")
                 ForEach(viewModel.types) { type in
-                    Text(type.typeTitle).tag(type.objectID.uriRepresentation().absoluteString)
+                    Text(type.typeTitle).tag(type.objectURL)
                 }
             }
         } label: {
-            Text(viewModel.selectedTypeIcon)
+            Text(viewModel.item.type?.typeIcon ?? "❓")
                 .font(.title2)
                 .frame(width: 30, height: 30)
         }

@@ -14,8 +14,9 @@ extension DataController {
             let vendor = Vendor(context: backgroundContext)
             vendor.title = title
 
-            if let receiptID = receiptID {
-                let receipt = try! self.backgroundContext.existingObject(with: receiptID) as! Receipt
+            if let receiptID = receiptID,
+               let receipt = try? self.backgroundContext.existingObject(with: receiptID) as? Receipt {
+
                 receipt.vendor = vendor
             }
         }
@@ -23,8 +24,10 @@ extension DataController {
 
     func updateVendor(_ vendorID: NSManagedObjectID, title: String) {
         backgroundContext.performWaitAndSave {
-            let vendor = try! self.backgroundContext.existingObject(with: vendorID) as! Vendor
-            vendor.title = title
+            if let vendor = try? self.backgroundContext.existingObject(with: vendorID) as? Vendor {
+
+                vendor.title = title
+            }
         }
     }
 

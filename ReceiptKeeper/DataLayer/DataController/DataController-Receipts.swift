@@ -85,10 +85,11 @@ extension DataController {
 
     func updateReceipt(_ receiptID: NSManagedObjectID, vendorID: NSManagedObjectID?) {
         backgroundContext.performWaitAndSave {
-            let receipt = try! self.backgroundContext.existingObject(with: receiptID) as! Receipt
+            guard let receipt = try? self.backgroundContext.existingObject(with: receiptID) as? Receipt else { return }
 
-            if let vendorID = vendorID {
-                let vendor = try! self.backgroundContext.existingObject(with: vendorID) as! Vendor
+            if let vendorID = vendorID,
+                let vendor = try? self.backgroundContext.existingObject(with: vendorID) as? Vendor {
+
                 receipt.vendor = vendor
             } else {
                 receipt.vendor = nil
@@ -98,11 +99,13 @@ extension DataController {
 
     func updateReceipt(_ receiptID: NSManagedObjectID, vendorURL: String) {
         backgroundContext.performWaitAndSave {
-            let receipt = try! self.backgroundContext.existingObject(with: receiptID) as! Receipt
-            let vendorID = container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: URL(string: vendorURL)!)!
-            let vendor = try! self.backgroundContext.existingObject(with: vendorID) as! Vendor
+            if let receipt = try? self.backgroundContext.existingObject(with: receiptID) as? Receipt,
+               let vendorURL = URL(string: vendorURL),
+               let vendorID = container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: vendorURL),
+               let vendor = try? self.backgroundContext.existingObject(with: vendorID) as? Vendor {
 
-            receipt.vendor = vendor
+                receipt.vendor = vendor
+            }
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 import CoreData
 
 extension ItemTypePicker {
@@ -15,10 +16,10 @@ extension ItemTypePicker {
 
         @Published var item: Item
 
-        var selectedTypeIcon: String { item.type?.typeIcon ?? "❓" }
-
         @Published var selectedTypeURL = "" { didSet { updateItem() } }
         @Published var types = [ItemType]()
+
+        private var cancellables = Set<AnyCancellable>()
 
         init(item: Item) {
             self.item = item
@@ -45,10 +46,17 @@ extension ItemTypePicker {
             } catch {
                 print("Error fetching vendors array: \(error.localizedDescription)")
             }
+
+            dataController.publisher(for: item, in: dataController.container.viewContext, changeTypes: [.updated])
+                .sink(receiveValue: { [weak self] change in
+                    guard let updatedItem = change.object else { return }
+                    self?.selectedTypeURL = updatedItem.type?.objectURL ?? ""
+                })
+                .store(in: &cancellables)
         }
 
         func updateItem() {
-            if selectedTypeURL == "" {
+            if selectedTypeURL == "", item.type != nil {
                 dataController.updateItem(item.objectID, typeID: nil)
             } else {
                 dataController.updateItem(item.objectID, typeURL: selectedTypeURL)
