@@ -30,6 +30,8 @@ struct VendorEditView: View {
     }
 
     func saveChanges() {
+        let vendorTitle = vendorTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+
         if let vendor = vendor {
             dataController.updateVendor(vendor.objectID, title: vendorTitle)
         } else {

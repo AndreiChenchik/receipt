@@ -47,6 +47,8 @@ struct TypeEditView: View {
     }
 
     func saveChanges() {
+        let typeTitle = typeTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         if let type = type {
             dataController.updateItemType(type.objectID, title: typeTitle)
         } else {
