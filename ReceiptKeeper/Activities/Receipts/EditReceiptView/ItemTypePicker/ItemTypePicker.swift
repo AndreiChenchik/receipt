@@ -10,45 +10,46 @@ import SwiftUI
 struct ItemTypePicker: View {
     @EnvironmentObject var dataController: DataController
 
-    var item: Item
+    @ObservedObject var item: Item
+
+    @StateObject var viewModel: ViewModel
+
+    @State var showingNewItemTypeView = false
+
+    init(item: Item) {
+        _item = ObservedObject(wrappedValue: item)
+        _viewModel = StateObject(wrappedValue: ViewModel(item: item))
+    }
 
     var body: some View {
-        InnerView(item: item, dataController: dataController)
-    }
-}
-
-
-extension ItemTypePicker {
-    struct InnerView: View {
-        @ObservedObject var item: Item
-        @StateObject var viewModel: ViewModel
-
-        init(item: Item, dataController: DataController) {
-            let viewModel = ViewModel(item: item, dataController: dataController)
-            _viewModel = StateObject(wrappedValue: viewModel)
-            _item = ObservedObject(wrappedValue: item)
-        }
-
-        var body: some View {
-            Menu {
-//                Section {
-//                    Button {
-//                        print("new!")
-//                    } label: {
-//                        Label("Add new type", systemImage: "plus")
-//                    }
-//                }
-
-                Picker(selection: $viewModel.selectedTypeIndex, label: Text("Select item type")) {
-                    Text("Not selected").tag(-1)
-                    ForEach(0..<viewModel.types.count) { index in
-                        Text(viewModel.types[index].typeTitle).tag(index)
-                    }
+        Menu {
+            Section {
+                Button {
+                    showingNewItemTypeView = true
+                } label: {
+                    Label("Add new type", systemImage: "plus")
                 }
-            } label: {
-                Text(viewModel.selectedTypeIcon)
-                    .font(.title2)
-                    .frame(width: 30, height: 30)
+            }
+
+            Picker(selection: $viewModel.selectedTypeURL, label: Text("Select item type")) {
+                Text("Not selected").tag("")
+                ForEach(viewModel.types) { type in
+                    Text(type.typeTitle).tag(type.objectID.uriRepresentation().absoluteString)
+                }
+            }
+        } label: {
+            Text(viewModel.selectedTypeIcon)
+                .font(.title2)
+                .frame(width: 30, height: 30)
+        }
+        .sheet(isPresented: $showingNewItemTypeView) {
+            NavigationView{
+                TypeEditView(item: item)
+                    .toolbar {
+                        Button("Dismiss") {
+                            showingNewItemTypeView = false
+                        }
+                    }
             }
         }
     }

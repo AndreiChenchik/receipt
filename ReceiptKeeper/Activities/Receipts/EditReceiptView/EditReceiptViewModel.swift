@@ -20,16 +20,14 @@ extension EditReceiptView {
 
         @Published var venueTitle = ""
 
-        @Published var vendors = [Vendor]() { didSet { updateVendorIndex() } }
-        @Published var selectedVendorIndex = -1 {
+        @Published var vendors = [Vendor]()
+        @Published var selectedVendorURL = "" {
             didSet {
-                if selectedVendorIndex != -1 {
-                    receipt.vendor = vendors[selectedVendorIndex]
+                if selectedVendorURL == "" {
+                    dataController.updateReceipt(receipt.objectID, vendorID: nil)
                 } else {
-                    receipt.vendor = nil
+                    dataController.updateReceipt(receipt.objectID, vendorURL: selectedVendorURL)
                 }
-
-                dataController.saveIfNeeded()
             }
         }
 
@@ -102,8 +100,12 @@ extension EditReceiptView {
             loadCoordinates(from: receiptPurchaseAddress)
 
             fetchVendors()
-            updateVendorIndex()
-            
+
+            let newVendorURL = receipt.vendor?.objectURL ?? ""
+            if newVendorURL != selectedVendorURL {
+                selectedVendorURL = newVendorURL
+            }
+
             venueTitle = receipt.recognitionData?.venueTitle?.value ?? ""
         }
 
@@ -140,7 +142,6 @@ extension EditReceiptView {
 
             withAnimation {
                 updateFormFields(from: receipt)
-
             }
 
             fetchVendors()
@@ -162,15 +163,6 @@ extension EditReceiptView {
                 print("Error fetching receipts array: \(error.localizedDescription)")
             }
         }
-
-        func updateVendorIndex() {
-            let newVendorIndex = vendors.firstIndex { receipt.vendor == $0 } ?? -1
-
-            if newVendorIndex != selectedVendorIndex {
-                selectedVendorIndex = newVendorIndex
-            }
-        }
-
 
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
             if let newVendors = controller.fetchedObjects as? [Vendor] {

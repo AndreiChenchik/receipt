@@ -66,7 +66,7 @@ extension DataController {
 
                     if receipt.vendorLineUUID != recognitionData.venueTitle?.id,
                        let title = recognitionData.venueTitle?.value,
-                       let vendor = searchVendor(for: title, in: context) {
+                       let vendor = self.searchVendor(for: title, in: context) {
                         receipt.vendor = vendor
                         receipt.vendorLineUUID = recognitionData.venueTitle?.id
                     }
@@ -81,28 +81,28 @@ extension DataController {
 
             completionHandler()
         }
+    }
 
-        func searchVendor(for title: String, in context: NSManagedObjectContext) -> Vendor? {
-            let vendorsRequest = Vendor.fetchRequest()
-            vendorsRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Vendor.title, ascending: false)]
+    func updateReceipt(_ receiptID: NSManagedObjectID, vendorID: NSManagedObjectID?) {
+        backgroundContext.performWaitAndSave {
+            let receipt = try! self.backgroundContext.existingObject(with: receiptID) as! Receipt
 
-            let vendorsController = NSFetchedResultsController(
-                fetchRequest: vendorsRequest,
-                managedObjectContext: context,
-                sectionNameKeyPath: nil,
-                cacheName: nil
-            )
-
-            do {
-                try vendorsController.performFetch()
-                let vendors = vendorsController.fetchedObjects ?? []
-                let receiptVendor = vendors.first { !$0.vendorTitleWithoutIcon.isEmpty && title.lowercased().contains($0.vendorTitleWithoutIcon.lowercased()) }
-                return receiptVendor
-            } catch {
-                print("Error fetching receipts array: \(error.localizedDescription)")
+            if let vendorID = vendorID {
+                let vendor = try! self.backgroundContext.existingObject(with: vendorID) as! Vendor
+                receipt.vendor = vendor
+            } else {
+                receipt.vendor = nil
             }
+        }
+    }
 
-            return nil
+    func updateReceipt(_ receiptID: NSManagedObjectID, vendorURL: String) {
+        backgroundContext.performWaitAndSave {
+            let receipt = try! self.backgroundContext.existingObject(with: receiptID) as! Receipt
+            let vendorID = container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: URL(string: vendorURL)!)!
+            let vendor = try! self.backgroundContext.existingObject(with: vendorID) as! Vendor
+
+            receipt.vendor = vendor
         }
     }
 }

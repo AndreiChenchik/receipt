@@ -27,4 +27,27 @@ extension DataController {
             vendor.title = title
         }
     }
+
+    func searchVendor(for title: String, in context: NSManagedObjectContext) -> Vendor? {
+        let vendorsRequest = Vendor.fetchRequest()
+        vendorsRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Vendor.title, ascending: false)]
+
+        let vendorsController = NSFetchedResultsController(
+            fetchRequest: vendorsRequest,
+            managedObjectContext: context,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+
+        do {
+            try vendorsController.performFetch()
+            let vendors = vendorsController.fetchedObjects ?? []
+            let receiptVendor = vendors.first { !$0.vendorTitleWithoutIcon.isEmpty && title.lowercased().contains($0.vendorTitleWithoutIcon.lowercased()) }
+            return receiptVendor
+        } catch {
+            print("Error fetching receipts array: \(error.localizedDescription)")
+        }
+
+        return nil
+    }
 }

@@ -10,42 +10,19 @@ import CoreData
 
 extension ItemTypePicker {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
-        let dataController: DataController
+        let dataController = DataController.shared
         let resultsController: NSFetchedResultsController<ItemType>
 
         @Published var item: Item
 
         var selectedTypeIcon: String { item.type?.typeIcon ?? "❓" }
-        @Published var selectedTypeIndex = -1 {
-            didSet {
-                if selectedTypeIndex == -1 {
-                    item.type = nil
-                    dataController.saveIfNeeded()
 
-                    return
-                }
+        @Published var selectedTypeURL = "" { didSet { updateItem() } }
+        @Published var types = [ItemType]()
 
-                if types.indices.contains(selectedTypeIndex),
-                   item.type?.objectID != types[selectedTypeIndex].objectID {
-                    item.type = types[selectedTypeIndex]
-                    dataController.saveIfNeeded()
-                }
-            }
-        }
-
-        @Published var types = [ItemType]() {
-            didSet {
-                let newTypeIndex = types.firstIndex { item.type == $0 } ?? -1
-
-                if newTypeIndex != selectedTypeIndex {
-                    selectedTypeIndex = newTypeIndex
-                }
-            }
-        }
-
-        init(item: Item, dataController: DataController) {
-            self.dataController = dataController
+        init(item: Item) {
             self.item = item
+            selectedTypeURL = item.type?.objectURL ?? ""
             
             let request = ItemType.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(keyPath: \ItemType.title, ascending: false)]
@@ -70,18 +47,18 @@ extension ItemTypePicker {
             }
         }
 
+        func updateItem() {
+            if selectedTypeURL == "" {
+                dataController.updateItem(item.objectID, typeID: nil)
+            } else {
+                dataController.updateItem(item.objectID, typeURL: selectedTypeURL)
+            }
+        }
+
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
             if let newTypes = controller.fetchedObjects as? [ItemType] {
                 types = newTypes.sorted { $0.typeTitleWithoutIcon < $1.typeTitleWithoutIcon}
             }
-        }
-
-        func deleteItemType(indexSet: IndexSet) {
-            for index in indexSet.reversed() {
-                dataController.delete(types[index])
-            }
-
-            dataController.saveIfNeeded()
         }
     }
 }

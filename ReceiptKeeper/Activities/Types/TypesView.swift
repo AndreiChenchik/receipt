@@ -50,7 +50,6 @@ struct TypesView: View {
                             Text("€")
                         }
                     }
-                    .animation(.default)
                 }
                 .onDelete(perform: viewModel.delete)
             }
@@ -63,10 +62,7 @@ struct TypesView: View {
 }
 
 struct TypesView_Previews: PreviewProvider {
-    static var dataController = DataController.preview
-    
     static var previews: some View {
         TypesView()
-            .environmentObject(dataController)
     }
 }

@@ -50,7 +50,7 @@ struct VendorsView: View {
                             Text(vendor.vendorReceiptsSumString)
                             Text("€")
                         }
-                    }.animation(.default)
+                    }
                 }
                 .onDelete(perform: viewModel.delete)
             }
@@ -62,12 +62,10 @@ struct VendorsView: View {
     }
 }
 
-//
-//struct VendorsView_Previews: PreviewProvider {
-//    static var dataController = DataController.preview
-//    
-//    static var previews: some View {
-//        VendorsView()
-//            .environmentObject(dataController)
-//    }
-//}
+
+struct VendorsView_Previews: PreviewProvider {
+
+    static var previews: some View {
+        VendorsView()
+    }
+}
