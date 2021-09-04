@@ -61,16 +61,18 @@ struct ScanImageView: View {
     }
 
     func drawLayers() {
-        DispatchQueue.global(qos: .userInteractive).async {
+        DispatchQueue.main.async {
             guard let scanImage = receipt.scanImage,
                   let recognizedContent = receipt.recognitionData?.content else { return }
 
-            let textBoundingBoxesLayer = scanImage.getLayerWithRects(recognizedContent.allTextBoxes, with: .blue, opacity: 0.4)
-            let charBoundingBoxesLayer = scanImage.getLayerWithRects(recognizedContent.allCharBoxes, with: .green, using: .fill, opacity: 0.15)
+            DispatchQueue.global(qos: .userInteractive).async {
+                let textBoundingBoxesLayer = scanImage.getLayerWithRects(recognizedContent.allTextBoxes, with: .blue, opacity: 0.4)
+                let charBoundingBoxesLayer = scanImage.getLayerWithRects(recognizedContent.allCharBoxes, with: .green, using: .fill, opacity: 0.15)
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.textBoundingBoxesLayer = textBoundingBoxesLayer
-                self.charBoundingBoxesLayer = charBoundingBoxesLayer
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.textBoundingBoxesLayer = textBoundingBoxesLayer
+                    self.charBoundingBoxesLayer = charBoundingBoxesLayer
+                }
             }
         }
     }
