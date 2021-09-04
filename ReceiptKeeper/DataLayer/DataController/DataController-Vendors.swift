@@ -29,6 +29,16 @@ extension DataController {
                 vendor.title = title
             }
         }
+
+        #warning("should be refactored, because it can be slow when there will be a lot of receipts")
+        container.viewContext.perform {
+            if let vendor = try? self.container.viewContext.existingObject(with: vendorID) as? Vendor {
+
+                for receipt in vendor.vendorReceipts {
+                    receipt.objectWillChange.send()
+                }
+            }
+        }
     }
 
     func searchVendor(for title: String, in context: NSManagedObjectContext) -> Vendor? {
