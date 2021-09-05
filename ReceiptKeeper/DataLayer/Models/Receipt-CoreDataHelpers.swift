@@ -86,17 +86,17 @@ extension Receipt {
             if let firstCreation = first.creationDate, let secondCreation = second.creationDate {
                 return firstCreation < secondCreation
             } else {
-                return first.itemTitle < second.itemTitle
+                return first.wrappedTitle < second.wrappedTitle
             }
         }
     }
 
-    var vendorTitle: String {
-        vendor?.vendorTitle ?? "Unknown vendor"
+    var storeTitle: String {
+        store?.wrappedTitle ?? "Unknown store"
     }
 
-    var vendorTitleWithoutIcon: String {
-        vendor?.vendorTitleWithoutIcon ?? "Unknown vendor"
+    var storeTitleWithoutIcon: String {
+        store?.storeTitleWithoutIcon ?? "Unknown store"
     }
 }
 
@@ -106,12 +106,12 @@ extension Receipt {
         let controller = DataController.preview
         let viewContext = controller.container.viewContext
 
-        let vendor = Vendor(context: viewContext)
-        vendor.title = "🛃 Example Vendor"
-        vendor.uuid = UUID()
+        let store = Store(context: viewContext)
+        store.title = "🛃 Example Store"
+        store.uuid = UUID()
 
         let receipt = Receipt(context: viewContext)
-        receipt.vendor = vendor
+        receipt.store = store
         receipt.state = .draft
         receipt.creationDate = Date()
         receipt.purchaseDate = Date()

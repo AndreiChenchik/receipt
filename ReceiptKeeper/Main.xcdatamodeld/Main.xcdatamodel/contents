@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19197" systemVersion="21A5304g" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19197" systemVersion="21A5506j" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
@@ -26,30 +26,30 @@
         <attribute name="recognitionData" optional="YES" attributeType="Transformable" valueTransformerName="RecognitionDataTransformer" customClassName="RecognitionData"/>
         <attribute name="scanImageData" optional="YES" attributeType="Binary"/>
         <attribute name="stateValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="storeLineUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="total" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="totalLineUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="vendorLineUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="venueAddress" optional="YES" attributeType="String"/>
         <attribute name="venueAddressLineUUID" optional="YES" attributeType="String"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Item" inverseName="receipt" inverseEntity="Item"/>
-        <relationship name="vendor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vendor" inverseName="receipts" inverseEntity="Vendor"/>
+        <relationship name="store" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Store" inverseName="receipts" inverseEntity="Store"/>
     </entity>
-    <entity name="Vendor" representedClassName="Vendor" syncable="YES" codeGenerationType="class">
+    <entity name="Store" representedClassName="Store" syncable="YES" codeGenerationType="class">
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VendorCategory" inverseName="vendors" inverseEntity="VendorCategory"/>
-        <relationship name="receipts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Receipt" inverseName="vendor" inverseEntity="Receipt"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoreCategory" inverseName="stores" inverseEntity="StoreCategory"/>
+        <relationship name="receipts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Receipt" inverseName="store" inverseEntity="Receipt"/>
     </entity>
-    <entity name="VendorCategory" representedClassName="VendorCategory" syncable="YES" codeGenerationType="class">
+    <entity name="StoreCategory" representedClassName="StoreCategory" syncable="YES" codeGenerationType="class">
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="vendors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vendor" inverseName="category" inverseEntity="Vendor"/>
+        <relationship name="stores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Store" inverseName="category" inverseEntity="Store"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-141.140625" positionY="-138.58203125" width="128" height="134"/>
-        <element name="ItemType" positionX="32.8125" positionY="-15.00390625" width="128" height="89"/>
-        <element name="Receipt" positionX="34.58984375" positionY="-221.078125" width="128" height="224"/>
-        <element name="Vendor" positionX="201.640625" positionY="-177.76171875" width="128" height="89"/>
-        <element name="VendorCategory" positionX="370.046875" positionY="-177.91796875" width="128" height="59"/>
-        <element name="ItemCategory" positionX="63" positionY="-90" width="128" height="59"/>
+        <element name="Item" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ItemCategory" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ItemType" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Receipt" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Store" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="StoreCategory" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

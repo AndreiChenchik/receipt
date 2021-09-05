@@ -1,6 +1,6 @@
 //
-//  EditReceiptViewModel.swift
-//  EditReceiptViewModel
+//  ReceiptViewModel.swift
+//  ReceiptViewModel
 //
 //  Created by Andrei Chenchik on 25/8/21.
 //
@@ -11,22 +11,22 @@ import Foundation
 import SwiftUI
 import MapKit
 
-extension EditReceiptView {
+extension ReceiptView {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
         let dataController: DataController
-        let vendorsController: NSFetchedResultsController<Vendor>
+        let storesController: NSFetchedResultsController<Store>
 
         @Published var receipt: Receipt
 
         @Published var venueTitle = ""
 
-        @Published var vendors = [Vendor]()
-        @Published var selectedVendorURL = "" {
+        @Published var stores = [Store]()
+        @Published var selectedStoreURL = "" {
             didSet {
-                if selectedVendorURL == "", receipt.vendor != nil {
-                    dataController.updateReceipt(receipt.objectID, vendorID: nil)
-                } else if receipt.vendor?.objectURL != selectedVendorURL {
-                    dataController.updateReceipt(receipt.objectID, vendorURL: selectedVendorURL)
+                if selectedStoreURL == "", receipt.store != nil {
+                    dataController.updateReceipt(receipt.objectID, storeID: nil)
+                } else if receipt.store?.objectURL != selectedStoreURL {
+                    dataController.updateReceipt(receipt.objectID, storeURL: selectedStoreURL)
                 }
             }
         }
@@ -99,11 +99,11 @@ extension EditReceiptView {
             receiptPurchaseAddress = receipt.receiptPurchaseAddress
             loadCoordinates(from: receiptPurchaseAddress)
 
-            fetchVendors()
+            fetchStores()
 
-            let newVendorURL = receipt.vendor?.objectURL ?? ""
-            if newVendorURL != selectedVendorURL {
-                selectedVendorURL = newVendorURL
+            let newStoreURL = receipt.store?.objectURL ?? ""
+            if newStoreURL != selectedStoreURL {
+                selectedStoreURL = newStoreURL
             }
 
             venueTitle = receipt.recognitionData?.venueTitle?.value ?? ""
@@ -128,11 +128,11 @@ extension EditReceiptView {
 
             self.receipt = receipt
             
-            let vendorsRequest = Vendor.fetchRequest()
-            vendorsRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Vendor.title, ascending: false)]
+            let storesRequest = Store.fetchRequest()
+            storesRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Store.title, ascending: false)]
 
-            vendorsController = NSFetchedResultsController(
-                fetchRequest: vendorsRequest,
+            storesController = NSFetchedResultsController(
+                fetchRequest: storesRequest,
                 managedObjectContext: dataController.container.viewContext,
                 sectionNameKeyPath: nil,
                 cacheName: nil
@@ -144,8 +144,8 @@ extension EditReceiptView {
                 updateFormFields(from: receipt)
             }
 
-            fetchVendors()
-            vendorsController.delegate = self
+            fetchStores()
+            storesController.delegate = self
 
             dataController.publisher(for: receipt, in: dataController.container.viewContext, changeTypes: [.updated])
                 .sink(receiveValue: { [weak self] change in
@@ -155,18 +155,18 @@ extension EditReceiptView {
                 .store(in: &cancellables)
         }
 
-        func fetchVendors() {
+        func fetchStores() {
             do {
-                try vendorsController.performFetch()
-                vendors = vendorsController.fetchedObjects ?? []
+                try storesController.performFetch()
+                stores = storesController.fetchedObjects ?? []
             } catch {
                 print("Error fetching receipts array: \(error.localizedDescription)")
             }
         }
 
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-            if let newVendors = controller.fetchedObjects as? [Vendor] {
-                vendors = newVendors
+            if let newStores = controller.fetchedObjects as? [Store] {
+                stores = newStores
             }
         }
 

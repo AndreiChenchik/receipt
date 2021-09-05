@@ -1,23 +1,23 @@
 //
-//  VendorsViewModel.swift
-//  VendorsViewModel
+//  ItemTypeViewModel.swift
+//  ItemTypeViewModel
 //
-//  Created by Andrei Chenchik on 27/8/21.
+//  Created by Andrei Chenchik on 3/9/21.
 //
 
 import Foundation
 import CoreData
 
-extension VendorsView {
+extension ItemTypeView {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
         let dataController = DataController.shared
-        let resultsController: NSFetchedResultsController<Vendor>
+        let resultsController: NSFetchedResultsController<ItemCategory>
 
-        @Published var vendors = [Vendor]()
+        @Published var categories = [ItemCategory]()
 
         override init() {
-            let request = Vendor.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(keyPath: \Vendor.title, ascending: false)]
+            let request = ItemCategory.fetchRequest()
+            request.sortDescriptors = [NSSortDescriptor(keyPath: \ItemCategory.title, ascending: false)]
 
             resultsController = NSFetchedResultsController(
                 fetchRequest: request,
@@ -30,23 +30,22 @@ extension VendorsView {
 
             resultsController.delegate = self
 
+            fetchTypes()
+        }
+
+        func fetchTypes() {
             do {
                 try resultsController.performFetch()
-                vendors = resultsController.fetchedObjects ?? []
+                categories = resultsController.fetchedObjects ?? []
             } catch {
-                print("Error fetching vendors array: \(error.localizedDescription)")
+                print("Error fetching stores array: \(error.localizedDescription)")
             }
         }
 
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-            if let newVendors = controller.fetchedObjects as? [Vendor] {
-                vendors = newVendors
+            if let categories = controller.fetchedObjects as? [ItemCategory] {
+                self.categories = categories
             }
-        }
-
-        func delete(indexSet: IndexSet) {
-            let objectIDs = indexSet.map { vendors[$0].objectID }
-            dataController.delete(objectIDs)
         }
     }
 }

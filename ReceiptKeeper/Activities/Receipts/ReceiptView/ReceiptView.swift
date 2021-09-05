@@ -1,6 +1,6 @@
 //
-//  EditReceiptView.swift
-//  EditReceiptView
+//  ReceiptView.swift
+//  ReceiptView
 //
 //  Created by Andrei Chenchik on 23/8/21.
 //
@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-struct EditReceiptView: View {
+struct ReceiptView: View {
     var receipt: Receipt
     @EnvironmentObject var dataController: DataController
 
@@ -17,7 +17,7 @@ struct EditReceiptView: View {
     }
 }
 
-extension EditReceiptView {
+extension ReceiptView {
     struct InnerView: View {
         @Environment(\.presentationMode) var presentationMode
 
@@ -45,9 +45,9 @@ extension EditReceiptView {
 
         var body: some View {
             Form {
-                Picker("Store", selection: $viewModel.selectedVendorURL) {
-                    ForEach(viewModel.vendors) { vendor in
-                        Text(vendor.vendorTitle).tag(vendor.objectURL)
+                Picker("Store", selection: $viewModel.selectedStoreURL) {
+                    ForEach(viewModel.stores) { store in
+                        Text(store.wrappedTitle).tag(store.objectURL)
                     }
                 }
 
@@ -68,13 +68,13 @@ extension EditReceiptView {
                     }
 
                     if let region = viewModel.addressLocation {
-                        ReceiptMapView(region: region)
+                        MapView(region: region)
                     }
                 }
 
                 Section(header: Text("Shopping cart")) {
                     ForEach(viewModel.receipt.receiptItemsSorted) { item in
-                        ReceiptItemView(item: item)
+                        ItemView(item: item)
                     }
                     .onDelete(perform: viewModel.deleteItems)
                     
@@ -122,11 +122,11 @@ extension EditReceiptView {
     }
 }
 
-struct EditReceiptView_Previews: PreviewProvider {
+struct ReceiptView_Previews: PreviewProvider {
     static var dataController = DataController.preview
 
     static var previews: some View {
-        EditReceiptView(receipt: Receipt.example)
+        ReceiptView(receipt: Receipt.example)
             .environmentObject(dataController)
     }
 }

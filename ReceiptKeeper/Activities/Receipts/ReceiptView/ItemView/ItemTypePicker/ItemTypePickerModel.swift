@@ -44,7 +44,7 @@ extension ItemTypePicker {
                 types = resultsController.fetchedObjects ?? []
                 types.sort { $0.typeTitleWithoutIcon < $1.typeTitleWithoutIcon}
             } catch {
-                print("Error fetching vendors array: \(error.localizedDescription)")
+                print("Error fetching stores array: \(error.localizedDescription)")
             }
 
             dataController.publisher(for: item, in: dataController.container.viewContext, changeTypes: [.updated])

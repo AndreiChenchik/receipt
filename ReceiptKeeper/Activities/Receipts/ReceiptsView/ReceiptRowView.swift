@@ -27,10 +27,10 @@ struct ReceiptRowView: View {
     }
 
     var normalReceipt: some View {
-        NavigationLink(destination: EditReceiptView(receipt: receipt)) {
+        NavigationLink(destination: ReceiptView(receipt: receipt)) {
             HStack {
-                if let vendorIcon = receipt.vendor?.vendorIcon {
-                    Text(vendorIcon)
+                if let storeIcon = receipt.store?.storeIcon {
+                    Text(storeIcon)
                         .font(.title2)
                         .frame(width: 30, height: 30)
                 } else {
@@ -40,7 +40,7 @@ struct ReceiptRowView: View {
                 }
 
                 VStack(alignment: .leading) {
-                    Text(receipt.vendorTitleWithoutIcon)
+                    Text(receipt.storeTitleWithoutIcon)
                     Text(receiptPurchaseDate)
                         .font(.caption)
                         .opacity(0.5)
@@ -55,14 +55,14 @@ struct ReceiptRowView: View {
     }
 
     var draftReceipt: some View {
-        NavigationLink(destination: EditReceiptView(receipt: receipt)) {
+        NavigationLink(destination: ReceiptView(receipt: receipt)) {
             HStack {
                 Image(systemName: "doc.text")
                     .font(.title2)
                     .frame(width: 30, height: 30)
 
                 VStack(alignment: .leading) {
-                    Text(receipt.vendorTitleWithoutIcon)
+                    Text(receipt.storeTitleWithoutIcon)
                     Text(receiptPurchaseDate)
                         .font(.caption)
                         .opacity(0.5)

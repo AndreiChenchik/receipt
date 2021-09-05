@@ -27,14 +27,14 @@ extension DataController {
         let viewContext = container.viewContext
 
         let icons = ["♻️ ", "🚸 ", "🔱 ", ""]
-        for vendorCounter in 1...3 {
-            let vendor = Vendor(context: viewContext)
-            vendor.title = icons[Int.random(in: 0..<icons.count)] + "Vendor \(vendorCounter)"
-            vendor.uuid = UUID()
+        for storeCounter in 1...3 {
+            let store = Store(context: viewContext)
+            store.title = icons[Int.random(in: 0..<icons.count)] + "Store \(storeCounter)"
+            store.uuid = UUID()
 
             for _ in 1...3 {
                 let receipt = Receipt(context: viewContext)
-                receipt.vendor = vendor
+                receipt.store = store
                 receipt.state = Receipt.State(rawValue: Int16.random(in: 1...3)) ?? .unknown
                 var total = 0.0
 

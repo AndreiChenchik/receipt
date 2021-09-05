@@ -34,7 +34,7 @@ struct ItemTypePicker: View {
             Picker(selection: $viewModel.selectedTypeURL, label: Text("Select item type")) {
                 Text("❓ Not selected").tag("")
                 ForEach(viewModel.types) { type in
-                    Text(type.typeTitle).tag(type.objectURL)
+                    Text(type.wrappedTitle).tag(type.objectURL)
                 }
             }
         } label: {
@@ -44,7 +44,7 @@ struct ItemTypePicker: View {
         }
         .sheet(isPresented: $showingNewItemTypeView) {
             NavigationView{
-                TypeEditView(item: item)
+                ItemTypeView(item: item)
                     .toolbar {
                         Button("Dismiss") {
                             showingNewItemTypeView = false

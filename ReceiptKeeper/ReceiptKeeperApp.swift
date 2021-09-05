@@ -20,6 +20,7 @@ struct ReceiptKeeperApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(dataController)
+                .environment(\.managedObjectContext, dataController.container.viewContext)
                 .onReceive(
                     // Automatically save when we detect that we are no longer
                     // the foreground app. Use this rather than the scene phase

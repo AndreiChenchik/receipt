@@ -8,7 +8,7 @@
 import Foundation
 
 extension ItemType {
-    var typeTitle: String { title ?? "Unknown category" }
+    var wrappedTitle: String { title ?? "Unknown category" }
 
     var typeIcon: String {
         String(title?.first ?? Character(""))
@@ -16,10 +16,10 @@ extension ItemType {
 
     var typeTitleWithoutIcon: String {
         if typeIcon.first?.isEmoji ?? false {
-            let shortTitle = typeTitle.dropFirst().trimmingCharacters(in: .whitespacesAndNewlines)
+            let shortTitle = wrappedTitle.dropFirst().trimmingCharacters(in: .whitespacesAndNewlines)
             return String(shortTitle)
         } else {
-            return typeTitle
+            return wrappedTitle
         }
     }
 
@@ -40,6 +40,10 @@ extension ItemType {
         formatter.numberStyle = .decimal
         return formatter.string(from: typeItemsSum) ?? ""
     }
+
+    var typeCategoryTitle: String {
+        category?.title ?? "Unknown section"
+    }
 }
 
 extension ItemType {
@@ -47,9 +51,9 @@ extension ItemType {
         let controller = DataController.preview
         let viewContext = controller.container.viewContext
 
-        let vendor = ItemType(context: viewContext)
-        vendor.title = "🛃 Example Category"
+        let store = ItemType(context: viewContext)
+        store.title = "🛃 Example Category"
 
-        return vendor
+        return store
     }
 }

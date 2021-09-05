@@ -1,6 +1,6 @@
 //
-//  ReceiptMapView.swift
-//  ReceiptMapView
+//  MapView.swift
+//  MapView
 //
 //  Created by Andrei Chenchik on 30/8/21.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct ReceiptMapView: View {
+struct MapView: View {
     let region: MKCoordinateRegion
 
     struct Pin: Identifiable {
@@ -31,7 +31,7 @@ struct ReceiptMapView_Previews: PreviewProvider {
                                            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
     static var previews: some View {
         Form {
-            ReceiptMapView(region: region)
+            MapView(region: region)
         }
     }
 }

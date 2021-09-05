@@ -1,13 +1,13 @@
 //
-//  ReceiptItemView.swift
-//  ReceiptItemView
+//  ItemView.swift
+//  ItemView
 //
 //  Created by Andrei Chenchik on 29/8/21.
 //
 
 import SwiftUI
 
-struct ReceiptItemView: View {
+struct ItemView: View {
     @ObservedObject var item: Item
 
     @State private var title: String
@@ -15,7 +15,7 @@ struct ReceiptItemView: View {
 
     init(item: Item) {
         self.item = item
-        self.title = item.itemTitle
+        self.title = item.wrappedTitle
         self.priceString = item.itemPriceString
     }
 
@@ -70,7 +70,7 @@ struct ReceiptItemView_Previews: PreviewProvider {
 
     static var previews: some View {
         Form {
-            ReceiptItemView(item: Item.example)
+            ItemView(item: Item.example)
         }
     }
 }

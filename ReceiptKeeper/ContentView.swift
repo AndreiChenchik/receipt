@@ -18,12 +18,12 @@ struct ContentView: View {
             ReceiptsView()
                 .tag(ReceiptsView.tag)
                 .tabItem { Label("Receipts", systemImage: "doc.on.doc") }
-            TypesView()
-                .tag(TypesView.tag)
-                .tabItem { Label("Categories", systemImage: "list.star") }
-            VendorsView()
-                .tag(VendorsView.tag)
-                .tabItem { Label("Vendors", systemImage: "crown") }
+            ItemTypesView()
+                .tag(ItemTypesView.tag)
+                .tabItem { Label("Item types", systemImage: "list.star") }
+            StoresView()
+                .tag(StoresView.tag)
+                .tabItem { Label("Stores", systemImage: "crown") }
         }
     }
 }

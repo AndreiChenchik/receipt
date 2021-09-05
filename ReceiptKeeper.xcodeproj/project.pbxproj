@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		380311E426D4348300B8B168 /* EditReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380311E326D4348300B8B168 /* EditReceiptView.swift */; };
+		380311E426D4348300B8B168 /* ReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380311E326D4348300B8B168 /* ReceiptView.swift */; };
 		380311E626D4454C00B8B168 /* RecognizedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380311E526D4454C00B8B168 /* RecognizedContent.swift */; };
 		380311E926D5448C00B8B168 /* SelectSomethingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380311E826D5448C00B8B168 /* SelectSomethingView.swift */; };
 		380311EB26D5715700B8B168 /* ReceiptsViewModel-Recognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380311EA26D5715700B8B168 /* ReceiptsViewModel-Recognizer.swift */; };
@@ -17,24 +17,21 @@
 		3822FE9E26E269BB0078ECD1 /* DataController-ItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FE9D26E269BB0078ECD1 /* DataController-ItemType.swift */; };
 		3822FEA026E272A10078ECD1 /* DataController-Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FE9F26E272A10078ECD1 /* DataController-Item.swift */; };
 		3822FEA226E276B40078ECD1 /* NSManagedObject-objectURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FEA126E276B40078ECD1 /* NSManagedObject-objectURL.swift */; };
+		3822FEA426E2A77C0078ECD1 /* ItemTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FEA326E2A77C0078ECD1 /* ItemTypeViewModel.swift */; };
 		382DD12D26D663EF00C6DA95 /* RecognizedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */; };
 		382DD12F26D665F400C6DA95 /* ScanImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD12E26D665F400C6DA95 /* ScanImageView.swift */; };
-		382DD13126D66F9F00C6DA95 /* EditReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */; };
+		382DD13126D66F9F00C6DA95 /* ReceiptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD13026D66F9F00C6DA95 /* ReceiptViewModel.swift */; };
 		382DD13326D7B9AB00C6DA95 /* RecognizedContentLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */; };
 		3843197926DD375500E78F73 /* Character-Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3843197826DD375500E78F73 /* Character-Emoji.swift */; };
-		3843197D26DD50FC00E78F73 /* VendorEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3843197C26DD50FC00E78F73 /* VendorEditView.swift */; };
+		3843197D26DD50FC00E78F73 /* StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3843197C26DD50FC00E78F73 /* StoreView.swift */; };
 		3859F9CB26C26EA200F2BEE5 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3859F9CA26C26EA200F2BEE5 /* UIImage.swift */; };
 		385DBC2426D9119A00B0D245 /* Binding-onChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2326D9119A00B0D245 /* Binding-onChange.swift */; };
-		385DBC2726D98B7B00B0D245 /* VendorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2626D98B7B00B0D245 /* VendorsView.swift */; };
-		385DBC2926D98BED00B0D245 /* VendorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2826D98BED00B0D245 /* VendorsViewModel.swift */; };
-		385DBC2D26DB772800B0D245 /* Vendor-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2C26DB772800B0D245 /* Vendor-CoreDataHelpers.swift */; };
+		385DBC2726D98B7B00B0D245 /* StoresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2626D98B7B00B0D245 /* StoresView.swift */; };
+		385DBC2D26DB772800B0D245 /* Store-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2C26DB772800B0D245 /* Store-CoreDataHelpers.swift */; };
 		385DBC2F26DB780E00B0D245 /* Item-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC2E26DB780E00B0D245 /* Item-CoreDataHelpers.swift */; };
-		385DBC3126DB7EBC00B0D245 /* ReceiptItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC3026DB7EBC00B0D245 /* ReceiptItemView.swift */; };
-		385DBC3326DCD42C00B0D245 /* ReceiptMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC3226DCD42C00B0D245 /* ReceiptMapView.swift */; };
 		385DBC3726DD1D2600B0D245 /* DataController-Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DBC3626DD1D2600B0D245 /* DataController-Previews.swift */; };
-		38696D6526DF556A00835E9E /* TypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6426DF556900835E9E /* TypesView.swift */; };
-		38696D6726DF579200835E9E /* TypesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6626DF579200835E9E /* TypesViewModel.swift */; };
-		38696D6926DF596A00835E9E /* TypeEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6826DF596A00835E9E /* TypeEditView.swift */; };
+		38696D6526DF556A00835E9E /* ItemTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6426DF556900835E9E /* ItemTypesView.swift */; };
+		38696D6926DF596A00835E9E /* ItemTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6826DF596A00835E9E /* ItemTypeView.swift */; };
 		38696D6B26DF5B4700835E9E /* ItemType-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6A26DF5B4700835E9E /* ItemType-CoreDataHelpers.swift */; };
 		386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */; };
 		386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6B26BABE0400F1E4AB /* ContentView.swift */; };
@@ -46,6 +43,7 @@
 		387E09F926CEA5E1007D0542 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 387E09F726CEA5E1007D0542 /* Main.xcdatamodeld */; };
 		387E09FC26CEE57C007D0542 /* RecognitionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387E09FB26CEE57C007D0542 /* RecognitionData.swift */; };
 		387E0A0026D2D00E007D0542 /* RecognitionDataTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387E09FF26D2D00E007D0542 /* RecognitionDataTransformer.swift */; };
+		3882210B26E53758002478E0 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3882210A26E53758002478E0 /* ItemView.swift */; };
 		388C181026C25FBE009D0F23 /* Baseline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388C180F26C25FBE009D0F23 /* Baseline.swift */; };
 		38B786FB26E0B4980011A53A /* ItemTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B786FA26E0B4980011A53A /* ItemTypePicker.swift */; };
 		38B786FD26E0B5690011A53A /* ItemTypePickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B786FC26E0B5690011A53A /* ItemTypePickerModel.swift */; };
@@ -54,6 +52,8 @@
 		38B7870726E22E120011A53A /* DataController-Vendors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B7870626E22E120011A53A /* DataController-Vendors.swift */; };
 		38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9226BABED900CE2946 /* ScannerView.swift */; };
 		38C1ACC326D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C1ACC226D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift */; };
+		38DDD07E26E53783007B2F3C /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DDD07D26E53783007B2F3C /* MapView.swift */; };
+		38DDD08226E53ECB007B2F3C /* ItemCategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DDD08126E53ECB007B2F3C /* ItemCategoryPicker.swift */; };
 		38E89E4726BD9731006A0D49 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E4626BD9731006A0D49 /* Line.swift */; };
 		38E9908426C19B52007FF507 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E9908326C19B52007FF507 /* CGRect.swift */; };
 		38F20D5B26BBFE0E007D0A0E /* ReceiptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */; };
@@ -61,7 +61,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		380311E326D4348300B8B168 /* EditReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReceiptView.swift; sourceTree = "<group>"; };
+		380311E326D4348300B8B168 /* ReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptView.swift; sourceTree = "<group>"; };
 		380311E526D4454C00B8B168 /* RecognizedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedContent.swift; sourceTree = "<group>"; };
 		380311E826D5448C00B8B168 /* SelectSomethingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSomethingView.swift; sourceTree = "<group>"; };
 		380311EA26D5715700B8B168 /* ReceiptsViewModel-Recognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReceiptsViewModel-Recognizer.swift"; sourceTree = "<group>"; };
@@ -71,24 +71,21 @@
 		3822FE9D26E269BB0078ECD1 /* DataController-ItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-ItemType.swift"; sourceTree = "<group>"; };
 		3822FE9F26E272A10078ECD1 /* DataController-Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Item.swift"; sourceTree = "<group>"; };
 		3822FEA126E276B40078ECD1 /* NSManagedObject-objectURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject-objectURL.swift"; sourceTree = "<group>"; };
+		3822FEA326E2A77C0078ECD1 /* ItemTypeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypeViewModel.swift; sourceTree = "<group>"; };
 		382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedContentView.swift; sourceTree = "<group>"; };
 		382DD12E26D665F400C6DA95 /* ScanImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanImageView.swift; sourceTree = "<group>"; };
-		382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReceiptViewModel.swift; sourceTree = "<group>"; };
+		382DD13026D66F9F00C6DA95 /* ReceiptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewModel.swift; sourceTree = "<group>"; };
 		382DD13226D7B9AB00C6DA95 /* RecognizedContentLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedContentLineView.swift; sourceTree = "<group>"; };
 		3843197826DD375500E78F73 /* Character-Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character-Emoji.swift"; sourceTree = "<group>"; };
-		3843197C26DD50FC00E78F73 /* VendorEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendorEditView.swift; sourceTree = "<group>"; };
+		3843197C26DD50FC00E78F73 /* StoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreView.swift; sourceTree = "<group>"; };
 		3859F9CA26C26EA200F2BEE5 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		385DBC2326D9119A00B0D245 /* Binding-onChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding-onChange.swift"; sourceTree = "<group>"; };
-		385DBC2626D98B7B00B0D245 /* VendorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendorsView.swift; sourceTree = "<group>"; };
-		385DBC2826D98BED00B0D245 /* VendorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendorsViewModel.swift; sourceTree = "<group>"; };
-		385DBC2C26DB772800B0D245 /* Vendor-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vendor-CoreDataHelpers.swift"; sourceTree = "<group>"; };
+		385DBC2626D98B7B00B0D245 /* StoresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresView.swift; sourceTree = "<group>"; };
+		385DBC2C26DB772800B0D245 /* Store-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Store-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 		385DBC2E26DB780E00B0D245 /* Item-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item-CoreDataHelpers.swift"; sourceTree = "<group>"; };
-		385DBC3026DB7EBC00B0D245 /* ReceiptItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptItemView.swift; sourceTree = "<group>"; };
-		385DBC3226DCD42C00B0D245 /* ReceiptMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptMapView.swift; sourceTree = "<group>"; };
 		385DBC3626DD1D2600B0D245 /* DataController-Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Previews.swift"; sourceTree = "<group>"; };
-		38696D6426DF556900835E9E /* TypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypesView.swift; sourceTree = "<group>"; };
-		38696D6626DF579200835E9E /* TypesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypesViewModel.swift; sourceTree = "<group>"; };
-		38696D6826DF596A00835E9E /* TypeEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeEditView.swift; sourceTree = "<group>"; };
+		38696D6426DF556900835E9E /* ItemTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypesView.swift; sourceTree = "<group>"; };
+		38696D6826DF596A00835E9E /* ItemTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypeView.swift; sourceTree = "<group>"; };
 		38696D6A26DF5B4700835E9E /* ItemType-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemType-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 		386EBE6626BABE0400F1E4AB /* ReceiptKeeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReceiptKeeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptKeeperApp.swift; sourceTree = "<group>"; };
@@ -102,6 +99,7 @@
 		387E09F826CEA5E1007D0542 /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
 		387E09FB26CEE57C007D0542 /* RecognitionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionData.swift; sourceTree = "<group>"; };
 		387E09FF26D2D00E007D0542 /* RecognitionDataTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionDataTransformer.swift; sourceTree = "<group>"; };
+		3882210A26E53758002478E0 /* ItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		388C180F26C25FBE009D0F23 /* Baseline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Baseline.swift; sourceTree = "<group>"; };
 		38B786FA26E0B4980011A53A /* ItemTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypePicker.swift; sourceTree = "<group>"; };
 		38B786FC26E0B5690011A53A /* ItemTypePickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypePickerModel.swift; sourceTree = "<group>"; };
@@ -111,6 +109,8 @@
 		38BB9B9226BABED900CE2946 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		38BB9B9426BAC05E00CE2946 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		38C1ACC226D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Receipt-CoreDataHelpers.swift"; sourceTree = "<group>"; };
+		38DDD07D26E53783007B2F3C /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		38DDD08126E53ECB007B2F3C /* ItemCategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategoryPicker.swift; sourceTree = "<group>"; };
 		38E89E4626BD9731006A0D49 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		38E9908326C19B52007FF507 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsView.swift; sourceTree = "<group>"; };
@@ -161,37 +161,36 @@
 			path = RecognitionData;
 			sourceTree = "<group>";
 		};
-		382DD12B26D663DA00C6DA95 /* EditReceiptView */ = {
+		382DD12B26D663DA00C6DA95 /* ReceiptView */ = {
 			isa = PBXGroup;
 			children = (
-				380311E326D4348300B8B168 /* EditReceiptView.swift */,
-				382DD13026D66F9F00C6DA95 /* EditReceiptViewModel.swift */,
-				385DBC3026DB7EBC00B0D245 /* ReceiptItemView.swift */,
-				385DBC3226DCD42C00B0D245 /* ReceiptMapView.swift */,
-				38B786FE26E0B5730011A53A /* ItemTypePicker */,
+				380311E326D4348300B8B168 /* ReceiptView.swift */,
+				382DD13026D66F9F00C6DA95 /* ReceiptViewModel.swift */,
+				38DDD07D26E53783007B2F3C /* MapView.swift */,
+				38DDD08026E5379F007B2F3C /* ItemView */,
 				38696D6D26E0B2E600835E9E /* RecognizedContentView */,
 			);
-			path = EditReceiptView;
+			path = ReceiptView;
 			sourceTree = "<group>";
 		};
-		385DBC2526D98B6700B0D245 /* Vendors */ = {
+		385DBC2526D98B6700B0D245 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
-				385DBC2626D98B7B00B0D245 /* VendorsView.swift */,
-				385DBC2826D98BED00B0D245 /* VendorsViewModel.swift */,
-				3843197C26DD50FC00E78F73 /* VendorEditView.swift */,
+				385DBC2626D98B7B00B0D245 /* StoresView.swift */,
+				3843197C26DD50FC00E78F73 /* StoreView.swift */,
 			);
-			path = Vendors;
+			path = Stores;
 			sourceTree = "<group>";
 		};
-		38696D6326DF554300835E9E /* Types */ = {
+		38696D6326DF554300835E9E /* ItemTypes */ = {
 			isa = PBXGroup;
 			children = (
-				38696D6426DF556900835E9E /* TypesView.swift */,
-				38696D6626DF579200835E9E /* TypesViewModel.swift */,
-				38696D6826DF596A00835E9E /* TypeEditView.swift */,
+				38696D6426DF556900835E9E /* ItemTypesView.swift */,
+				38696D6826DF596A00835E9E /* ItemTypeView.swift */,
+				38DDD08126E53ECB007B2F3C /* ItemCategoryPicker.swift */,
+				3822FEA326E2A77C0078ECD1 /* ItemTypeViewModel.swift */,
 			);
-			path = Types;
+			path = ItemTypes;
 			sourceTree = "<group>";
 		};
 		38696D6D26E0B2E600835E9E /* RecognizedContentView */ = {
@@ -252,7 +251,7 @@
 				38BB9B9226BABED900CE2946 /* ScannerView.swift */,
 				380311E826D5448C00B8B168 /* SelectSomethingView.swift */,
 				380311EC26D571D200B8B168 /* ReceiptsView */,
-				382DD12B26D663DA00C6DA95 /* EditReceiptView */,
+				382DD12B26D663DA00C6DA95 /* ReceiptView */,
 			);
 			path = Receipts;
 			sourceTree = "<group>";
@@ -303,19 +302,28 @@
 			children = (
 				38C1ACC226D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift */,
 				385DBC2E26DB780E00B0D245 /* Item-CoreDataHelpers.swift */,
-				385DBC2C26DB772800B0D245 /* Vendor-CoreDataHelpers.swift */,
+				385DBC2C26DB772800B0D245 /* Store-CoreDataHelpers.swift */,
 				38696D6A26DF5B4700835E9E /* ItemType-CoreDataHelpers.swift */,
 				380311F026D585C500B8B168 /* RecognitionData */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
+		38DDD08026E5379F007B2F3C /* ItemView */ = {
+			isa = PBXGroup;
+			children = (
+				3882210A26E53758002478E0 /* ItemView.swift */,
+				38B786FE26E0B5730011A53A /* ItemTypePicker */,
+			);
+			path = ItemView;
+			sourceTree = "<group>";
+		};
 		38E89E3A26BD6A28006A0D49 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
-				38696D6326DF554300835E9E /* Types */,
-				385DBC2526D98B6700B0D245 /* Vendors */,
 				3872875726BF1871008B312B /* Receipts */,
+				38696D6326DF554300835E9E /* ItemTypes */,
+				385DBC2526D98B6700B0D245 /* Stores */,
 			);
 			path = Activities;
 			sourceTree = "<group>";
@@ -406,34 +414,33 @@
 				388C181026C25FBE009D0F23 /* Baseline.swift in Sources */,
 				38B7870326E1FDE00011A53A /* NSManagedObjectContext-save.swift in Sources */,
 				380311EB26D5715700B8B168 /* ReceiptsViewModel-Recognizer.swift in Sources */,
-				38696D6526DF556A00835E9E /* TypesView.swift in Sources */,
-				380311E426D4348300B8B168 /* EditReceiptView.swift in Sources */,
+				38696D6526DF556A00835E9E /* ItemTypesView.swift in Sources */,
+				380311E426D4348300B8B168 /* ReceiptView.swift in Sources */,
 				38E89E4726BD9731006A0D49 /* Line.swift in Sources */,
 				38696D6B26DF5B4700835E9E /* ItemType-CoreDataHelpers.swift in Sources */,
 				387E09F926CEA5E1007D0542 /* Main.xcdatamodeld in Sources */,
-				385DBC2D26DB772800B0D245 /* Vendor-CoreDataHelpers.swift in Sources */,
+				385DBC2D26DB772800B0D245 /* Store-CoreDataHelpers.swift in Sources */,
 				380311E626D4454C00B8B168 /* RecognizedContent.swift in Sources */,
 				385DBC2F26DB780E00B0D245 /* Item-CoreDataHelpers.swift in Sources */,
 				387E09FC26CEE57C007D0542 /* RecognitionData.swift in Sources */,
-				38696D6726DF579200835E9E /* TypesViewModel.swift in Sources */,
 				38F20D5B26BBFE0E007D0A0E /* ReceiptsView.swift in Sources */,
-				382DD13126D66F9F00C6DA95 /* EditReceiptViewModel.swift in Sources */,
+				382DD13126D66F9F00C6DA95 /* ReceiptViewModel.swift in Sources */,
+				38DDD08226E53ECB007B2F3C /* ItemCategoryPicker.swift in Sources */,
 				386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */,
 				385DBC3726DD1D2600B0D245 /* DataController-Previews.swift in Sources */,
-				385DBC3326DCD42C00B0D245 /* ReceiptMapView.swift in Sources */,
 				380311F426D656F700B8B168 /* RecognizedObservations.swift in Sources */,
 				382DD12F26D665F400C6DA95 /* ScanImageView.swift in Sources */,
-				385DBC2926D98BED00B0D245 /* VendorsViewModel.swift in Sources */,
+				3882210B26E53758002478E0 /* ItemView.swift in Sources */,
+				3822FEA426E2A77C0078ECD1 /* ItemTypeViewModel.swift in Sources */,
 				382DD12D26D663EF00C6DA95 /* RecognizedContentView.swift in Sources */,
 				380311F226D63F7400B8B168 /* ReceiptRowView.swift in Sources */,
 				38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */,
 				38B7870726E22E120011A53A /* DataController-Vendors.swift in Sources */,
-				38696D6926DF596A00835E9E /* TypeEditView.swift in Sources */,
+				38696D6926DF596A00835E9E /* ItemTypeView.swift in Sources */,
 				38B7870126E112CE0011A53A /* DataController-Publisher.swift in Sources */,
 				38B786FD26E0B5690011A53A /* ItemTypePickerModel.swift in Sources */,
 				386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */,
-				385DBC2726D98B7B00B0D245 /* VendorsView.swift in Sources */,
-				385DBC3126DB7EBC00B0D245 /* ReceiptItemView.swift in Sources */,
+				385DBC2726D98B7B00B0D245 /* StoresView.swift in Sources */,
 				3872875226BF11E5008B312B /* DataController.swift in Sources */,
 				38C1ACC326D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift in Sources */,
 				380311E926D5448C00B8B168 /* SelectSomethingView.swift in Sources */,
@@ -444,9 +451,10 @@
 				380311EF26D57AF500B8B168 /* DataController-Receipts.swift in Sources */,
 				38E9908426C19B52007FF507 /* CGRect.swift in Sources */,
 				3843197926DD375500E78F73 /* Character-Emoji.swift in Sources */,
+				38DDD07E26E53783007B2F3C /* MapView.swift in Sources */,
 				3822FE9E26E269BB0078ECD1 /* DataController-ItemType.swift in Sources */,
 				3822FEA026E272A10078ECD1 /* DataController-Item.swift in Sources */,
-				3843197D26DD50FC00E78F73 /* VendorEditView.swift in Sources */,
+				3843197D26DD50FC00E78F73 /* StoreView.swift in Sources */,
 				385DBC2426D9119A00B0D245 /* Binding-onChange.swift in Sources */,
 				382DD13326D7B9AB00C6DA95 /* RecognizedContentLineView.swift in Sources */,
 				387E0A0026D2D00E007D0542 /* RecognitionDataTransformer.swift in Sources */,

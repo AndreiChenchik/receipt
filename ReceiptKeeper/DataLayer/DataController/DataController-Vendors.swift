@@ -1,6 +1,6 @@
 //
-//  DataController-Vendors.swift
-//  DataController-Vendors
+//  DataController-Stores.swift
+//  DataController-Stores
 //
 //  Created by Andrei Chenchik on 3/9/21.
 //
@@ -9,54 +9,54 @@ import Foundation
 import CoreData
 
 extension DataController {
-    func createVendor(with title: String, linkedTo receiptID: NSManagedObjectID?) {
+    func createStore(with title: String, linkedTo receiptID: NSManagedObjectID?) {
         backgroundContext.performWaitAndSave {
-            let vendor = Vendor(context: backgroundContext)
-            vendor.title = title
+            let store = Store(context: backgroundContext)
+            store.title = title
 
             if let receiptID = receiptID,
                let receipt = try? self.backgroundContext.existingObject(with: receiptID) as? Receipt {
 
-                receipt.vendor = vendor
+                receipt.store = store
             }
         }
     }
 
-    func updateVendor(_ vendorID: NSManagedObjectID, title: String) {
+    func updateStore(_ storeID: NSManagedObjectID, title: String) {
         backgroundContext.performWaitAndSave {
-            if let vendor = try? self.backgroundContext.existingObject(with: vendorID) as? Vendor {
+            if let store = try? self.backgroundContext.existingObject(with: storeID) as? Store {
 
-                vendor.title = title
+                store.title = title
             }
         }
 
         #warning("should be refactored, because it can be slow when there will be a lot of receipts")
         container.viewContext.perform {
-            if let vendor = try? self.container.viewContext.existingObject(with: vendorID) as? Vendor {
+            if let store = try? self.container.viewContext.existingObject(with: storeID) as? Store {
 
-                for receipt in vendor.vendorReceipts {
+                for receipt in store.storeReceipts {
                     receipt.objectWillChange.send()
                 }
             }
         }
     }
 
-    func searchVendor(for title: String, in context: NSManagedObjectContext) -> Vendor? {
-        let vendorsRequest = Vendor.fetchRequest()
-        vendorsRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Vendor.title, ascending: false)]
+    func searchStore(for title: String, in context: NSManagedObjectContext) -> Store? {
+        let storesRequest = Store.fetchRequest()
+        storesRequest.sortDescriptors = [NSSortDescriptor(keyPath: \Store.title, ascending: false)]
 
-        let vendorsController = NSFetchedResultsController(
-            fetchRequest: vendorsRequest,
+        let storesController = NSFetchedResultsController(
+            fetchRequest: storesRequest,
             managedObjectContext: context,
             sectionNameKeyPath: nil,
             cacheName: nil
         )
 
         do {
-            try vendorsController.performFetch()
-            let vendors = vendorsController.fetchedObjects ?? []
-            let receiptVendor = vendors.first { !$0.vendorTitleWithoutIcon.isEmpty && title.lowercased().contains($0.vendorTitleWithoutIcon.lowercased()) }
-            return receiptVendor
+            try storesController.performFetch()
+            let stores = storesController.fetchedObjects ?? []
+            let receiptStore = stores.first { !$0.storeTitleWithoutIcon.isEmpty && title.lowercased().contains($0.storeTitleWithoutIcon.lowercased()) }
+            return receiptStore
         } catch {
             print("Error fetching receipts array: \(error.localizedDescription)")
         }

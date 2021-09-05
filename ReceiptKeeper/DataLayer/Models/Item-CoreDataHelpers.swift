@@ -15,7 +15,7 @@ extension Item {
         formatter.numberStyle = .decimal
         return formatter.string(from: price) ?? ""
     }
-    var itemTitle: String { title ?? "Unknown item" }
+    var wrappedTitle: String { title ?? "Unknown item" }
 }
 
 extension Item {

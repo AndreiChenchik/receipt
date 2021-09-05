@@ -64,11 +64,11 @@ extension DataController {
                         item.creationDate = Date()
                     }
 
-                    if receipt.vendorLineUUID != recognitionData.venueTitle?.id,
+                    if receipt.storeLineUUID != recognitionData.venueTitle?.id,
                        let title = recognitionData.venueTitle?.value,
-                       let vendor = self.searchVendor(for: title, in: context) {
-                        receipt.vendor = vendor
-                        receipt.vendorLineUUID = recognitionData.venueTitle?.id
+                       let store = self.searchStore(for: title, in: context) {
+                        receipt.store = store
+                        receipt.storeLineUUID = recognitionData.venueTitle?.id
                     }
 
                     if receipt.state == .processing {
@@ -83,28 +83,28 @@ extension DataController {
         }
     }
 
-    func updateReceipt(_ receiptID: NSManagedObjectID, vendorID: NSManagedObjectID?) {
+    func updateReceipt(_ receiptID: NSManagedObjectID, storeID: NSManagedObjectID?) {
         backgroundContext.performWaitAndSave {
             guard let receipt = try? self.backgroundContext.existingObject(with: receiptID) as? Receipt else { return }
 
-            if let vendorID = vendorID,
-                let vendor = try? self.backgroundContext.existingObject(with: vendorID) as? Vendor {
+            if let storeID = storeID,
+                let store = try? self.backgroundContext.existingObject(with: storeID) as? Store {
 
-                receipt.vendor = vendor
+                receipt.store = store
             } else {
-                receipt.vendor = nil
+                receipt.store = nil
             }
         }
     }
 
-    func updateReceipt(_ receiptID: NSManagedObjectID, vendorURL: String) {
+    func updateReceipt(_ receiptID: NSManagedObjectID, storeURL: String) {
         backgroundContext.performWaitAndSave {
             if let receipt = try? self.backgroundContext.existingObject(with: receiptID) as? Receipt,
-               let vendorURL = URL(string: vendorURL),
-               let vendorID = container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: vendorURL),
-               let vendor = try? self.backgroundContext.existingObject(with: vendorID) as? Vendor {
+               let storeURL = URL(string: storeURL),
+               let storeID = container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: storeURL),
+               let store = try? self.backgroundContext.existingObject(with: storeID) as? Store {
 
-                receipt.vendor = vendor
+                receipt.store = store
             }
         }
     }
