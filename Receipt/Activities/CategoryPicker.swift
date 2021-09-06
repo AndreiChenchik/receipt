@@ -9,8 +9,6 @@ import SwiftUI
 import CoreData
 
 struct CategoryPicker<Category: NSManagedObject & ObjectWithTitle & Identifiable>: View {
-    let dataController = DataController.shared
-
     let title: String
     @Binding var selection: String
 
@@ -28,67 +26,12 @@ struct CategoryPicker<Category: NSManagedObject & ObjectWithTitle & Identifiable
         categories.sorted { $0.title ?? "" < $1.title ?? "" }
     }
 
-    @State private var showingPickerView = false
-    @State private var showingNewGoodsCategoryView = false
-    @State private var newItemTitle = ""
-    @FocusState private var selectedNewItemTextField: Bool
-
     var selectedCategory: Category? { categories.first { $0.objectURL == selection } }
     var selectedCategoryTitle: String { selectedCategory?.title ?? "Please select" }
 
-    var newItemCell: some View {
-        Group {
-            if showingNewGoodsCategoryView {
-                HStack {
-                    TextField("New item", text: $newItemTitle)
-                        .focused($selectedNewItemTextField)
-                    Button("Create") {
-                        var category = Category(context: dataController.container.viewContext)
-                        category.title = newItemTitle
-                        dataController.saveIfNeeded()
-
-                        selection = category.objectURL
-                        showingPickerView = false
-                        showingNewGoodsCategoryView = false
-                        newItemTitle = ""
-                    }
-                    .disabled(newItemTitle.isEmpty)
-                }
-            } else {
-                Button {
-                    showingNewGoodsCategoryView = true
-                    selectedNewItemTextField = true
-                } label: {
-                    Label("Add new", systemImage: "plus")
-                }
-            }
-        }
-    }
-
-    var categoriesList: some View {
-        List {
-            ForEach(categories) { category in
-                Button {
-                    selection = category.objectURL
-                    showingPickerView = false
-                } label: {
-                    Text(category.title ?? "Unknown category")
-                }
-                .foregroundColor(.primary)
-            }
-            .onDelete { indexSet in
-                let objectIDs = indexSet.map { categories[$0].objectID }
-                dataController.delete(objectIDs)
-            }
-
-            newItemCell
-        }
-        .navigationTitle("Select category")
-    }
-
     var body: some View {
-        NavigationLink(isActive: $showingPickerView) {
-            categoriesList
+        NavigationLink {
+            CategoriesList(categories: sortedCategories, selection: $selection)
         } label: {
             HStack {
                 Text(title)
@@ -97,6 +40,78 @@ struct CategoryPicker<Category: NSManagedObject & ObjectWithTitle & Identifiable
 
                 Text(selectedCategoryTitle)
                     .foregroundColor(.secondary)
+            }
+        }
+    }
+
+    struct CategoriesList: View {
+        let dataController = DataController.shared
+
+        let categories: [Category]
+        @Binding var selection: String
+
+        @Environment(\.dismiss) var dismiss
+
+        @State private var newItemTitle = ""
+        @State private var showingNewCategoryTextField = false
+
+        var body: some View {
+            List {
+                ForEach(categories) { category in
+                    Button {
+                        selection = category.objectURL
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Text(category.title ?? "Unknown category")
+
+                            Spacer()
+
+                            if selection == category.objectURL {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.accentColor)
+                            }
+                        }
+                    }
+                    .foregroundColor(.primary)
+                }
+                .onDelete { indexSet in
+                    let objectIDs = indexSet.map { categories[$0].objectID }
+                    dataController.delete(objectIDs)
+                }
+
+                newItemCell
+            }
+            .navigationTitle("Select category")
+        }
+
+        var newItemCell: some View {
+            Group {
+                if showingNewCategoryTextField {
+                    HStack {
+                        TextField("New item", text: $newItemTitle)
+
+                        Button("Create") {
+                            var category = Category(context: dataController.container.viewContext)
+                            category.title = newItemTitle
+
+                            newItemTitle = ""
+                            showingNewCategoryTextField = false
+
+                            dataController.saveIfNeeded()
+
+                            selection = category.objectURL
+                            dismiss()
+                        }
+                        .disabled(newItemTitle.isEmpty)
+                    }
+                } else {
+                    Button {
+                        showingNewCategoryTextField = true
+                    } label: {
+                        Label("Add new", systemImage: "plus")
+                    }
+                }
             }
         }
     }
