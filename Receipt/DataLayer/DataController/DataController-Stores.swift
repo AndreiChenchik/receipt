@@ -41,16 +41,6 @@ extension DataController {
                 }
             }
         }
-
-        #warning("should be refactored, because it can be slow when there will be a lot of receipts")
-        container.viewContext.perform {
-            if let store = try? self.container.viewContext.existingObject(with: storeID) as? Store {
-
-                for receipt in store.storeReceipts {
-                    receipt.objectWillChange.send()
-                }
-            }
-        }
     }
 
     func searchStore(for title: String, in context: NSManagedObjectContext) -> Store? {

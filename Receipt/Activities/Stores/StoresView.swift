@@ -18,10 +18,10 @@ struct StoresView: View {
     @FetchRequest<Store>(sortDescriptors: [
         NSSortDescriptor(keyPath: \Store.title, ascending: false)
     ])
-    private var types
+    private var stores
 
-    var sectionedTypes: [(key: StoreCategory?, value: [Store])] {
-        Dictionary(grouping: types, by: { $0.category })
+    var sectionedStores: [(key: StoreCategory?, value: [Store])] {
+        Dictionary(grouping: stores, by: { $0.category })
             .sorted { $0.key?.title ?? "" < $1.key?.title ?? "" }
     }
 
@@ -30,7 +30,7 @@ struct StoresView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(sectionedTypes, id: \.key) { section in
+                ForEach(sectionedStores, id: \.key) { section in
                     Section(header: Text(section.key?.title ?? "Unknown category")) {
                         ForEach(section.value, content: row)
                             .onDelete { indexSet in
