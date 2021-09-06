@@ -1,6 +1,6 @@
 //
-//  CategoryPicker.swift
-//  CategoryPicker
+//  RelationPicker.swift
+//  RelationPicker
 //
 //  Created by Andrei Chenchik on 5/9/21.
 //
@@ -8,46 +8,49 @@
 import SwiftUI
 import CoreData
 
-struct CategoryPicker<Category: NSManagedObject & ObjectWithTitle & Identifiable>: View {
+struct RelationPicker<Relation: NSManagedObject & ObjectWithTitle & Identifiable>: View {
     let title: String
+    let navigationTitle: String
     @Binding var selection: String
 
-    init(_ title: String, selection: Binding<String>) {
+    init(_ title: String, selection: Binding<String>, navigationTitle: String = "Select category") {
         self.title = title
         self._selection = selection
+        self.navigationTitle = navigationTitle
     }
 
-    @FetchRequest<Category>(
+    @FetchRequest<Relation>(
         sortDescriptors: []
     )
-    private var categories
+    private var relations
 
-    var sortedCategories: [Category] {
-        categories.sorted { $0.title ?? "" < $1.title ?? "" }
+    var sortedRelations: [Relation] {
+        relations.sorted { $0.title ?? "" < $1.title ?? "" }
     }
 
-    var selectedCategory: Category? { categories.first { $0.objectURL == selection } }
-    var selectedCategoryTitle: String { selectedCategory?.title ?? "Please select" }
+    var selectedRelation: Relation? { relations.first { $0.objectURL == selection } }
+    var selectedRelationTitle: String { selectedRelation?.title ?? "Please select" }
 
     var body: some View {
         NavigationLink {
-            CategoriesList(categories: sortedCategories, selection: $selection)
+            RelationsList(navigationTitle: navigationTitle, categories: sortedRelations, selection: $selection)
         } label: {
             HStack {
                 Text(title)
 
                 Spacer()
 
-                Text(selectedCategoryTitle)
+                Text(selectedRelationTitle)
                     .foregroundColor(.secondary)
             }
         }
     }
 
-    struct CategoriesList: View {
+    struct RelationsList: View {
         let dataController = DataController.shared
 
-        let categories: [Category]
+        let navigationTitle: String
+        let categories: [Relation]
         @Binding var selection: String
 
         @Environment(\.dismiss) var dismiss
@@ -63,7 +66,7 @@ struct CategoryPicker<Category: NSManagedObject & ObjectWithTitle & Identifiable
                         dismiss()
                     } label: {
                         HStack {
-                            Text(category.title ?? "Unknown category")
+                            Text(category.title ?? "Unknown")
 
                             Spacer()
 
@@ -82,7 +85,7 @@ struct CategoryPicker<Category: NSManagedObject & ObjectWithTitle & Identifiable
 
                 newItemCell
             }
-            .navigationTitle("Select category")
+            .navigationTitle(navigationTitle)
         }
 
         var newItemCell: some View {
@@ -92,7 +95,7 @@ struct CategoryPicker<Category: NSManagedObject & ObjectWithTitle & Identifiable
                         TextField("New item", text: $newItemTitle)
 
                         Button("Create") {
-                            var category = Category(context: dataController.container.viewContext)
+                            var category = Relation(context: dataController.container.viewContext)
                             category.title = newItemTitle
 
                             newItemTitle = ""
@@ -117,8 +120,8 @@ struct CategoryPicker<Category: NSManagedObject & ObjectWithTitle & Identifiable
     }
 }
 
-struct CategoryPicker_Previews: PreviewProvider {
+struct RelationPicker_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryPicker<GoodsCategory>("Category", selection: .constant(""))
+        RelationPicker<GoodsCategory>("Category", selection: .constant(""))
     }
 }

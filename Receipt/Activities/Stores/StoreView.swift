@@ -46,7 +46,7 @@ struct StoreView: View {
             }
 
             Section {
-                CategoryPicker<StoreCategory>("Category", selection: $selectedCategoryURL)
+                RelationPicker<StoreCategory>("Category", selection: $selectedCategoryURL)
             }
 
             Button(store == nil ? "Create store" : "Update store") {

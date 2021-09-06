@@ -55,7 +55,7 @@
 		38BB9B9326BABED900CE2946 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BB9B9226BABED900CE2946 /* ScannerView.swift */; };
 		38C1ACC326D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C1ACC226D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift */; };
 		38DDD07E26E53783007B2F3C /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DDD07D26E53783007B2F3C /* MapView.swift */; };
-		38DDD08226E53ECB007B2F3C /* CategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DDD08126E53ECB007B2F3C /* CategoryPicker.swift */; };
+		38DDD08226E53ECB007B2F3C /* RelationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DDD08126E53ECB007B2F3C /* RelationPicker.swift */; };
 		38E89E4726BD9731006A0D49 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E89E4626BD9731006A0D49 /* Line.swift */; };
 		38E9908426C19B52007FF507 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E9908326C19B52007FF507 /* CGRect.swift */; };
 		38F20D5B26BBFE0E007D0A0E /* ReceiptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */; };
@@ -114,7 +114,7 @@
 		38BB9B9426BAC05E00CE2946 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		38C1ACC226D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Receipt-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 		38DDD07D26E53783007B2F3C /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		38DDD08126E53ECB007B2F3C /* CategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPicker.swift; sourceTree = "<group>"; };
+		38DDD08126E53ECB007B2F3C /* RelationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationPicker.swift; sourceTree = "<group>"; };
 		38E89E4626BD9731006A0D49 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		38E9908326C19B52007FF507 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		38F20D5A26BBFE0E007D0A0E /* ReceiptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsView.swift; sourceTree = "<group>"; };
@@ -325,7 +325,7 @@
 		38E89E3A26BD6A28006A0D49 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
-				38DDD08126E53ECB007B2F3C /* CategoryPicker.swift */,
+				38DDD08126E53ECB007B2F3C /* RelationPicker.swift */,
 				3872875726BF1871008B312B /* Receipts */,
 				380311E826D5448C00B8B168 /* SelectSomethingView.swift */,
 				38696D6326DF554300835E9E /* Goods */,
@@ -432,7 +432,7 @@
 				387E09FC26CEE57C007D0542 /* RecognitionData.swift in Sources */,
 				38F20D5B26BBFE0E007D0A0E /* ReceiptsView.swift in Sources */,
 				382DD13126D66F9F00C6DA95 /* ReceiptViewModel.swift in Sources */,
-				38DDD08226E53ECB007B2F3C /* CategoryPicker.swift in Sources */,
+				38DDD08226E53ECB007B2F3C /* RelationPicker.swift in Sources */,
 				386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */,
 				385DBC3726DD1D2600B0D245 /* DataController-Previews.swift in Sources */,
 				380311F426D656F700B8B168 /* RecognizedObservations.swift in Sources */,

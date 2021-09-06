@@ -45,11 +45,7 @@ extension ReceiptView {
 
         var body: some View {
             Form {
-                Picker("Store", selection: $viewModel.selectedStoreURL) {
-                    ForEach(viewModel.stores) { store in
-                        Text(store.wrappedTitle).tag(store.objectURL)
-                    }
-                }
+                RelationPicker<Store>("Store", selection: $viewModel.selectedStoreURL, navigationTitle: "Select store")
 
                 Section(header: Text("Purchase Date & location")) {
                     HStack {

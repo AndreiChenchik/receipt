@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Store {
+extension Store: ObjectWithTitle {
     var wrappedTitle: String { title ?? "❓ Unknown store" }
 
     var storeIcon: String? {

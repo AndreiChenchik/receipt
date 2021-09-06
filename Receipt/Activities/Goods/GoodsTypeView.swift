@@ -45,7 +45,7 @@ struct GoodsTypeView: View {
             }
 
             Section {
-                CategoryPicker<GoodsCategory>("Category", selection: $selectedCategoryURL)
+                RelationPicker<GoodsCategory>("Category", selection: $selectedCategoryURL)
             }
 
             Button(type == nil ? "Create type" : "Update type") {
