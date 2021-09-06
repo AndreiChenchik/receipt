@@ -25,6 +25,12 @@ struct GoodsTypesView: View {
         NavigationView {
             List {
                 ForEach(sectionedTypes) { section in
+                    Section {
+                        ForEach(section, content: goodsTypeRow)
+                    }
+                }
+
+                ForEach(sectionedTypes) { section in
                     Section(header: Text(section.id?.title ?? "Unknown category")) {
                         ForEach(section, content: goodsTypeRow)
                             .onDelete { indexSet in

@@ -12,18 +12,17 @@ struct GoodsTypeView: View {
 
     @Environment(\.dismiss) var dismiss
 
-    @StateObject var viewModel = ViewModel()
+    @State private var typeTitle = ""
 
     @FetchRequest<GoodsCategory>(
         sortDescriptors: [NSSortDescriptor(keyPath: \GoodsCategory.title, ascending: false)]
     )
-    private var goodsCategories
-
-    @State private var typeTitle = ""
+    private var categories
     @State private var selectedCategoryURL = ""
+    var selectedCategory: GoodsCategory? { categories.first { $0.objectURL == selectedCategoryURL } }
+
     var type: GoodsType?
     var item: Item?
-
 
     init() {}
 
@@ -44,21 +43,15 @@ struct GoodsTypeView: View {
                           prompt: Text("🚀 Super-type"))
             }
 
-            Section(header: Text("Section")) {
-                NavigationLink("Hello", destination: GoodsCategoryPicker(selectedGoodsCategoryURL: $selectedCategoryURL))
-                Picker("Section", selection: $selectedCategoryURL) {
-                    ForEach(goodsCategories) { category in
-                        Text(category.title ?? "Unknown category").tag(category.objectURL)
-                    }
-                }
-
+            Section {
+                CategoryPicker<GoodsCategory>("Category", selection: $selectedCategoryURL)
             }
 
             Button(type == nil ? "Create type" : "Update type") {
                 saveChanges()
                 dismiss()
             }
-            .disabled(typeTitle.isEmpty)
+            .disabled(typeTitle.isEmpty || selectedCategory == nil)
         }
         .navigationTitle(type == nil ? "New type" : "Edit type")
     }
@@ -67,9 +60,9 @@ struct GoodsTypeView: View {
         let typeTitle = typeTitle.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if let type = type {
-            dataController.updateGoodsType(type.objectID, title: typeTitle)
+            dataController.updateGoodsType(type.objectID, title: typeTitle, categoryID: selectedCategory?.objectID)
         } else {
-            dataController.createGoodsType(with: typeTitle, linkedTo: item?.objectID)
+            dataController.createGoodsType(with: typeTitle, linkedTo: item?.objectID, categoryID: selectedCategory?.objectID)
         }
     }
 }

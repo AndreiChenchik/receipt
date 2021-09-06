@@ -12,6 +12,21 @@ struct GoodsTypePicker: View {
 
     @ObservedObject var item: Item
 
+//    @SectionedFetchRequest<GoodsCategory?, GoodsType>(
+//        sectionIdentifier: \.category,
+//        sortDescriptors: [NSSortDescriptor(keyPath: \GoodsType.title, ascending: false)],
+//        animation: .default
+//    )
+//    private var sectionedTypes
+
+    @FetchRequest<GoodsType>(
+        sortDescriptors: [
+            NSSortDescriptor(keyPath: \GoodsType.category, ascending: false),
+            NSSortDescriptor(keyPath: \GoodsType.title, ascending: false)
+        ]
+    )
+    private var types
+
     @StateObject var viewModel: ViewModel
 
     @State var showingNewGoodsTypeView = false
@@ -33,10 +48,21 @@ struct GoodsTypePicker: View {
 
             Picker(selection: $viewModel.selectedTypeURL, label: Text("Select item type")) {
                 Text("❓ Not selected").tag("")
-                ForEach(viewModel.types) { type in
+
+                ForEach(types) { type in
                     Text(type.wrappedTitle).tag(type.objectURL)
                 }
             }
+
+//            ForEach(sectionedTypes) { section in
+//                Section {
+//                    Picker(selection: $viewModel.selectedTypeURL, label: Text("Select item type")) {
+//                        ForEach(section) { type in
+//                            Text(type.wrappedTitle).tag(type.objectURL)
+//                        }
+//                    }
+//                }
+//            }
         } label: {
             Text(viewModel.item.type?.typeIcon ?? "❓")
                 .font(.title2)

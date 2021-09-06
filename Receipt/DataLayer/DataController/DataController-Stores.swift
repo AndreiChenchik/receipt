@@ -9,10 +9,16 @@ import Foundation
 import CoreData
 
 extension DataController {
-    func createStore(with title: String, linkedTo receiptID: NSManagedObjectID?) {
+    func createStore(with title: String, linkedTo receiptID: NSManagedObjectID?, categoryID: NSManagedObjectID? = nil) {
         backgroundContext.performWaitAndSave {
             let store = Store(context: backgroundContext)
             store.title = title
+
+            if let categoryID = categoryID,
+               let category = try? self.backgroundContext.existingObject(with: categoryID) as? StoreCategory {
+
+                store.category = category
+            }
 
             if let receiptID = receiptID,
                let receipt = try? self.backgroundContext.existingObject(with: receiptID) as? Receipt {
@@ -22,11 +28,17 @@ extension DataController {
         }
     }
 
-    func updateStore(_ storeID: NSManagedObjectID, title: String) {
+    func updateStore(_ storeID: NSManagedObjectID, title: String, categoryID: NSManagedObjectID? = nil) {
         backgroundContext.performWaitAndSave {
             if let store = try? self.backgroundContext.existingObject(with: storeID) as? Store {
 
                 store.title = title
+
+                if let categoryID = categoryID,
+                   let category = try? self.backgroundContext.existingObject(with: categoryID) as? StoreCategory {
+
+                    store.category = category
+                }
             }
         }
 

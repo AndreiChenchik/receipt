@@ -14,8 +14,15 @@ struct StoreView: View {
 
     @State private var storeTitle = ""
 
-    var store: Store? = nil
-    var receipt: Receipt? = nil
+    @FetchRequest<StoreCategory>(
+        sortDescriptors: [NSSortDescriptor(keyPath: \StoreCategory.title, ascending: false)]
+    )
+    private var categories
+    @State private var selectedCategoryURL = ""
+    var selectedCategory: StoreCategory? { categories.first { $0.objectURL == selectedCategoryURL } }
+
+    var store: Store?
+    var receipt: Receipt?
 
     init() {}
 
@@ -29,16 +36,6 @@ struct StoreView: View {
         _storeTitle = State(wrappedValue: storeTitle)
     }
 
-    func saveChanges() {
-        let storeTitle = storeTitle.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        if let store = store {
-            dataController.updateStore(store.objectID, title: storeTitle)
-        } else {
-            dataController.createStore(with: storeTitle, linkedTo: receipt?.objectID)
-        }
-    }
-
     var body: some View {
         Form {
             Section(header: Text("Title"),
@@ -47,13 +44,27 @@ struct StoreView: View {
                           prompt: Text("🚀 Super-store"))
             }
 
+            Section {
+                CategoryPicker<StoreCategory>("Category", selection: $selectedCategoryURL)
+            }
+
             Button(store == nil ? "Create store" : "Update store") {
                 saveChanges()
                 dismiss()
             }
-            .disabled(storeTitle.isEmpty)
+            .disabled(storeTitle.isEmpty || selectedCategory == nil)
         }
         .navigationTitle(store == nil ? "New store" : "Edit store")
+    }
+
+    func saveChanges() {
+        let storeTitle = storeTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if let store = store {
+            dataController.updateStore(store.objectID, title: storeTitle, categoryID: selectedCategory?.objectID)
+        } else {
+            dataController.createStore(with: storeTitle, linkedTo: receipt?.objectID, categoryID: selectedCategory?.objectID)
+        }
     }
 }
 
