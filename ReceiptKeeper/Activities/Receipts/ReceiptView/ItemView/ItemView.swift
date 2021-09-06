@@ -34,7 +34,7 @@ struct ItemView: View {
 
     var body: some View {
         HStack(alignment: .top) {
-            ItemTypePicker(item: item)
+            GoodsTypePicker(item: item)
 
             ZStack(alignment: .topLeading) {
                 Text(title)

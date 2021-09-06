@@ -14,7 +14,7 @@ extension DataController {
             guard let item = try? self.backgroundContext.existingObject(with: itemID) as? Item else { return }
 
             if let typeID = typeID,
-               let type = try? self.backgroundContext.existingObject(with: typeID) as? ItemType {
+               let type = try? self.backgroundContext.existingObject(with: typeID) as? GoodsType {
 
                 item.type = type
             } else {
@@ -29,7 +29,7 @@ extension DataController {
             if let item = try? self.backgroundContext.existingObject(with: itemID) as? Item,
                let typeURL = URL(string: typeURL),
                let typeID = container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: typeURL),
-               let type = try? self.backgroundContext.existingObject(with: typeID) as? ItemType {
+               let type = try? self.backgroundContext.existingObject(with: typeID) as? GoodsType {
 
                 item.type = type
             }

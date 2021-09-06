@@ -1,6 +1,6 @@
 //
-//  ItemTypePickerModel.swift
-//  ItemTypePickerModel
+//  GoodsTypePickerModel.swift
+//  GoodsTypePickerModel
 //
 //  Created by Andrei Chenchik on 2/9/21.
 //
@@ -9,15 +9,15 @@ import Foundation
 import Combine
 import CoreData
 
-extension ItemTypePicker {
+extension GoodsTypePicker {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
         let dataController = DataController.shared
-        let resultsController: NSFetchedResultsController<ItemType>
+        let resultsController: NSFetchedResultsController<GoodsType>
 
         @Published var item: Item
 
         @Published var selectedTypeURL = "" { didSet { updateItem() } }
-        @Published var types = [ItemType]()
+        @Published var types = [GoodsType]()
 
         private var cancellables = Set<AnyCancellable>()
 
@@ -25,8 +25,8 @@ extension ItemTypePicker {
             self.item = item
             selectedTypeURL = item.type?.objectURL ?? ""
             
-            let request = ItemType.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(keyPath: \ItemType.title, ascending: false)]
+            let request = GoodsType.fetchRequest()
+            request.sortDescriptors = [NSSortDescriptor(keyPath: \GoodsType.title, ascending: false)]
 
             resultsController = NSFetchedResultsController(
                 fetchRequest: request,
@@ -68,7 +68,7 @@ extension ItemTypePicker {
         }
 
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-            if let newTypes = controller.fetchedObjects as? [ItemType] {
+            if let newTypes = controller.fetchedObjects as? [GoodsType] {
                 types = newTypes.sorted { $0.typeTitleWithoutIcon < $1.typeTitleWithoutIcon}
             }
         }

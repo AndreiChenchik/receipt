@@ -1,6 +1,6 @@
 //
-//  ItemTypeViewModel.swift
-//  ItemTypeViewModel
+//  GoodsTypeViewModel.swift
+//  GoodsTypeViewModel
 //
 //  Created by Andrei Chenchik on 3/9/21.
 //
@@ -8,16 +8,16 @@
 import Foundation
 import CoreData
 
-extension ItemTypeView {
+extension GoodsTypeView {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
         let dataController = DataController.shared
-        let resultsController: NSFetchedResultsController<ItemCategory>
+        let resultsController: NSFetchedResultsController<GoodsCategory>
 
-        @Published var categories = [ItemCategory]()
+        @Published var categories = [GoodsCategory]()
 
         override init() {
-            let request = ItemCategory.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(keyPath: \ItemCategory.title, ascending: false)]
+            let request = GoodsCategory.fetchRequest()
+            request.sortDescriptors = [NSSortDescriptor(keyPath: \GoodsCategory.title, ascending: false)]
 
             resultsController = NSFetchedResultsController(
                 fetchRequest: request,
@@ -43,7 +43,7 @@ extension ItemTypeView {
         }
 
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-            if let categories = controller.fetchedObjects as? [ItemCategory] {
+            if let categories = controller.fetchedObjects as? [GoodsCategory] {
                 self.categories = categories
             }
         }

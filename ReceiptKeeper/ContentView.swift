@@ -17,13 +17,13 @@ struct ContentView: View {
         TabView(selection: $selectedView) {
             ReceiptsView()
                 .tag(ReceiptsView.tag)
-                .tabItem { Label("Receipts", systemImage: "doc.on.doc") }
-            ItemTypesView()
-                .tag(ItemTypesView.tag)
-                .tabItem { Label("Item types", systemImage: "list.star") }
+                .tabItem { Label("Receipts", systemImage: "scroll") }
+            GoodsTypesView()
+                .tag(GoodsTypesView.tag)
+                .tabItem { Label("Goods", systemImage: "takeoutbag.and.cup.and.straw") }
             StoresView()
                 .tag(StoresView.tag)
-                .tabItem { Label("Stores", systemImage: "crown") }
+                .tabItem { Label("Stores", systemImage: "house") }
         }
     }
 }

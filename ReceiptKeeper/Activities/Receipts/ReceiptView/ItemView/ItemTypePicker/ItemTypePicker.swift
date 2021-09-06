@@ -1,20 +1,20 @@
 //
-//  ItemTypePicker.swift
-//  ItemTypePicker
+//  GoodsTypePicker.swift
+//  GoodsTypePicker
 //
 //  Created by Andrei Chenchik on 2/9/21.
 //
 
 import SwiftUI
 
-struct ItemTypePicker: View {
+struct GoodsTypePicker: View {
     @EnvironmentObject var dataController: DataController
 
     @ObservedObject var item: Item
 
     @StateObject var viewModel: ViewModel
 
-    @State var showingNewItemTypeView = false
+    @State var showingNewGoodsTypeView = false
 
     init(item: Item) {
         _item = ObservedObject(wrappedValue: item)
@@ -25,7 +25,7 @@ struct ItemTypePicker: View {
         Menu {
             Section {
                 Button {
-                    showingNewItemTypeView = true
+                    showingNewGoodsTypeView = true
                 } label: {
                     Label("Add new type", systemImage: "plus")
                 }
@@ -42,12 +42,12 @@ struct ItemTypePicker: View {
                 .font(.title2)
                 .frame(width: 30, height: 30)
         }
-        .sheet(isPresented: $showingNewItemTypeView) {
+        .sheet(isPresented: $showingNewGoodsTypeView) {
             NavigationView{
-                ItemTypeView(item: item)
+                GoodsTypeView(item: item)
                     .toolbar {
                         Button("Dismiss") {
-                            showingNewItemTypeView = false
+                            showingNewGoodsTypeView = false
                         }
                     }
             }

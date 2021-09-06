@@ -1,13 +1,13 @@
 //
-//  ItemType-CoreDataHelpers.swift
-//  ItemType-CoreDataHelpers
+//  GoodsType-CoreDataHelpers.swift
+//  GoodsType-CoreDataHelpers
 //
 //  Created by Andrei Chenchik on 1/9/21.
 //
 
 import Foundation
 
-extension ItemType {
+extension GoodsType {
     var wrappedTitle: String { title ?? "Unknown category" }
 
     var typeIcon: String {
@@ -46,12 +46,12 @@ extension ItemType {
     }
 }
 
-extension ItemType {
-    static var example: ItemType {
+extension GoodsType {
+    static var example: GoodsType {
         let controller = DataController.preview
         let viewContext = controller.container.viewContext
 
-        let store = ItemType(context: viewContext)
+        let store = GoodsType(context: viewContext)
         store.title = "🛃 Example Category"
 
         return store

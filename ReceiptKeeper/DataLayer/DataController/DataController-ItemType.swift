@@ -1,6 +1,6 @@
 //
-//  DataController-ItemType.swift
-//  DataController-ItemType
+//  DataController-GoodsType.swift
+//  DataController-GoodsType
 //
 //  Created by Andrei Chenchik on 3/9/21.
 //
@@ -9,9 +9,9 @@ import CoreData
 import Foundation
 
 extension DataController {
-    func createItemType(with title: String, linkedTo itemID: NSManagedObjectID?) {
+    func createGoodsType(with title: String, linkedTo itemID: NSManagedObjectID?) {
         backgroundContext.performWaitAndSave {
-            let type = ItemType(context: backgroundContext)
+            let type = GoodsType(context: backgroundContext)
             type.title = title
 
             if let itemID = itemID,
@@ -22,9 +22,9 @@ extension DataController {
         }
     }
 
-    func updateItemType(_ typeID: NSManagedObjectID, title: String) {
+    func updateGoodsType(_ typeID: NSManagedObjectID, title: String) {
         backgroundContext.performWaitAndSave {
-            if let type = try? self.backgroundContext.existingObject(with: typeID) as? ItemType {
+            if let type = try? self.backgroundContext.existingObject(with: typeID) as? GoodsType {
 
                 type.title = title
             }

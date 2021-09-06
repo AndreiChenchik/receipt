@@ -1,32 +1,32 @@
 //
-//  ItemTypesView.swift
-//  ItemTypesView
+//  GoodsTypesView.swift
+//  GoodsTypesView
 //
 //  Created by Andrei Chenchik on 1/9/21.
 //
 
 import SwiftUI
 
-struct ItemTypesView: View {
-    static let tag: String? = "Types"
+struct GoodsTypesView: View {
+    static let tag: String? = "Goods"
 
     let dataController = DataController.shared
 
-    @SectionedFetchRequest<ItemCategory?, ItemType>(
+    @SectionedFetchRequest<GoodsCategory?, GoodsType>(
         sectionIdentifier: \.category,
-        sortDescriptors: [NSSortDescriptor(keyPath: \ItemType.title, ascending: false)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \GoodsType.title, ascending: false)],
         animation: .default
     )
     private var sectionedTypes
 
-    @State private var showingNewItemTypeScreen = false
+    @State private var showingNewGoodsTypeScreen = false
 
     var body: some View {
         NavigationView {
             List {
                 ForEach(sectionedTypes) { section in
                     Section(header: Text(section.id?.title ?? "Unknown category")) {
-                        ForEach(section, content: itemTypeRow)
+                        ForEach(section, content: goodsTypeRow)
                             .onDelete { indexSet in
                                 let objectIDs = indexSet.map { section[$0].objectID }
                                 dataController.delete(objectIDs)
@@ -34,14 +34,14 @@ struct ItemTypesView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingNewItemTypeScreen) { newItemTypeSheet }
-            .toolbar { newItemTypeButton }
+            .sheet(isPresented: $showingNewGoodsTypeScreen) { newGoodsTypeSheet }
+            .toolbar { newGoodsTypeButton }
             .navigationTitle("Categories")
         }
     }
 
-    func itemTypeRow(type: ItemType) -> some View {
-        NavigationLink(destination: ItemTypeView(type: type)) {
+    func goodsTypeRow(type: GoodsType) -> some View {
+        NavigationLink(destination: GoodsTypeView(type: type)) {
             HStack {
                 if let typeIcon = type.typeIcon {
                     Text("\(typeIcon)")
@@ -61,30 +61,30 @@ struct ItemTypesView: View {
         }
     }
 
-    var newItemTypeButton: some ToolbarContent {
+    var newGoodsTypeButton: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             Button(action: {
-                showingNewItemTypeScreen = true
+                showingNewGoodsTypeScreen = true
             }) {
                 Label("Add item type", systemImage: "plus")
             }
         }
     }
 
-    var newItemTypeSheet: some View {
+    var newGoodsTypeSheet: some View {
         NavigationView {
-            ItemTypeView()
+            GoodsTypeView()
                 .toolbar {
                     Button("Cancel") {
-                        showingNewItemTypeScreen = false
+                        showingNewGoodsTypeScreen = false
                     }
                 }
         }
     }
 }
 
-struct ItemTypesView_Previews: PreviewProvider {
+struct GoodsTypesView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemTypesView()
+        GoodsTypesView()
     }
 }

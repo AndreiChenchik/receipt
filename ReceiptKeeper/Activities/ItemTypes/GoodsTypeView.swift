@@ -1,33 +1,33 @@
 //
-//  ItemTypeView.swift
-//  ItemTypeView
+//  GoodsTypeView.swift
+//  GoodsTypeView
 //
 //  Created by Andrei Chenchik on 1/9/21.
 //
 
 import SwiftUI
 
-struct ItemTypeView: View {
+struct GoodsTypeView: View {
     let dataController = DataController.shared
 
     @Environment(\.dismiss) var dismiss
 
     @StateObject var viewModel = ViewModel()
 
-    @FetchRequest<ItemCategory>(
-        sortDescriptors: [NSSortDescriptor(keyPath: \ItemCategory.title, ascending: false)]
+    @FetchRequest<GoodsCategory>(
+        sortDescriptors: [NSSortDescriptor(keyPath: \GoodsCategory.title, ascending: false)]
     )
-    private var itemCategories
+    private var goodsCategories
 
     @State private var typeTitle = ""
     @State private var selectedCategoryURL = ""
-    var type: ItemType?
+    var type: GoodsType?
     var item: Item?
 
 
     init() {}
 
-    init(type: ItemType) {
+    init(type: GoodsType) {
         self.type = type
         _typeTitle = State(wrappedValue: type.wrappedTitle)
     }
@@ -45,9 +45,9 @@ struct ItemTypeView: View {
             }
 
             Section(header: Text("Section")) {
-                NavigationLink("Hello", destination: ItemCategoryPicker(selectedItemCategoryURL: $selectedCategoryURL))
+                NavigationLink("Hello", destination: GoodsCategoryPicker(selectedGoodsCategoryURL: $selectedCategoryURL))
                 Picker("Section", selection: $selectedCategoryURL) {
-                    ForEach(itemCategories) { category in
+                    ForEach(goodsCategories) { category in
                         Text(category.title ?? "Unknown category").tag(category.objectURL)
                     }
                 }
@@ -67,16 +67,16 @@ struct ItemTypeView: View {
         let typeTitle = typeTitle.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if let type = type {
-            dataController.updateItemType(type.objectID, title: typeTitle)
+            dataController.updateGoodsType(type.objectID, title: typeTitle)
         } else {
-            dataController.createItemType(with: typeTitle, linkedTo: item?.objectID)
+            dataController.createGoodsType(with: typeTitle, linkedTo: item?.objectID)
         }
     }
 }
 
 
-struct ItemTypeView_Previews: PreviewProvider {
+struct GoodsTypeView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemTypeView(type: ItemType.example)
+        GoodsTypeView(type: GoodsType.example)
     }
 }
