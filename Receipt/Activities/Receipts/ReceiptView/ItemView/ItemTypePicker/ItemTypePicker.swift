@@ -12,20 +12,25 @@ struct GoodsTypePicker: View {
 
     @ObservedObject var item: Item
 
-//    @SectionedFetchRequest<GoodsCategory?, GoodsType>(
-//        sectionIdentifier: \.category,
-//        sortDescriptors: [NSSortDescriptor(keyPath: \GoodsType.title, ascending: false)],
-//        animation: .default
-//    )
-//    private var sectionedTypes
+    //    @SectionedFetchRequest<GoodsCategory?, GoodsType>(
+    //        sectionIdentifier: \.category,
+    //        sortDescriptors: [NSSortDescriptor(keyPath: \GoodsType.title, ascending: false)],
+    //        animation: .default
+    //    )
+    //    private var sectionedTypes
 
-    @FetchRequest<GoodsType>(
-        sortDescriptors: [
-            NSSortDescriptor(keyPath: \GoodsType.category, ascending: false),
-            NSSortDescriptor(keyPath: \GoodsType.title, ascending: false)
-        ]
-    )
+    @FetchRequest<GoodsCategory>(sortDescriptors: [])
+    private var categories
+
+    @FetchRequest<GoodsType>(sortDescriptors: [
+        NSSortDescriptor(keyPath: \GoodsType.title, ascending: false)
+    ])
     private var types
+
+    var sectionedTypes: [(key: GoodsCategory?, value: [GoodsType])] {
+        Dictionary(grouping: types, by: { $0.category })
+            .sorted { $0.key?.title ?? "" < $1.key?.title ?? "" }
+    }
 
     @StateObject var viewModel: ViewModel
 
@@ -48,21 +53,17 @@ struct GoodsTypePicker: View {
 
             Picker(selection: $viewModel.selectedTypeURL, label: Text("Select item type")) {
                 Text("❓ Not selected").tag("")
-
-                ForEach(types) { type in
-                    Text(type.wrappedTitle).tag(type.objectURL)
-                }
             }
 
-//            ForEach(sectionedTypes) { section in
-//                Section {
-//                    Picker(selection: $viewModel.selectedTypeURL, label: Text("Select item type")) {
-//                        ForEach(section) { type in
-//                            Text(type.wrappedTitle).tag(type.objectURL)
-//                        }
-//                    }
-//                }
-//            }
+            ForEach(sectionedTypes, id: \.key) { section in
+                Section {
+                    Picker(selection: $viewModel.selectedTypeURL, label: Text("Select item type")) {
+                        ForEach(section.value) { type in
+                            Text(type.wrappedTitle).tag(type.objectURL)
+                        }
+                    }
+                }
+            }
         } label: {
             Text(viewModel.item.type?.typeIcon ?? "❓")
                 .font(.title2)

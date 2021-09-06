@@ -12,23 +12,29 @@ struct StoresView: View {
 
     let dataController = DataController.shared
 
-    @SectionedFetchRequest<StoreCategory?, Store>(
-        sectionIdentifier: \.category,
-        sortDescriptors: [NSSortDescriptor(keyPath: \Store.title, ascending: false)],
-        animation: .default
-    )
-    private var sectionedStores
+    @FetchRequest<StoreCategory>(sortDescriptors: [])
+    private var categories
+
+    @FetchRequest<Store>(sortDescriptors: [
+        NSSortDescriptor(keyPath: \Store.title, ascending: false)
+    ])
+    private var types
+
+    var sectionedTypes: [(key: StoreCategory?, value: [Store])] {
+        Dictionary(grouping: types, by: { $0.category })
+            .sorted { $0.key?.title ?? "" < $1.key?.title ?? "" }
+    }
 
     @State private var showingNewStoreView = false
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(sectionedStores) { section in
-                    Section(header: Text(section.id?.title ?? "Unknown category")) {
-                        ForEach(section, content: storeRow)
+                ForEach(sectionedTypes, id: \.key) { section in
+                    Section(header: Text(section.key?.title ?? "Unknown category")) {
+                        ForEach(section.value, content: row)
                             .onDelete { indexSet in
-                                let objectIDs = indexSet.map { section[$0].objectID }
+                                let objectIDs = indexSet.map { section.value[$0].objectID }
                                 dataController.delete(objectIDs)
                             }
                     }
@@ -40,7 +46,7 @@ struct StoresView: View {
         }
     }
 
-    func storeRow(store: Store) -> some View {
+    func row(store: Store) -> some View {
         NavigationLink(destination: StoreView(store: store)) {
             HStack {
                 if let storeIcon = store.storeIcon {

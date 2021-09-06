@@ -8,7 +8,7 @@
 import Foundation
 
 extension GoodsType {
-    var wrappedTitle: String { title ?? "Unknown category" }
+    var wrappedTitle: String { title ?? "Unknown goods" }
 
     var typeIcon: String {
         String(title?.first ?? Character(""))

@@ -12,23 +12,29 @@ struct GoodsTypesView: View {
 
     let dataController = DataController.shared
 
-    @SectionedFetchRequest<GoodsCategory?, GoodsType>(
-        sectionIdentifier: \.category,
-        sortDescriptors: [NSSortDescriptor(keyPath: \GoodsType.title, ascending: false)],
-        animation: .default
-    )
-    private var sectionedTypes
+    @FetchRequest<GoodsCategory>(sortDescriptors: [])
+    private var categories
+
+    @FetchRequest<GoodsType>(sortDescriptors: [
+        NSSortDescriptor(keyPath: \GoodsType.title, ascending: false)
+    ])
+    private var types
+
+    var sectionedTypes: [(key: GoodsCategory?, value: [GoodsType])] {
+        Dictionary(grouping: types, by: { $0.category })
+            .sorted { $0.key?.title ?? "" < $1.key?.title ?? "" }
+    }
 
     @State private var showingNewGoodsTypeScreen = false
 
     var body: some View {
-        NavigationView {
+        return NavigationView {
             List {
-                ForEach(sectionedTypes) { section in
-                    Section(header: Text(section.id?.title ?? "Unknown category")) {
-                        ForEach(section, content: goodsTypeRow)
+                ForEach(sectionedTypes, id: \.key) { section in
+                    Section(header: Text(section.key?.title ?? "Unknown category")) {
+                        ForEach(section.value, content: row)
                             .onDelete { indexSet in
-                                let objectIDs = indexSet.map { section[$0].objectID }
+                                let objectIDs = indexSet.map { section.value[$0].objectID }
                                 dataController.delete(objectIDs)
                             }
                     }
@@ -40,7 +46,7 @@ struct GoodsTypesView: View {
         }
     }
 
-    func goodsTypeRow(type: GoodsType) -> some View {
+    func row(type: GoodsType) -> some View {
         NavigationLink(destination: GoodsTypeView(type: type)) {
             HStack {
                 if let typeIcon = type.typeIcon {

@@ -50,6 +50,11 @@ extension Store {
         formatter.numberStyle = .decimal
         return formatter.string(from: storeReceiptsSum) ?? ""
     }
+
+
+    var storeCategoryTitle: String {
+        category?.title ?? "Unknown category"
+    }
 }
 
 extension Store {
