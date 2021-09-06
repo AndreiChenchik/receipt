@@ -42,7 +42,7 @@ extension GoodsType {
     }
 
     var typeCategoryTitle: String {
-        category?.title ?? "Unknown section"
+        category?.title ?? "Unknown category"
     }
 }
 
@@ -51,9 +51,9 @@ extension GoodsType {
         let controller = DataController.preview
         let viewContext = controller.container.viewContext
 
-        let store = GoodsType(context: viewContext)
-        store.title = "🛃 Example Category"
+        let type = GoodsType(context: viewContext)
+        type.title = "🛃 Type of goods example"
 
-        return store
+        return type
     }
 }

@@ -36,7 +36,6 @@
     </entity>
     <entity name="Store" representedClassName="Store" syncable="YES" codeGenerationType="class">
         <attribute name="title" optional="YES" attributeType="String"/>
-        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoreCategory" inverseName="stores" inverseEntity="StoreCategory"/>
         <relationship name="receipts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Receipt" inverseName="store" inverseEntity="Receipt"/>
     </entity>
@@ -45,11 +44,11 @@
         <relationship name="stores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Store" inverseName="category" inverseEntity="Store"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-141.140625" positionY="-138.58203125" width="128" height="134"/>
         <element name="GoodsCategory" positionX="160" positionY="192" width="128" height="59"/>
         <element name="GoodsType" positionX="160" positionY="192" width="128" height="89"/>
+        <element name="Item" positionX="-141.140625" positionY="-138.58203125" width="128" height="134"/>
         <element name="Receipt" positionX="34.58984375" positionY="-221.078125" width="128" height="224"/>
-        <element name="Store" positionX="160" positionY="192" width="128" height="89"/>
+        <element name="Store" positionX="160" positionY="192" width="128" height="74"/>
         <element name="StoreCategory" positionX="160" positionY="192" width="128" height="59"/>
     </elements>
 </model>

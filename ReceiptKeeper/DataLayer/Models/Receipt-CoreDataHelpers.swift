@@ -108,7 +108,6 @@ extension Receipt {
 
         let store = Store(context: viewContext)
         store.title = "🛃 Example Store"
-        store.uuid = UUID()
 
         let receipt = Receipt(context: viewContext)
         receipt.store = store

@@ -27,8 +27,6 @@ extension Store {
         }
     }
 
-    var storeTag: String { uuid?.uuidString ?? "" }
-
     var storeReceipts: [Receipt] {
         receipts?.allObjects as? [Receipt] ?? []
     }
@@ -60,9 +58,8 @@ extension Store {
         let viewContext = controller.container.viewContext
 
         let store = Store(context: viewContext)
-        store.title = "🛃 Example Store"
-        store.uuid = UUID()
-        
+        store.title = "🛃 Store example"
+
         return store
     }
 }

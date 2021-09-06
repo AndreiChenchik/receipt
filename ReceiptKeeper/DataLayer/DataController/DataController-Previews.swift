@@ -30,7 +30,6 @@ extension DataController {
         for storeCounter in 1...3 {
             let store = Store(context: viewContext)
             store.title = icons[Int.random(in: 0..<icons.count)] + "Store \(storeCounter)"
-            store.uuid = UUID()
 
             for _ in 1...3 {
                 let receipt = Receipt(context: viewContext)
