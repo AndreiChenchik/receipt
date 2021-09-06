@@ -6,9 +6,26 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ReceiptRowView: View {
+    let dataController = DataController.shared
+
     @ObservedObject var receipt: Receipt
+
+    private var cancellables = Set<AnyCancellable>()
+
+    init(receipt: Receipt) {
+        _receipt = ObservedObject(wrappedValue: receipt)
+
+        if let store = receipt.store {
+            dataController.publisher(for: store, in: dataController.container.viewContext, changeTypes: [.updated])
+                .sink(receiveValue: { _ in
+                    receipt.objectWillChange.send()
+                })
+                .store(in: &cancellables)
+        }
+    }
 
     var receiptPurchaseDate: String {
         let formatter = DateFormatter()

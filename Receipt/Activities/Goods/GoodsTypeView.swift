@@ -29,6 +29,7 @@ struct GoodsTypeView: View {
     init(type: GoodsType) {
         self.type = type
         _typeTitle = State(wrappedValue: type.wrappedTitle)
+        _selectedCategoryURL = State(wrappedValue: type.category?.objectURL ?? "")
     }
 
     init(item: Item) {

@@ -29,6 +29,7 @@ struct StoreView: View {
     init(store: Store) {
         self.store = store
         _storeTitle = State(wrappedValue: store.wrappedTitle)
+        _selectedCategoryURL = State(wrappedValue: store.category?.objectURL ?? "")
     }
 
     init(receipt: Receipt, storeTitle: String) {

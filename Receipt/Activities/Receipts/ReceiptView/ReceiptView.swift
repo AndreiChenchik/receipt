@@ -20,9 +20,7 @@ struct ReceiptView: View {
 extension ReceiptView {
     struct InnerView: View {
         @Environment(\.presentationMode) var presentationMode
-
-        @FetchRequest<Store>(sortDescriptors: []) private var stores
-
+        
         @ObservedObject var receipt: Receipt
         @StateObject var viewModel: ViewModel
 
