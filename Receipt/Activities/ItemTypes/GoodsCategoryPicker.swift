@@ -32,7 +32,7 @@ struct GoodsCategoryPicker: View {
         }
     }
 
-    var body: some View {
+    var categoriesList: some View {
         List {
             ForEach(goodsCategories) { goodsCategory in
                 Button {
@@ -44,7 +44,10 @@ struct GoodsCategoryPicker: View {
             }
         }
         .toolbar { newGoodsCategoryButton }
-        
+    }
+
+    var body: some View {
+        categoriesList
     }
 }
 

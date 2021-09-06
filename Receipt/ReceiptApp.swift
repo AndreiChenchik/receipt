@@ -1,6 +1,6 @@
 //
-//  ReceiptKeeperApp.swift
-//  ReceiptKeeper
+//  ReceiptApp.swift
+//  Receipt
 //
 //  Created by Andrei Chenchik on 4/8/21.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct ReceiptKeeperApp: App {
+struct ReceiptApp: App {
     @StateObject var dataController: DataController
 
     init() {

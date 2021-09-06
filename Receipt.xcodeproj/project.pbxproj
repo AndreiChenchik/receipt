@@ -33,7 +33,7 @@
 		38696D6526DF556A00835E9E /* GoodsTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6426DF556900835E9E /* GoodsTypesView.swift */; };
 		38696D6926DF596A00835E9E /* GoodsTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6826DF596A00835E9E /* GoodsTypeView.swift */; };
 		38696D6B26DF5B4700835E9E /* GoodsType-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38696D6A26DF5B4700835E9E /* GoodsType-CoreDataHelpers.swift */; };
-		386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */; };
+		386EBE6A26BABE0400F1E4AB /* ReceiptApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6926BABE0400F1E4AB /* ReceiptApp.swift */; };
 		386EBE6C26BABE0400F1E4AB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386EBE6B26BABE0400F1E4AB /* ContentView.swift */; };
 		386EBE6E26BABE0400F1E4AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386EBE6D26BABE0400F1E4AB /* Assets.xcassets */; };
 		386EBE7126BABE0400F1E4AB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386EBE7026BABE0400F1E4AB /* Preview Assets.xcassets */; };
@@ -87,14 +87,14 @@
 		38696D6426DF556900835E9E /* GoodsTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsTypesView.swift; sourceTree = "<group>"; };
 		38696D6826DF596A00835E9E /* GoodsTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsTypeView.swift; sourceTree = "<group>"; };
 		38696D6A26DF5B4700835E9E /* GoodsType-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoodsType-CoreDataHelpers.swift"; sourceTree = "<group>"; };
-		386EBE6626BABE0400F1E4AB /* ReceiptKeeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReceiptKeeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptKeeperApp.swift; sourceTree = "<group>"; };
+		386EBE6626BABE0400F1E4AB /* Receipt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Receipt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		386EBE6926BABE0400F1E4AB /* ReceiptApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptApp.swift; sourceTree = "<group>"; };
 		386EBE6B26BABE0400F1E4AB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		386EBE6D26BABE0400F1E4AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		386EBE7026BABE0400F1E4AB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3872875126BF11E5008B312B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		3872875826BF1EE8008B312B /* ReceiptsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsViewModel.swift; sourceTree = "<group>"; };
-		387E09F326CEA4CE007D0542 /* ReceiptKeeper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ReceiptKeeper.entitlements; sourceTree = "<group>"; };
+		387E09F326CEA4CE007D0542 /* Receipt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Receipt.entitlements; sourceTree = "<group>"; };
 		387E09F526CEA4E1007D0542 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		387E09F826CEA5E1007D0542 /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
 		387E09FB26CEE57C007D0542 /* RecognitionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionData.swift; sourceTree = "<group>"; };
@@ -206,7 +206,7 @@
 		386EBE5D26BABE0400F1E4AB = {
 			isa = PBXGroup;
 			children = (
-				386EBE6826BABE0400F1E4AB /* ReceiptKeeper */,
+				386EBE6826BABE0400F1E4AB /* Receipt */,
 				386EBE6726BABE0400F1E4AB /* Products */,
 				387E09F426CEA4E1007D0542 /* Frameworks */,
 			);
@@ -215,26 +215,26 @@
 		386EBE6726BABE0400F1E4AB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				386EBE6626BABE0400F1E4AB /* ReceiptKeeper.app */,
+				386EBE6626BABE0400F1E4AB /* Receipt.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		386EBE6826BABE0400F1E4AB /* ReceiptKeeper */ = {
+		386EBE6826BABE0400F1E4AB /* Receipt */ = {
 			isa = PBXGroup;
 			children = (
-				387E09F326CEA4CE007D0542 /* ReceiptKeeper.entitlements */,
+				387E09F326CEA4CE007D0542 /* Receipt.entitlements */,
 				38E89E3D26BD703E006A0D49 /* Extensions */,
 				38E89E3A26BD6A28006A0D49 /* Activities */,
 				38BB9B9426BAC05E00CE2946 /* Info.plist */,
 				380311ED26D57A9D00B8B168 /* DataLayer */,
 				387E09F726CEA5E1007D0542 /* Main.xcdatamodeld */,
-				386EBE6926BABE0400F1E4AB /* ReceiptKeeperApp.swift */,
+				386EBE6926BABE0400F1E4AB /* ReceiptApp.swift */,
 				386EBE6B26BABE0400F1E4AB /* ContentView.swift */,
 				386EBE6D26BABE0400F1E4AB /* Assets.xcassets */,
 				386EBE6F26BABE0400F1E4AB /* Preview Content */,
 			);
-			path = ReceiptKeeper;
+			path = Receipt;
 			sourceTree = "<group>";
 		};
 		386EBE6F26BABE0400F1E4AB /* Preview Content */ = {
@@ -344,9 +344,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		386EBE6526BABE0400F1E4AB /* ReceiptKeeper */ = {
+		386EBE6526BABE0400F1E4AB /* Receipt */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 386EBE7426BABE0400F1E4AB /* Build configuration list for PBXNativeTarget "ReceiptKeeper" */;
+			buildConfigurationList = 386EBE7426BABE0400F1E4AB /* Build configuration list for PBXNativeTarget "Receipt" */;
 			buildPhases = (
 				386EBE6226BABE0400F1E4AB /* Sources */,
 				386EBE6326BABE0400F1E4AB /* Frameworks */,
@@ -356,9 +356,9 @@
 			);
 			dependencies = (
 			);
-			name = ReceiptKeeper;
+			name = Receipt;
 			productName = ReceiptKeeper;
-			productReference = 386EBE6626BABE0400F1E4AB /* ReceiptKeeper.app */;
+			productReference = 386EBE6626BABE0400F1E4AB /* Receipt.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -376,7 +376,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 386EBE6126BABE0400F1E4AB /* Build configuration list for PBXProject "ReceiptKeeper" */;
+			buildConfigurationList = 386EBE6126BABE0400F1E4AB /* Build configuration list for PBXProject "Receipt" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -389,7 +389,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				386EBE6526BABE0400F1E4AB /* ReceiptKeeper */,
+				386EBE6526BABE0400F1E4AB /* Receipt */,
 			);
 		};
 /* End PBXProject section */
@@ -439,7 +439,7 @@
 				38696D6926DF596A00835E9E /* GoodsTypeView.swift in Sources */,
 				38B7870126E112CE0011A53A /* DataController-Publisher.swift in Sources */,
 				38B786FD26E0B5690011A53A /* ItemTypePickerModel.swift in Sources */,
-				386EBE6A26BABE0400F1E4AB /* ReceiptKeeperApp.swift in Sources */,
+				386EBE6A26BABE0400F1E4AB /* ReceiptApp.swift in Sources */,
 				385DBC2726D98B7B00B0D245 /* StoresView.swift in Sources */,
 				3872875226BF11E5008B312B /* DataController.swift in Sources */,
 				38C1ACC326D3C2830030C6C0 /* Receipt-CoreDataHelpers.swift in Sources */,
@@ -586,14 +586,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = ReceiptKeeper/ReceiptKeeper.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Receipt/Receipt.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ReceiptKeeper/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Receipt/Preview Content\"";
 				DEVELOPMENT_TEAM = UM3QPHF8E3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ReceiptKeeper/Info.plist;
+				INFOPLIST_FILE = Receipt/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Simply Receipts";
 				INFOPLIST_KEY_NSCameraUsageDescription = "I want to use the camera!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -619,14 +620,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = ReceiptKeeper/ReceiptKeeper.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Receipt/Receipt.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ReceiptKeeper/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Receipt/Preview Content\"";
 				DEVELOPMENT_TEAM = UM3QPHF8E3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ReceiptKeeper/Info.plist;
+				INFOPLIST_FILE = Receipt/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Simply Receipts";
 				INFOPLIST_KEY_NSCameraUsageDescription = "I want to use the camera!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -650,7 +652,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		386EBE6126BABE0400F1E4AB /* Build configuration list for PBXProject "ReceiptKeeper" */ = {
+		386EBE6126BABE0400F1E4AB /* Build configuration list for PBXProject "Receipt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				386EBE7226BABE0400F1E4AB /* Debug */,
@@ -659,7 +661,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		386EBE7426BABE0400F1E4AB /* Build configuration list for PBXNativeTarget "ReceiptKeeper" */ = {
+		386EBE7426BABE0400F1E4AB /* Build configuration list for PBXNativeTarget "Receipt" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				386EBE7526BABE0400F1E4AB /* Debug */,

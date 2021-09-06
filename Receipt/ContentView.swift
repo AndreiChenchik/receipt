@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  ReceiptKeeper
+//  Receipt
 //
 //  Created by Andrei Chenchik on 4/8/21.
 //

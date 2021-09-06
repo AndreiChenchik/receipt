@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "386EBE6526BABE0400F1E4AB"
-               BuildableName = "ReceiptKeeper.app"
-               BlueprintName = "ReceiptKeeper"
-               ReferencedContainer = "container:ReceiptKeeper.xcodeproj">
+               BuildableName = "Receipt.app"
+               BlueprintName = "Receipt"
+               ReferencedContainer = "container:Receipt.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "386EBE6526BABE0400F1E4AB"
-            BuildableName = "ReceiptKeeper.app"
-            BlueprintName = "ReceiptKeeper"
-            ReferencedContainer = "container:ReceiptKeeper.xcodeproj">
+            BuildableName = "Receipt.app"
+            BlueprintName = "Receipt"
+            ReferencedContainer = "container:Receipt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "386EBE6526BABE0400F1E4AB"
-            BuildableName = "ReceiptKeeper.app"
-            BlueprintName = "ReceiptKeeper"
-            ReferencedContainer = "container:ReceiptKeeper.xcodeproj">
+            BuildableName = "Receipt.app"
+            BlueprintName = "Receipt"
+            ReferencedContainer = "container:Receipt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -36,7 +36,7 @@ struct GoodsTypesView: View {
             }
             .sheet(isPresented: $showingNewGoodsTypeScreen) { newGoodsTypeSheet }
             .toolbar { newGoodsTypeButton }
-            .navigationTitle("Categories")
+            .navigationTitle("Types of goods")
         }
     }
 
