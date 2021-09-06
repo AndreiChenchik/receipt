@@ -1,1 +1,1 @@
-# receipt-keeper
+# receipt
