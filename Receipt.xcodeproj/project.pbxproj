@@ -17,6 +17,7 @@
 		38120ED326E63199002BB73A /* GoodsCategory-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38120ED226E63199002BB73A /* GoodsCategory-CoreDataHelpers.swift */; };
 		38120ED526E63FFA002BB73A /* ObjectWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38120ED426E63FFA002BB73A /* ObjectWithTitle.swift */; };
 		38120ED726E6419E002BB73A /* StoreCategory-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38120ED626E6419E002BB73A /* StoreCategory-CoreDataHelpers.swift */; };
+		38120ED926E7B7F1002BB73A /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38120ED826E7B7F1002BB73A /* ImagePickerView.swift */; };
 		3822FE9E26E269BB0078ECD1 /* DataController-GoodsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FE9D26E269BB0078ECD1 /* DataController-GoodsType.swift */; };
 		3822FEA026E272A10078ECD1 /* DataController-Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FE9F26E272A10078ECD1 /* DataController-Item.swift */; };
 		3822FEA226E276B40078ECD1 /* NSManagedObject-objectURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FEA126E276B40078ECD1 /* NSManagedObject-objectURL.swift */; };
@@ -73,6 +74,7 @@
 		38120ED226E63199002BB73A /* GoodsCategory-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoodsCategory-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 		38120ED426E63FFA002BB73A /* ObjectWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectWithTitle.swift; sourceTree = "<group>"; };
 		38120ED626E6419E002BB73A /* StoreCategory-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreCategory-CoreDataHelpers.swift"; sourceTree = "<group>"; };
+		38120ED826E7B7F1002BB73A /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		3822FE9D26E269BB0078ECD1 /* DataController-GoodsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-GoodsType.swift"; sourceTree = "<group>"; };
 		3822FE9F26E272A10078ECD1 /* DataController-Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Item.swift"; sourceTree = "<group>"; };
 		3822FEA126E276B40078ECD1 /* NSManagedObject-objectURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject-objectURL.swift"; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 		3872875726BF1871008B312B /* Receipts */ = {
 			isa = PBXGroup;
 			children = (
+				38120ED826E7B7F1002BB73A /* ImagePickerView.swift */,
 				38BB9B9226BABED900CE2946 /* ScannerView.swift */,
 				380311EC26D571D200B8B168 /* ReceiptsView */,
 				382DD12B26D663DA00C6DA95 /* ReceiptView */,
@@ -463,6 +466,7 @@
 				3822FE9E26E269BB0078ECD1 /* DataController-GoodsType.swift in Sources */,
 				3822FEA026E272A10078ECD1 /* DataController-Item.swift in Sources */,
 				3843197D26DD50FC00E78F73 /* StoreView.swift in Sources */,
+				38120ED926E7B7F1002BB73A /* ImagePickerView.swift in Sources */,
 				385DBC2426D9119A00B0D245 /* Binding-onChange.swift in Sources */,
 				382DD13326D7B9AB00C6DA95 /* RecognizedContentLineView.swift in Sources */,
 				387E0A0026D2D00E007D0542 /* RecognitionDataTransformer.swift in Sources */,

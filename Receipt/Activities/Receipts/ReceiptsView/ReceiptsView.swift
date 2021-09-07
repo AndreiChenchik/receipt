@@ -9,34 +9,51 @@ import SwiftUI
 
 struct ReceiptsView: View {
     static let tag: String? = "Receipts"
-
+    
     @StateObject var viewModel = ViewModel()
-
-    @State private var isShowingScannerView = false
-
-    var newReceiptButton: some ToolbarContent {
+    
+    @State private var showingScannerView = false
+    @State private var showingPickerView = false
+    
+    var newReceiptMenu: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
-            if viewModel.isCapableToScan {
-                //TODO: Add photo picker for devices without scan
-                Button(action: {
-                    isShowingScannerView = true
-                }) {
-                    Label("Add receipt", systemImage: "doc.badge.plus")
+            Menu {
+                if viewModel.isCapableToScan {
+                    //TODO: Add photo picker for devices without scan
+                    Button(action: {
+                        showingScannerView = true
+                    }) {
+                        Label("Scan receipt", systemImage: "doc.text.viewfinder")
+                    }
                 }
+                
+                Button {
+                    showingPickerView = true
+                } label: {
+                    Label("Add from library", systemImage: "photo.on.rectangle.angled")
+                }
+                
+                Button {
+                    viewModel.createReceipt()
+                } label: {
+                    Label("Create empty receipt", systemImage: "doc")
+                }
+            } label: {
+                Label("Add", systemImage: "plus.app")
             }
         }
     }
-
+    
     var receiptsList: some View {
         List {
             receiptsListSection(from: viewModel.draftReceipts,
                                 header: "Drafts for review (\(viewModel.draftReceipts.count))")
-
+            
             receiptsListSection(from: viewModel.readyReceipts,
                                 header: "Purchases")
         }
     }
-
+    
     func receiptsListSection(from receipts: [Receipt], header: String) -> some View {
         Group {
             if !receipts.isEmpty {
@@ -47,7 +64,7 @@ struct ReceiptsView: View {
             }
         }
     }
-
+    
     var body: some View {
         NavigationView {
             Group {
@@ -59,15 +76,20 @@ struct ReceiptsView: View {
                     receiptsList
                 }
             }
-            .toolbar {
-                newReceiptButton
+            .sheet(isPresented: $showingPickerView, onDismiss: viewModel.processNewScans) {
+                ImagePickerView(newImages: $viewModel.newScanImages)
+                    .ignoresSafeArea()
             }
-            .navigationTitle("Receipts")
-            .sheet(isPresented: $isShowingScannerView, onDismiss: viewModel.processNewScans) {
+            .sheet(isPresented: $showingScannerView, onDismiss: viewModel.processNewScans) {
                 ScannerView(newScanImages: $viewModel.newScanImages)
                     .ignoresSafeArea()
             }
-
+            .toolbar {
+                newReceiptMenu
+            }
+            .navigationTitle("Receipts")
+            
+            
             SelectSomethingView()
         }
     }
@@ -76,7 +98,7 @@ struct ReceiptsView: View {
 
 struct ReceiptsView_Previews: PreviewProvider {
     static var dataController = DataController.preview
-
+    
     static var previews: some View {
         ReceiptsView()
             .environmentObject(dataController)

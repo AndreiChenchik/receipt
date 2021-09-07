@@ -57,5 +57,8 @@ extension ReceiptsView {
             ScannerView.isCapableToScan
         }
 
+        func createReceipt() {
+            dataController.createReceipt()
+        }
     }
 }
