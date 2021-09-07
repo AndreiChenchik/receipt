@@ -9,10 +9,12 @@ import CoreData
 import Foundation
 
 extension DataController {
-    func createGoodsType(with title: String, linkedTo itemID: NSManagedObjectID?, categoryID: NSManagedObjectID? = nil) {
+    func createGoodsType(with title: String, linkedTo itemID: NSManagedObjectID?, categoryID: NSManagedObjectID? = nil, units: Int16 = 0) {
         backgroundContext.performWaitAndSave {
             let type = GoodsType(context: backgroundContext)
             type.title = title
+            type.unitValue = units
+
 
             if let categoryID = categoryID,
                let category = try? self.backgroundContext.existingObject(with: categoryID) as? GoodsCategory {
@@ -28,11 +30,12 @@ extension DataController {
         }
     }
 
-    func updateGoodsType(_ typeID: NSManagedObjectID, title: String, categoryID: NSManagedObjectID? = nil) {
+    func updateGoodsType(_ typeID: NSManagedObjectID, title: String, categoryID: NSManagedObjectID? = nil, units: Int16 = 0) {
         backgroundContext.performWaitAndSave {
             if let type = try? self.backgroundContext.existingObject(with: typeID) as? GoodsType {
 
                 type.title = title
+                type.unitValue = units
 
                 if let categoryID = categoryID,
                    let category = try? self.backgroundContext.existingObject(with: categoryID) as? GoodsCategory {

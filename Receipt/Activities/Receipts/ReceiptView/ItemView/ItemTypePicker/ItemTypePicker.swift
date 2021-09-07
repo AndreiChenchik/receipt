@@ -59,7 +59,7 @@ struct GoodsTypePicker: View {
                 Section {
                     Picker(selection: $viewModel.selectedTypeURL, label: Text("Select item type")) {
                         ForEach(section.value) { type in
-                            Text(type.wrappedTitle).tag(type.objectURL)
+                            Text("\(type.wrappedTitle), \(type.unit.abbreviation).").tag(type.objectURL)
                         }
                     }
                 }

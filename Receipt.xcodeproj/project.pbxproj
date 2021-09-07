@@ -17,7 +17,7 @@
 		38120ED326E63199002BB73A /* GoodsCategory-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38120ED226E63199002BB73A /* GoodsCategory-CoreDataHelpers.swift */; };
 		38120ED526E63FFA002BB73A /* ObjectWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38120ED426E63FFA002BB73A /* ObjectWithTitle.swift */; };
 		38120ED726E6419E002BB73A /* StoreCategory-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38120ED626E6419E002BB73A /* StoreCategory-CoreDataHelpers.swift */; };
-		3822FE9E26E269BB0078ECD1 /* DataController-ItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FE9D26E269BB0078ECD1 /* DataController-ItemType.swift */; };
+		3822FE9E26E269BB0078ECD1 /* DataController-GoodsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FE9D26E269BB0078ECD1 /* DataController-GoodsType.swift */; };
 		3822FEA026E272A10078ECD1 /* DataController-Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FE9F26E272A10078ECD1 /* DataController-Item.swift */; };
 		3822FEA226E276B40078ECD1 /* NSManagedObject-objectURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3822FEA126E276B40078ECD1 /* NSManagedObject-objectURL.swift */; };
 		382DD12D26D663EF00C6DA95 /* RecognizedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */; };
@@ -73,7 +73,7 @@
 		38120ED226E63199002BB73A /* GoodsCategory-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoodsCategory-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 		38120ED426E63FFA002BB73A /* ObjectWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectWithTitle.swift; sourceTree = "<group>"; };
 		38120ED626E6419E002BB73A /* StoreCategory-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreCategory-CoreDataHelpers.swift"; sourceTree = "<group>"; };
-		3822FE9D26E269BB0078ECD1 /* DataController-ItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-ItemType.swift"; sourceTree = "<group>"; };
+		3822FE9D26E269BB0078ECD1 /* DataController-GoodsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-GoodsType.swift"; sourceTree = "<group>"; };
 		3822FE9F26E272A10078ECD1 /* DataController-Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Item.swift"; sourceTree = "<group>"; };
 		3822FEA126E276B40078ECD1 /* NSManagedObject-objectURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject-objectURL.swift"; sourceTree = "<group>"; };
 		382DD12C26D663EF00C6DA95 /* RecognizedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedContentView.swift; sourceTree = "<group>"; };
@@ -289,7 +289,7 @@
 			children = (
 				3872875126BF11E5008B312B /* DataController.swift */,
 				38B7870626E22E120011A53A /* DataController-Stores.swift */,
-				3822FE9D26E269BB0078ECD1 /* DataController-ItemType.swift */,
+				3822FE9D26E269BB0078ECD1 /* DataController-GoodsType.swift */,
 				3822FE9F26E272A10078ECD1 /* DataController-Item.swift */,
 				38B7870026E112CE0011A53A /* DataController-Publisher.swift */,
 				380311EE26D57AF500B8B168 /* DataController-Receipts.swift */,
@@ -460,7 +460,7 @@
 				3843197926DD375500E78F73 /* Character-Emoji.swift in Sources */,
 				38120ED526E63FFA002BB73A /* ObjectWithTitle.swift in Sources */,
 				38DDD07E26E53783007B2F3C /* MapView.swift in Sources */,
-				3822FE9E26E269BB0078ECD1 /* DataController-ItemType.swift in Sources */,
+				3822FE9E26E269BB0078ECD1 /* DataController-GoodsType.swift in Sources */,
 				3822FEA026E272A10078ECD1 /* DataController-Item.swift in Sources */,
 				3843197D26DD50FC00E78F73 /* StoreView.swift in Sources */,
 				385DBC2426D9119A00B0D245 /* Binding-onChange.swift in Sources */,

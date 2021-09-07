@@ -8,6 +8,42 @@
 import Foundation
 
 extension GoodsType {
+    enum Unit: Int16, CaseIterable, Identifiable {
+        case units = 0
+        case grams = 2
+        case liters = 3
+
+        var id: Int16 { self.rawValue }
+
+        var title: String {
+            switch self {
+            case .liters:
+                return "liters"
+            case .grams:
+                return "grams"
+            case .units:
+                return "units"
+            }
+        }
+
+        var abbreviation: String {
+            switch self {
+            case .liters:
+                return "l"
+            case .grams:
+                return "g"
+            case .units:
+                return "u"
+            }
+        }
+    }
+
+    var unit: Unit {
+        get { Unit(rawValue: unitValue) ?? .units }
+        set { unitValue = newValue.rawValue }
+    }
+
+
     var wrappedTitle: String { title ?? "Unknown goods" }
 
     var typeIcon: String {

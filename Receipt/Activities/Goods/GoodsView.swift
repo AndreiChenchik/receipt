@@ -53,11 +53,9 @@ struct GoodsTypesView: View {
                     Text("\(typeIcon)")
                         .font(.title2)
                         .frame(width: 30)
-
-                    Text(type.typeTitleWithoutIcon)
-                } else {
-                    Text(type.wrappedTitle)
                 }
+
+                Text("\(type.typeTitleWithoutIcon), \(type.unit.abbreviation).")
 
                 Spacer()
 

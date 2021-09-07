@@ -18,7 +18,8 @@ struct GoodsTypeView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \GoodsCategory.title, ascending: false)]
     )
     private var categories
-    @State private var selectedCategoryURL = ""
+    @State private var selectedCategoryURL: String = ""
+    @State private var selectedUnits: Int16 = 0
     var selectedCategory: GoodsCategory? { categories.first { $0.objectURL == selectedCategoryURL } }
 
     var type: GoodsType?
@@ -30,6 +31,7 @@ struct GoodsTypeView: View {
         self.type = type
         _typeTitle = State(wrappedValue: type.wrappedTitle)
         _selectedCategoryURL = State(wrappedValue: type.category?.objectURL ?? "")
+        _selectedUnits = State(wrappedValue: type.unitValue)
     }
 
     init(item: Item) {
@@ -42,6 +44,14 @@ struct GoodsTypeView: View {
                     footer: Text("If you will add EMOJI in the beginning of the title - it will became an icon of that item type. How cool is that?!")) {
                 TextField("Category Title", text: $typeTitle,
                           prompt: Text("🚀 Super-type"))
+            }
+
+            Section {
+                Picker("Quantity measurement", selection: $selectedUnits) {
+                    ForEach(GoodsType.Unit.allCases) { unit in
+                        Text("\(unit.title), \(unit.abbreviation).").tag(unit.rawValue)
+                    }
+                }
             }
 
             Section {
@@ -61,9 +71,9 @@ struct GoodsTypeView: View {
         let typeTitle = typeTitle.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if let type = type {
-            dataController.updateGoodsType(type.objectID, title: typeTitle, categoryID: selectedCategory?.objectID)
+            dataController.updateGoodsType(type.objectID, title: typeTitle, categoryID: selectedCategory?.objectID, units: selectedUnits)
         } else {
-            dataController.createGoodsType(with: typeTitle, linkedTo: item?.objectID, categoryID: selectedCategory?.objectID)
+            dataController.createGoodsType(with: typeTitle, linkedTo: item?.objectID, categoryID: selectedCategory?.objectID, units: selectedUnits)
         }
     }
 }

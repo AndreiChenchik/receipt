@@ -15,6 +15,30 @@ extension Item {
         formatter.numberStyle = .decimal
         return formatter.string(from: price) ?? ""
     }
+
+    var quantityString: String {
+        guard let quantity = quantity else { return "" }
+
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter.string(from: quantity) ?? ""
+    }
+
+    var perUnitString: String {
+        guard let quantity = quantity,
+              let price = price
+        else { return "" }
+
+        guard quantity != 0 else { return "??" }
+
+        let perUnit = price.dividing(by: quantity)
+
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter.string(from: perUnit) ?? ""
+    }
+
+
     var wrappedTitle: String { title ?? "Unknown item" }
 }
 
