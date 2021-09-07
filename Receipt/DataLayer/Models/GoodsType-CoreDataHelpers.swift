@@ -20,7 +20,7 @@ extension GoodsType {
             case .liters:
                 return "liters"
             case .grams:
-                return "grams"
+                return "kilograms"
             case .units:
                 return "units"
             }
@@ -31,7 +31,7 @@ extension GoodsType {
             case .liters:
                 return "l"
             case .grams:
-                return "g"
+                return "kg"
             case .units:
                 return "u"
             }

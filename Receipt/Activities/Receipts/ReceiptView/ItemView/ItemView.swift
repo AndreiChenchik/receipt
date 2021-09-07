@@ -46,7 +46,8 @@ struct ItemView: View {
             priceString = item.itemPriceString
         }
 
-        if let quantity = formatter.number(from: quantityString) as? NSDecimalNumber {
+        if !quantityString.isEmpty,
+           let quantity = formatter.number(from: quantityString) as? NSDecimalNumber {
             item.quantity = quantity
         } else {
             quantityString = item.quantityString
