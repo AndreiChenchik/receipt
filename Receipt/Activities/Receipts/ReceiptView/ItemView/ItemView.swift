@@ -55,58 +55,110 @@ struct ItemView: View {
     }
 
     var body: some View {
-        HStack(alignment: .top) {
-            GoodsTypePicker(item: item)
-
-            ZStack(alignment: .topLeading) {
-                Text(title)
-                    .opacity(0)
-
-                TextEditor(text: $title.onChange(update))
-                    .padding(.vertical, -9)
-                    .padding(.horizontal, -5)
-            }
-            .padding(.horizontal, 5)
-
+        VStack(alignment: .leading, spacing: 6) {
             VStack(alignment: .leading, spacing: 0) {
-                Text("Price")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                
-                HStack(spacing: 0) {
-                    TextField("Item price", text: $priceString.onChange(update), prompt: Text("0,00"))
-                        .keyboardType(.decimalPad)
-                    
-                    Text("€")
-                }
+                ZStack(alignment: .topLeading) {
+                    Text(title)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .font(Font.body.weight(.bold))
+                        .opacity(0)
 
-                if let type = item.type {
-                    Text("Quantity")
+                    TextEditor(text: $title.onChange(update))
+                        .font(Font.body.weight(.bold))
+                        .padding(.vertical, -9)
+                        .padding(.horizontal, -5)
+                }.padding(.horizontal, 5)
+                Divider()
+            }
+
+
+            //            .background(RoundedRectangle(cornerRadius: 5).strokeBorder(lineWidth: 0.5, antialiased: true).foregroundColor(Color(.systemGray4)))
+            //            .background(Color(.systemGray6).opacity(0.5))
+            //            .clipShape(RoundedRectangle(cornerRadius: 5))
+
+
+            HStack(alignment: .top, spacing: 0) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Price")
                         .font(.caption)
-                        .padding(.top, 5)
                         .foregroundColor(.secondary)
 
                     HStack(spacing: 0) {
-                        TextField("Quantity", text: $quantityString.onChange(update), prompt: Text("0,00"))
-                            .keyboardType(.decimalPad)
+                        VStack(alignment: .leading, spacing: 0) {
+                            TextField("Item price", text: $priceString.onChange(update), prompt: Text("0,00"))
+                                .keyboardType(.decimalPad)
+                                .padding(5)
+                            //                            .background(RoundedRectangle(cornerRadius: 5).strokeBorder(lineWidth: 0.5, antialiased: true).foregroundColor(Color(.systemGray4)))
+                            //                            .background(Color(.systemGray6).opacity(0.5))
+                            //                            .clipShape(RoundedRectangle(cornerRadius: 5))
 
-                        Text(type.unit.abbreviation)
-                    }
+                            Divider()
+                        }
+                        .frame(width: 50)
+                        .padding(.trailing, 5)
 
-                    Text("Per unit")
-                        .font(.caption)
-                        .padding(.top, 5)
-                        .foregroundColor(.secondary)
-
-                    HStack(spacing: 0) {
-                        Text(item.perUnitString)
-                        Spacer()
                         Text("€")
                     }
+
+                }
+                .padding(.trailing, 25)
+
+                if let type = item.type {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Quantity")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+
+                        HStack(spacing: 0) {
+                            VStack(alignment: .leading, spacing: 0) {
+                                TextField("Quantity", text: $quantityString.onChange(update), prompt: Text("0,00"))
+                                    .keyboardType(.decimalPad)
+                                //                                .frame(width: 40)
+                                    .padding(5)
+                                //                                .background(RoundedRectangle(cornerRadius: 5).strokeBorder(lineWidth: 0.5, antialiased: true).foregroundColor(Color(.systemGray4)))
+                                //    //                            .background(Color(.systemGray6).opacity(0.5))
+                                //    //                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                                //                                .padding(.trailing, 5)
+
+                                Divider()
+                            }
+                            .frame(width: 50)
+                            .padding(.trailing, 5)
+
+                            Text("\(type.unit.abbreviation).")
+                        }
+                    }
+                }
+
+                Spacer()
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Type")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+
+                    GoodsTypePicker(item: item)
+                        .padding(5)
+                        .background(RoundedRectangle(cornerRadius: 5).strokeBorder(lineWidth: 0.5, antialiased: true).foregroundColor(Color(.systemGray4)))
+                    //                        .background(Color(.systemGray6))
+                    //                        .clipShape(RoundedRectangle(cornerRadius: 5))
+
+                }
+                .frame(width: 150, alignment: .leading)
+
+            }
+
+            if let type = item.type, let quantity = item.quantity, quantity != 0 {
+                HStack {
+                    HStack(spacing: 4) { Image(systemName: "chart.bar.fill")
+                        Text("\(item.perUnitString) € per \(type.unit.abbreviation)")
+                    }
+                    .font(.caption)
+                    .padding(5)
+                    .background(Color.brown.opacity(0.3))
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
                 }
             }
-            .padding(.bottom, 5)
-            .frame(width: 70)
         }
         .padding(.vertical, 4)
     }

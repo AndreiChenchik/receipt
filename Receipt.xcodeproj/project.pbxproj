@@ -228,8 +228,8 @@
 			isa = PBXGroup;
 			children = (
 				387E09F326CEA4CE007D0542 /* Receipt.entitlements */,
-				38E89E3D26BD703E006A0D49 /* Extensions */,
 				38E89E3A26BD6A28006A0D49 /* Activities */,
+				38E89E3D26BD703E006A0D49 /* Extensions */,
 				38BB9B9426BAC05E00CE2946 /* Info.plist */,
 				380311ED26D57A9D00B8B168 /* DataLayer */,
 				387E09F726CEA5E1007D0542 /* Main.xcdatamodeld */,

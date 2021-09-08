@@ -64,6 +64,8 @@ extension ImagePickerView.Coordinator: UIImagePickerControllerDelegate {
             try imageRequestHandler.perform([detectDocumentRequest])
         } catch let error {
             print("Error detecting document on image: \(error.localizedDescription)")
+
+            return uiImage
         }
 
         if let docBoundaries = docBoundaries,

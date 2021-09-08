@@ -65,9 +65,8 @@ struct GoodsTypePicker: View {
                 }
             }
         } label: {
-            Text(viewModel.item.type?.typeIcon ?? "❓")
-                .font(.title2)
-                .frame(width: 30, height: 30)
+            Text(viewModel.item.type?.wrappedTitle ?? "Set type")
+                .foregroundColor(.primary)
         }
         .sheet(isPresented: $showingNewGoodsTypeView) {
             NavigationView{

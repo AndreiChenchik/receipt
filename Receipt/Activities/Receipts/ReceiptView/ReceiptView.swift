@@ -73,14 +73,17 @@ extension ReceiptView {
                         ItemView(item: item)
                     }
                     .onDelete(perform: viewModel.deleteItems)
-                    
+                    .listRowSeparator(.hidden)
+
                     Button {
                         withAnimation {
                             viewModel.addItem()
                         }
                     } label: {
                         Label("Add New Item", systemImage: "plus")
+
                     }
+                    .listRowBackground(Color(.systemGray5).opacity(0.5))
                 }
 
                 Section(header: Text("Total")) {
