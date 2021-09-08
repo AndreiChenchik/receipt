@@ -41,7 +41,8 @@ extension ImagePickerView.Coordinator: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
         if let uiImage = info[.originalImage] as? UIImage,
-           let docImage = extractDocument(from: uiImage.fixOrientation()) {
+           let normalizedUIImage = uiImage.normalizeOrientation(),
+           let docImage = extractDocument(from: normalizedUIImage) {
             parent.newImages.append(docImage)
         }
 
