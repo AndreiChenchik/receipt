@@ -60,6 +60,7 @@ extension DataController {
                         item.receipt = receipt
                         item.recognizedLineUUID = itemLine.id
                         item.title = itemLine.label
+                        item.quantity = 1
                         item.price = NSDecimalNumber(value: itemLine.value ?? 0)
                         item.creationDate = Date()
                     }

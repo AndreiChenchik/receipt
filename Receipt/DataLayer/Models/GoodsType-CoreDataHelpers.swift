@@ -18,18 +18,18 @@ extension GoodsType {
         var title: String {
             switch self {
             case .liters:
-                return "liters"
+                return "Liters"
             case .grams:
-                return "kilograms"
+                return "Kilograms"
             case .units:
-                return "units"
+                return "Units"
             }
         }
 
         var abbreviation: String {
             switch self {
             case .liters:
-                return "l"
+                return "L"
             case .grams:
                 return "kg"
             case .units:

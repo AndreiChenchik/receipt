@@ -121,6 +121,7 @@ extension Receipt {
             item.title = "Example Item \(itemCounter)"
             item.creationDate = Date()
             item.receipt = receipt
+            item.quantity = 1
 
             let price = Double(itemCounter) + Double.random(in: 0...0.99)
             item.price = NSDecimalNumber(value: price)

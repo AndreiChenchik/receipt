@@ -62,19 +62,17 @@ struct ItemView: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .font(Font.body.weight(.bold))
                         .opacity(0)
+                        .layoutPriority(1)
 
                     TextEditor(text: $title.onChange(update))
                         .font(Font.body.weight(.bold))
                         .padding(.vertical, -9)
                         .padding(.horizontal, -5)
-                }.padding(.horizontal, 5)
+                }
+                .padding(.horizontal, 5)
+
                 Divider()
             }
-
-
-            //            .background(RoundedRectangle(cornerRadius: 5).strokeBorder(lineWidth: 0.5, antialiased: true).foregroundColor(Color(.systemGray4)))
-            //            .background(Color(.systemGray6).opacity(0.5))
-            //            .clipShape(RoundedRectangle(cornerRadius: 5))
 
 
             HStack(alignment: .top, spacing: 0) {
@@ -88,9 +86,6 @@ struct ItemView: View {
                             TextField("Item price", text: $priceString.onChange(update), prompt: Text("0,00"))
                                 .keyboardType(.decimalPad)
                                 .padding(5)
-                            //                            .background(RoundedRectangle(cornerRadius: 5).strokeBorder(lineWidth: 0.5, antialiased: true).foregroundColor(Color(.systemGray4)))
-                            //                            .background(Color(.systemGray6).opacity(0.5))
-                            //                            .clipShape(RoundedRectangle(cornerRadius: 5))
 
                             Divider()
                         }
@@ -105,7 +100,7 @@ struct ItemView: View {
 
                 if let type = item.type {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Quantity")
+                        Text(type.unit.title)
                             .font(.caption)
                             .foregroundColor(.secondary)
 
@@ -113,19 +108,14 @@ struct ItemView: View {
                             VStack(alignment: .leading, spacing: 0) {
                                 TextField("Quantity", text: $quantityString.onChange(update), prompt: Text("0,00"))
                                     .keyboardType(.decimalPad)
-                                //                                .frame(width: 40)
+
                                     .padding(5)
-                                //                                .background(RoundedRectangle(cornerRadius: 5).strokeBorder(lineWidth: 0.5, antialiased: true).foregroundColor(Color(.systemGray4)))
-                                //    //                            .background(Color(.systemGray6).opacity(0.5))
-                                //    //                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                                //                                .padding(.trailing, 5)
+                                    .padding(.trailing, 5)
 
                                 Divider()
                             }
                             .frame(width: 50)
                             .padding(.trailing, 5)
-
-                            Text("\(type.unit.abbreviation).")
                         }
                     }
                 }
@@ -138,13 +128,12 @@ struct ItemView: View {
                         .foregroundColor(.secondary)
 
                     GoodsTypePicker(item: item)
-                        .padding(5)
-                        .background(RoundedRectangle(cornerRadius: 5).strokeBorder(lineWidth: 0.5, antialiased: true).foregroundColor(Color(.systemGray4)))
-                    //                        .background(Color(.systemGray6))
-                    //                        .clipShape(RoundedRectangle(cornerRadius: 5))
-
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(Color(.tertiarySystemFill).opacity(0.5))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                .frame(width: 150, alignment: .leading)
+                .frame(maxWidth: 150, alignment: .leading)
 
             }
 
@@ -154,8 +143,9 @@ struct ItemView: View {
                         Text("\(item.perUnitString) € per \(type.unit.abbreviation)")
                     }
                     .font(.caption)
+                    .foregroundColor(.secondary)
                     .padding(5)
-                    .background(Color.brown.opacity(0.3))
+                    .background(Color(.systemGray6).opacity(0.5))
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                 }
             }

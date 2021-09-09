@@ -23,7 +23,6 @@ extension DataController {
         }
     }
 
-
     func updateItem(_ itemID: NSManagedObjectID, typeURL: String) {
         backgroundContext.performWaitAndSave {
             if let item = try? self.backgroundContext.existingObject(with: itemID) as? Item,

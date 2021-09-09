@@ -65,7 +65,8 @@ struct GoodsTypePicker: View {
                 }
             }
         } label: {
-            Text(viewModel.item.type?.wrappedTitle ?? "Set type")
+            Text(viewModel.item.type?.wrappedTitle ?? "？Select")
+                .lineLimit(1)
                 .foregroundColor(.primary)
         }
         .sheet(isPresented: $showingNewGoodsTypeView) {

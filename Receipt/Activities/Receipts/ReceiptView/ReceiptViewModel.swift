@@ -174,6 +174,7 @@ extension ReceiptView {
             let item = Item(context: dataController.container.viewContext)
             item.creationDate = Date()
             item.receipt = receipt
+            item.quantity = 1
 
             dataController.saveIfNeeded()
         }

@@ -50,6 +50,7 @@ extension Item {
         let item = Item(context: viewContext)
         item.title = "Nayeco Comedero Inox.\nN. Tiquet:\n-\nAntideslizante 300ml. 12cm G\nPVP Unid.: 4,95"
         item.creationDate = Date()
+        item.quantity = 1
 
         let price = Double(Int.random(in: 0...499)) / 100.0
         item.price = NSDecimalNumber(value: price)

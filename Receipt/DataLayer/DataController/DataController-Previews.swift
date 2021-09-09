@@ -42,6 +42,7 @@ extension DataController {
                     item.title = "Item \(itemCounter)"
                     let price = Double(itemCounter) + Double.random(in: 0...0.99)
                     item.price = NSDecimalNumber(value: price)
+                    item.quantity = 1
                     total += price
                 }
 

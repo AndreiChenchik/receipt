@@ -52,7 +52,8 @@ extension ReceiptView {
                         Image(systemName: "calendar.badge.clock")
                             .frame(width: 30)
 
-                        DatePicker("Purchased", selection: $viewModel.receiptPurchaseDate, in: ...Date())
+                        DatePicker("Date", selection: $viewModel.receiptPurchaseDate, in: ...Date())
+                            .lineLimit(1)
                     }
 
 
@@ -69,12 +70,26 @@ extension ReceiptView {
                 }
 
                 Section(header: Text("Shopping cart")) {
-                    ForEach(viewModel.receipt.receiptItemsSorted) { item in
+                    ForEach(Array(viewModel.receipt.receiptItemsSorted.enumerated()), id: \.element) { index, item in
                         ItemView(item: item)
+                            .listRowBackground(
+                                Color(.secondarySystemGroupedBackground)
+                                    .opacity(index % 2 == 0 ? 1 : 0.5)
+                            )
+                            .listRowSeparator(
+                                (
+                                    index != 0
+                                    && index != (viewModel.receipt.receiptItemsSorted.count - 1)
+                                )
+                                ? .hidden
+                                : .automatic )
                     }
                     .onDelete(perform: viewModel.deleteItems)
-                    .listRowSeparator(.hidden)
 
+
+                }
+
+                Section {
                     Button {
                         withAnimation {
                             viewModel.addItem()
@@ -83,7 +98,6 @@ extension ReceiptView {
                         Label("Add New Item", systemImage: "plus")
 
                     }
-                    .listRowBackground(Color(.systemGray5).opacity(0.5))
                 }
 
                 Section(header: Text("Total")) {
