@@ -76,13 +76,7 @@ extension ReceiptView {
                                 Color(.secondarySystemGroupedBackground)
                                     .opacity(index % 2 == 0 ? 1 : 0.5)
                             )
-                            .listRowSeparator(
-                                (
-                                    index != 0
-                                    && index != (viewModel.receipt.receiptItemsSorted.count - 1)
-                                )
-                                ? .hidden
-                                : .automatic )
+                            .listRowSeparator(index != 0 ? .hidden : .automatic, edges: .top)
                     }
                     .onDelete(perform: viewModel.deleteItems)
 
