@@ -56,24 +56,7 @@ struct ItemView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            VStack(alignment: .leading, spacing: 0) {
-                ZStack(alignment: .topLeading) {
-                    Text(title)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .font(Font.body.weight(.bold))
-                        .opacity(0)
-                        .layoutPriority(1)
-
-                    TextEditor(text: $title.onChange(update))
-                        .font(Font.body.weight(.bold))
-                        .padding(.vertical, -9)
-                        .padding(.horizontal, -5)
-                }
-                .padding(.horizontal, 5)
-
-                Divider()
-            }
-
+            ItemTitleView(title: $title.onChange(update))
 
             HStack(alignment: .top, spacing: 0) {
                 VStack(alignment: .leading, spacing: 2) {
@@ -138,16 +121,10 @@ struct ItemView: View {
             }
 
             if let type = item.type, let quantity = item.quantity, quantity != 0 {
-                HStack {
-                    HStack(spacing: 4) { Image(systemName: "chart.bar.fill")
-                        Text("\(item.perUnitString) € per \(type.unit.abbreviation)")
-                    }
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .padding(5)
-                    .background(Color(.systemGray6).opacity(0.5))
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                }
+                ItemPricePerUnitView(
+                    text: "\(item.perUnitString) € per \(type.unit.abbreviation)",
+                    icon: "chart.bar.fill"
+                )
             }
         }
         .padding(.vertical, 4)
